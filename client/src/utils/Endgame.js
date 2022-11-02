@@ -1,32 +1,33 @@
+// DELETE 'testboard' BEFORE DUE DATE
 const testboard = [
   {
     position: 1,
-    player: 'unclaimed',
+    player: 'red',
     display: '2',
   },
   {
     position: 2,
-    player: 'unclaimed',
+    player: 'red',
     display: '3',
   },
   {
     position: 3,
-    player: 'unclaimed',
+    player: 'red',
     display: '4',
   },
   {
     position: 4,
-    player: 'unclaimed',
+    player: 'red',
     display: '5',
   },
   {
     position: 5,
-    player: 'unclaimed',
+    player: 'red',
     display: '6',
   },
   {
     position: 6,
-    player: 'unclaimed',
+    player: 'red',
     display: '2',
   },
   {
@@ -51,7 +52,7 @@ const testboard = [
   },
   {
     position: 11,
-    player: 'unclaimed',
+    player: 'blue',
     display: '7',
   },
   {
@@ -76,7 +77,7 @@ const testboard = [
   },
   {
     position: 16,
-    player: 'unclaimed',
+    player: 'blue',
     display: '12',
   },
   {
@@ -101,7 +102,7 @@ const testboard = [
   },
   {
     position: 21,
-    player: 'unclaimed',
+    player: 'blue',
     display: '12',
   },
   {
@@ -126,7 +127,7 @@ const testboard = [
   },
   {
     position: 26,
-    player: 'unclaimed',
+    player: 'blue',
     display: '7',
   },
   {
@@ -151,7 +152,7 @@ const testboard = [
   },
   {
     position: 31,
-    player: 'unclaimed',
+    player: 'red',
     display: '2',
   },
   {
@@ -198,9 +199,28 @@ function victoryChecker(playerClaims) {
     [1, 8, 15, 22, 29, 36],
     [6, 11, 16, 21, 26, 31],
   ];
-  const toBeChecked = playerClaims;
 
-  console.log('something');
+  const result = winningPositions.every((e) => {
+    const testTable = e;
+    // console.log('L207: testTable', testTable);
+    let confirmTable = [];
+
+    for (let i = 0; i < testTable.length; i++) {
+      if (playerClaims.includes(testTable[i])) {
+        confirmTable.push(testTable[i]);
+        // console.log('L213: confirmTable', confirmTable);
+      }
+    }
+
+    if (confirmTable.length !== 6) {
+      return true;
+    } else {
+      console.log('Victory Condition Found', confirmTable);
+      return false;
+    }
+  });
+
+  return result;
 }
 
 function Endgame(boardState) {
@@ -214,11 +234,15 @@ function Endgame(boardState) {
     .filter((a) => a.player === 'blue')
     .map((b) => b.position);
 
-  console.log(redBoard);
-  console.log(yellowBoard);
-  console.log(blueBoard);
-
-  victoryChecker(blueBoard);
+  if (!victoryChecker(blueBoard)) {
+    console.log('Blue Wins');
+  }
+  if (!victoryChecker(redBoard)) {
+    console.log('Red Wins');
+  }
+  if (!victoryChecker(yellowBoard)) {
+    console.log('Yellow Wins');
+  }
 }
 
 Endgame(testboard);
