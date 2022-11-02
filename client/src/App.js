@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import Account from './pages/Account';
+import Forums from './pages/Forums';
+import Home from './pages/Home';
+import LFG from './pages/LFG';
+import Lobby from './pages/Lobby';
 
 export default function PortfolioContainer() {
   const [currentPage, setCurrentPage] = useState('Home');
