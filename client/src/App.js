@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import LFG from './pages/LFG';
 import Lobby from './pages/Lobby';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 export default function PortfolioContainer() {
   const [currentPage, setCurrentPage] = useState('Home');
