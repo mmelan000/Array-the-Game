@@ -14,8 +14,8 @@ export default function PortfolioContainer() {
     if (currentPage === 'Account') {
       return <Account />;
     }
-    if (currentPage === 'Front') {
-      return <Front />;
+    if (currentPage === 'Forums') {
+      return <Forums />;
     }
     if (currentPage === 'Back') {
       return <Back />;
