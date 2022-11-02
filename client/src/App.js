@@ -1,27 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
-import Dice from './utils/Dice';
+import React, { useState } from 'react';
+import Account from './pages/Account';
+import Forums from './pages/Forums';
+import Home from './pages/Home';
+import LFG from './pages/LFG';
+import Lobby from './pages/Lobby';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
-console.log(Dice(), Dice());
-function App() {
+export default function App() {
+  const [currentPage, setCurrentPage] = useState('Home');
+
+  const renderPage = () => {
+    if (currentPage === 'Account') {
+      return <Account />;
+    }
+    if (currentPage === 'Forums') {
+      return <Forums />;
+    }
+    if (currentPage === 'LFG') {
+      return <LFG />;
+    }
+    if (currentPage === 'Lobby') {
+      return <Lobby />;
+    }
+    if (currentPage === 'Login') {
+      return <Login />;
+    }
+    if (currentPage === 'Signup') {
+      return <Signup />;
+    }
+    return <Home />;
+  };
+
+  const handlePageChange = (page) => setCurrentPage(page);
+
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar currentPage={currentPage} handlePageChange={handlePageChange} />
+      {renderPage()}
+      <Footer />
     </div>
   );
 }
-
-export default App;
