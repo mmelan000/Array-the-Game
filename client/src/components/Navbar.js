@@ -1,8 +1,8 @@
 function Navbar({ currentPage, handlePageChange }) {
   return (
-    <Navbar bg='dark' variant='dark' expand='lg'>
-      <Container>
-        <Navbar.Brand
+    <nav bg='dark' variant='dark' expand='lg'>
+      <div>
+        <div
           onClick={() => handlePageChange('Home')}
           className={currentPage === 'Home'}
           href='#home'
@@ -70,7 +70,7 @@ function Navbar({ currentPage, handlePageChange }) {
           </Nav>
         </Navbar.Collapse>
       </Container>
-    </Navbar>
+    </nav>
   );
 }
 

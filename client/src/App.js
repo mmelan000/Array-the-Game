@@ -6,8 +6,10 @@ import LFG from './pages/LFG';
 import Lobby from './pages/Lobby';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
-export default function PortfolioContainer() {
+export default function App() {
   const [currentPage, setCurrentPage] = useState('Home');
 
   const renderPage = () => {
@@ -20,11 +22,14 @@ export default function PortfolioContainer() {
     if (currentPage === 'LFG') {
       return <LFG />;
     }
-    if (currentPage === 'Full') {
-      return <Full />;
+    if (currentPage === 'Lobby') {
+      return <Lobby />;
     }
-    if (currentPage === 'Resume') {
-      return <Resume />;
+    if (currentPage === 'Login') {
+      return <Login />;
+    }
+    if (currentPage === 'Signup') {
+      return <Signup />;
     }
     return <Home />;
   };
@@ -33,7 +38,7 @@ export default function PortfolioContainer() {
 
   return (
     <div>
-      <NavTabs currentPage={currentPage} handlePageChange={handlePageChange} />
+      <Navbar currentPage={currentPage} handlePageChange={handlePageChange} />
       {renderPage()}
       <Footer />
     </div>
