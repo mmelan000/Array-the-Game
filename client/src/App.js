@@ -1,27 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
-import Dice from './utils/Dice';
+import React, { useState } from 'react';
 
-console.log(Dice(), Dice());
-function App() {
+export default function PortfolioContainer() {
+  const [currentPage, setCurrentPage] = useState('Home');
+
+  const renderPage = () => {
+    if (currentPage === 'Contact') {
+      return <Contact />;
+    }
+    if (currentPage === 'Front') {
+      return <Front />;
+    }
+    if (currentPage === 'Back') {
+      return <Back />;
+    }
+    if (currentPage === 'Full') {
+      return <Full />;
+    }
+    if (currentPage === 'Resume') {
+      return <Resume />;
+    }
+    return <Home />;
+  };
+
+  const handlePageChange = (page) => setCurrentPage(page);
+
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <NavTabs currentPage={currentPage} handlePageChange={handlePageChange} />
+      {renderPage()}
+      <Footer />
     </div>
   );
 }
-
-export default App;
