@@ -17,8 +17,8 @@ export default function PortfolioContainer() {
     if (currentPage === 'Forums') {
       return <Forums />;
     }
-    if (currentPage === 'Back') {
-      return <Back />;
+    if (currentPage === 'LFG') {
+      return <LFG />;
     }
     if (currentPage === 'Full') {
       return <Full />;
