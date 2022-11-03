@@ -4,3 +4,4 @@ thumbs.db
 .env
 .vscode
 *.xlsx
+client/package-lock.json

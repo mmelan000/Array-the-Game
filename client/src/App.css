@@ -1,38 +1,80 @@
+body {
+  background: #000;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  max-width: 50%;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.game-tile {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  border-radius: 3px;
+  text-align: center;
   color: white;
+  justify-content: center;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.game-tile p {
+  position: absolute;
+  z-index: 1;
+  text-align: center;
+  font-size: 4vw;
+  padding-bottom: 0.5%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------- For Mobile Displays (PORTRAIT) ----------------------------------------------------*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+
+@media only screen and (max-width: 600px) and (orientation: portrait) {
+  .App {
+    max-width: 100%;
   }
-  to {
-    transform: rotate(360deg);
+
+  .game-tile p {
+    font-size: 4vh;
+  }
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------- For Mobile Displays (LANDSCAPE) ---------------------------------------------------*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+
+@media only screen and (max-width: 989px) and (orientation: landscape) {
+  .App {
+    max-width: 43vw;
+    max-height: 100%;
+  }
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------- For Tablet Sized Displays (PORTRAIT) ---------------------------------------------*/
+/*-------------------------------------------------------------------------------------------------------------------------------------*/
+
+@media only screen and (min-width: 601px) and (max-width: 1499px) and (orientation: portrait) {
+  .App {
+    max-width: 100%;
+  }
+
+  .game-tile p {
+    font-size: 4vh;
+  }
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------- For Tablet Sized Displays (Landscape) ---------------------------------------------*/
+/*-------------------------------------------------------------------------------------------------------------------------------------*/
+
+@media only screen and (min-width: 990px) and (max-width: 1499px) and (orientation: landscape) {
+  .App {
+    max-width: 50vw;
+    max-height: 100%;
   }
 }
