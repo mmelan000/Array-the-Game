@@ -23,7 +23,12 @@ const userSchema = new Schema(
     wins: {
       type: Number,
     },
-    thoughts: [thoughtSchema],
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Thought',
+      },
+    ],
   },
   {
     toJSON: {
