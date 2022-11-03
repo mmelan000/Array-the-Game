@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import './App.css';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('Home');
