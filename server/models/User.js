@@ -48,3 +48,7 @@ userSchema.methods.isCorrectPassword = async function (password) {
 userSchema.virtual('winCount').get(function () {
   return this.wins;
 });
+
+const User = model('User', userSchema);
+
+module.exports = User;
