@@ -1,9 +1,10 @@
 import React from 'react';
+import Gameboard from '../components/Gameboard';
 
 export default function Lobby() {
   return (
     <div>
-      <p>This is the Lobby page.</p>
+      <Gameboard />
     </div>
   );
 }
