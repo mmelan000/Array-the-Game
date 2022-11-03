@@ -1,7 +1,10 @@
 body {
   background: #000;
 }
-
+nav > div {
+  display: inline;
+  padding: 5px;
+}
 .App {
   max-width: 50%;
 }
@@ -16,7 +19,7 @@ body {
   display: flex;
   border-radius: 3px;
   text-align: center;
-  color: white;
+  color: black;
   justify-content: center;
   align-items: center;
 }
@@ -25,8 +28,9 @@ body {
   position: absolute;
   z-index: 1;
   text-align: center;
-  font-size: 4vw;
-  padding-bottom: 0.5%;
+  font-size: 3vw;
+  padding-bottom: 0.1%;
+  font-family: 'Readex Pro', Arial, Helvetica, sans-serif;
 }
 
 /*-------------------------------------------------------------------------------------------------------------------------------*/
