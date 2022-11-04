@@ -6,6 +6,10 @@ nav > div {
  display: inline;
  padding: 5px;
 }
+.dice-roller {
+text-align: center;
+}
+
 .Gameboard {
   max-width: 50%;
   margin: auto;

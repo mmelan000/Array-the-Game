@@ -1,15 +1,9 @@
 // gameboard goes here
 import Tile from './Tile';
 import React from 'react';
-import Endgame from '../utils/Endgame';
-
-const claimTile = (props, isTurn, currentPlayer, boardState) => {
-  if (!isTurn) {
-    return;
-  }
-};
 
 export default function Gameboard(props) {
+  console.log('Gameboard.js');
   const mappedBoardState = Object.entries(props.board).map((e) => {
     return <Tile tileDisplay={e[1].display} key={e[1].position} />;
   });

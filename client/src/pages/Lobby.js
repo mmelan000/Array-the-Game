@@ -3,8 +3,11 @@ import { useEffect, useState } from 'react';
 import Gameboard from '../components/Gameboard';
 import Timer from '../components/Timer';
 import Endgame from '../utils/Endgame';
+import DiceButton from '../components/DiceButton';
+import Dice from '../utils/Dice';
 
 export default function Lobby() {
+  console.log('Lobby.js');
   // boardState
   const [board, setBoard] = useState({
     1: {
@@ -178,7 +181,6 @@ export default function Lobby() {
   useEffect(() => {
     let myInterval = setInterval(() => {
       if (seconds > 0) {
-        console.log('currentPlayer ', currentPlayer);
         setSeconds(seconds - 1);
       } else {
         endPlayerTurn();
@@ -190,6 +192,13 @@ export default function Lobby() {
     };
   });
 
+  const [diceRoll1, setDiceRoll1] = useState(0);
+  const [diceRoll2, setDiceRoll2] = useState(0);
+
+  const rollDice = () => {
+    console.log(Dice());
+  };
+
   return (
     <div>
       <Timer seconds={seconds} />
@@ -197,7 +206,11 @@ export default function Lobby() {
       {/* team card feed a prop of team2] */}
       {/* team card feed a prop of team3] */}
       <Gameboard board={board} />
-      {/* dice roller */}
+      <DiceButton
+        diceRoll1={diceRoll2}
+        diceRoll2={diceRoll2}
+        onClick={() => rollDice()}
+      />
       {/* game log */}
       {/* chat */}
     </div>

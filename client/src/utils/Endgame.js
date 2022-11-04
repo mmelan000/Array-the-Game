@@ -1,4 +1,5 @@
 function victoryChecker(playerClaims) {
+  console.log('Endgame.js');
   // 16 different winning positions
   const winningPositions = [
     [1, 2, 3, 4, 5, 6],

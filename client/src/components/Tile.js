@@ -1,6 +1,7 @@
 import BoardTile from '../images/Board/Tile1-01.svg';
 
 function Tile(props) {
+  console.log('Tile.js');
   return (
     <div className='game-tile'>
       <p>{props.tileDisplay}</p>
