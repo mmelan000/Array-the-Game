@@ -1,16 +1,17 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import Gameboard from '../components/Gameboard';
+// import Gameboard from '../components/Gameboard';
 import Timer from '../components/Timer';
 import Endgame from '../utils/Endgame';
 import DiceButton from '../components/DiceButton';
 import Gamelog from '../components/Gamelog';
 import TeamCardContainer from '../components/TeamCardContainer';
+import Tile from '../components/Tile';
 
 export default function Lobby() {
-  console.log('Lobby.js');
-  // boardState
+  // console.log('Lobby.js');
   const [log, setLog] = useState(['Game has begun.']);
+  // boardState
   const [board, setBoard] = useState({
     1: {
       player: 'unclaimed',
@@ -157,11 +158,20 @@ export default function Lobby() {
       display: '2',
     },
   });
+  const mappedBoardState = Object.entries(board).map((e) => {
+    return (
+      <Tile
+        tileDisplay={e[1].display}
+        player={e[1].player}
+        key={e[1].position}
+      />
+    );
+  });
   // currentPlayer
   const [currentPlayer, setCurrentPlayer] = useState(1);
 
   // teams
-  let teams = 3;
+  let teams = 2;
 
   const endPlayerTurn = () => {
     if (currentPlayer === 1) {
@@ -170,7 +180,13 @@ export default function Lobby() {
       return;
     }
     if (currentPlayer === 2) {
-      setCurrentPlayer(3);
+      setCurrentPlayer(() => {
+        if (teams === 3) {
+          setCurrentPlayer(3);
+        } else {
+          setCurrentPlayer(1);
+        }
+      });
       setSeconds(60);
       return;
     }
@@ -188,6 +204,10 @@ export default function Lobby() {
       if (seconds > 0) {
         setSeconds(seconds - 1);
       } else {
+        setLog([
+          `Player ${currentPlayer} ran out of time and lost their turn.`,
+          ...log,
+        ]);
         endPlayerTurn();
         clearInterval(myInterval);
       }
@@ -195,7 +215,7 @@ export default function Lobby() {
     return () => {
       clearInterval(myInterval);
     };
-  }, [seconds]);
+  });
 
   const [diceRoll1, setDiceRoll1] = useState(0);
   const [diceRoll2, setDiceRoll2] = useState(0);
@@ -216,7 +236,9 @@ export default function Lobby() {
       <Gamelog log={log} />
       {/* chat */}
       <TeamCardContainer teams={teams} />
-      <Gameboard board={board} />
+      <div className='Gameboard'>
+        <div className='Gameboard-header'>{mappedBoardState}</div>
+      </div>
 
       <DiceButton
         diceRoll1={diceRoll1}

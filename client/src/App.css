@@ -2,6 +2,10 @@ body {
   /* background: #000; */
 }
 
+footer {
+  text-align: center;
+}
+
 nav > div {
  display: inline;
  padding: 5px;
@@ -23,16 +27,29 @@ text-align: center;
 }
 
 .game-log { 
-  height:330px;
-  width:300px;
+  width: 23vw;
+  height:30vh;
   overflow-y:auto;
-  float:left;
+
   position:relative;
   border: 1px;
   border-style: solid;
   margin:5px;
   list-style-type: none;
   padding-left: 0;
+}
+
+.game-log-header{
+  font-weight: 700;
+  border: 1px;
+  border-style: dashed;
+  text-align: center;
+}
+
+.game-log-container{
+border: 1px;
+border-style: solid;
+float:left;
 }
 
 .game-log > li:nth-child(even) {

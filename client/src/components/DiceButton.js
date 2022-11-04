@@ -1,8 +1,7 @@
 import React from 'react';
 
 export default function DiceButton(props) {
-  console.log('DiceButton.js');
-  console.log(props);
+  // console.log('DiceButton.js');
   if (props.diceRoll1 !== 0) {
     return (
       <div className='dice-roller'>
