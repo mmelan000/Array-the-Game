@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 // import Gameboard from '../components/Gameboard';
 import Timer from '../components/Timer';
-import Endgame from '../utils/Endgame';
+// import Endgame from '../utils/Endgame';
 import DiceButton from '../components/DiceButton';
 import Gamelog from '../components/Gamelog';
 import TeamCardContainer from '../components/TeamCardContainer';
@@ -10,7 +10,6 @@ import Tile from '../components/Tile';
 
 export default function Lobby() {
   // console.log('Lobby.js');
-  const [log, setLog] = useState(['Game has begun.']);
   // boardState
   const [board, setBoard] = useState({
     1: {
@@ -158,17 +157,47 @@ export default function Lobby() {
       display: '2',
     },
   });
+
+  const claimTile = (position, name) => {
+    console.log(position + name);
+    let claimerName = name;
+    if (claimerName === 1) {
+      claimerName = 'red';
+    }
+    if (claimerName === 2) {
+      claimerName = 'green';
+    }
+    if (claimerName === 3) {
+      claimerName = 'blue';
+    }
+    const newBoard = {
+      ...board,
+      [position]: {
+        ...board[position],
+        player: claimerName,
+      },
+    };
+    console.log(newBoard);
+    setBoard(newBoard);
+  };
+
+  const [log, setLog] = useState(['Game has begun.']);
+  const [currentPlayer, setCurrentPlayer] = useState(1);
+
   const mappedBoardState = Object.entries(board).map((e) => {
     return (
       <Tile
         tileDisplay={e[1].display}
         player={e[1].player}
-        key={e[1].position}
+        id={e[0]}
+        key={e[0]}
+        onClick={() => {
+          claimTile(e[0] + e[1].player);
+        }}
       />
     );
   });
   // currentPlayer
-  const [currentPlayer, setCurrentPlayer] = useState(1);
 
   // teams
   let teams = 2;
