@@ -7,11 +7,11 @@ nav > div {
   padding: 5px;
 }
 
-.App {
+.Gameboard {
   max-width: 30%;
 }
 
-.App-header {
+.Gameboard-header {
   display: grid;
   grid-template-columns: repeat(6, 2fr);
   grid-template-rows: repeat(6, 2fr);
@@ -56,16 +56,16 @@ nav > div {
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 
 @media only screen and (max-width: 600px) and (orientation: portrait) {
-  .App {
+  .Gameboard {
     width: 100%;
   }
 
-  .game-tile {
+  .Gameboard-tile {
     width: 15vw;
     height: 6vh;
   }
 
-  .game-tile p {
+  .Gameboard-tile p {
     font-size: 2vh;
   }
 
@@ -80,7 +80,8 @@ nav > div {
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 
 @media only screen and (max-width: 989px) and (orientation: landscape) {
-  .App {
+
+  .Gameboard {
     width: 100%;
   }
 
@@ -104,7 +105,8 @@ nav > div {
 /*-------------------------------------------------------------------------------------------------------------------------------------*/
 
 @media only screen and (min-width: 601px) and (max-width: 1499px) and (orientation: portrait) {
-  .App {
+
+  .Gameboard {
     width: 100%;
   }
 
@@ -128,7 +130,8 @@ nav > div {
 /*-------------------------------------------------------------------------------------------------------------------------------------*/
 
 @media only screen and (min-width: 990px) and (max-width: 1499px) and (orientation: landscape) {
-  .App {
+
+  .Gameboard {
     width: 100%;
   }
 

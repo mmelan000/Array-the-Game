@@ -4,7 +4,7 @@ function Tile(props) {
     <div className='board-container'>
       <div className='game-tile'>
         <div id='inner' className='game-tile'>
-          <p>{props.num}</p>
+          <p>{props.tileDisplay}</p>
           {/* <img src={BoardTile} alt="Background Tile for GameBoard"></img> */}
         </div>
       </div>
