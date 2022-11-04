@@ -157,8 +157,8 @@ export default function Gameboard() {
     },
   });
 
-  const mappedBoardState = Object.keys(board).map((e) => {
-    return <Tile tileInfo={e} key={e.position} />;
+  const mappedBoardState = Object.entries(board).map((e) => {
+    return <Tile tileDisplay={e[1].display} key={e[1].position} />;
   });
 
   return (
