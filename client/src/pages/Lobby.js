@@ -4,11 +4,12 @@ import Gameboard from '../components/Gameboard';
 import Timer from '../components/Timer';
 import Endgame from '../utils/Endgame';
 import DiceButton from '../components/DiceButton';
-import Dice from '../utils/Dice';
+import Gamelog from '../components/Gamelog';
 
 export default function Lobby() {
   console.log('Lobby.js');
   // boardState
+  const [log, setLog] = useState(['Game has begun.']);
   const [board, setBoard] = useState({
     1: {
       player: 'unclaimed',
@@ -190,29 +191,34 @@ export default function Lobby() {
     return () => {
       clearInterval(myInterval);
     };
-  });
+  }, [seconds]);
 
   const [diceRoll1, setDiceRoll1] = useState(0);
   const [diceRoll2, setDiceRoll2] = useState(0);
 
   const rollDice = () => {
-    console.log(Dice());
+    const dr1 = Math.floor(Math.random() * 6 + 1);
+    const dr2 = Math.floor(Math.random() * 6 + 1);
+    setDiceRoll1(dr1);
+    setDiceRoll2(dr2);
+    const result = dr1 + dr2;
+    setLog([`Player ${currentPlayer} has rolled a ${result}.`, ...log]);
   };
 
   return (
     <div>
       <Timer seconds={seconds} />
+      <Gamelog log={log} />
+      {/* chat */}
+      <Gameboard board={board} />
       {/* team card feed a prop of team1] */}
       {/* team card feed a prop of team2] */}
       {/* team card feed a prop of team3] */}
-      <Gameboard board={board} />
       <DiceButton
-        diceRoll1={diceRoll2}
+        diceRoll1={diceRoll1}
         diceRoll2={diceRoll2}
         onClick={() => rollDice()}
       />
-      {/* game log */}
-      {/* chat */}
     </div>
   );
 }

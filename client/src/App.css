@@ -20,6 +20,26 @@ text-align: center;
   grid-template-rows: repeat(6, 1fr);
   grid-template-columns: repeat(6, 1fr);
 }
+.game-log { 
+  height:330px;
+  width:215px;
+  overflow-y:auto;
+  float:left;
+  position:relative;
+  border: 1px;
+  border-style: solid;
+  margin:5px;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+
+.game-log > li:nth-child(even) {
+  background-color: #BBB;
+}
+.game-log > li:nth-child(odd) {
+  background-color: #DDD;
+}
 
 .game-tile {
   display: flex;
