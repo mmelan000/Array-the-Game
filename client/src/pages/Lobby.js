@@ -3,7 +3,7 @@ import Gameboard from '../components/Gameboard';
 
 export default function Lobby() {
   return (
-    <div>
+    <div className='board-container'>
       <Gameboard />
     </div>
   );
