@@ -5,6 +5,7 @@ import Timer from '../components/Timer';
 import Endgame from '../utils/Endgame';
 import DiceButton from '../components/DiceButton';
 import Gamelog from '../components/Gamelog';
+import TeamCardContainer from '../components/TeamCardContainer';
 
 export default function Lobby() {
   console.log('Lobby.js');
@@ -159,6 +160,9 @@ export default function Lobby() {
   // currentPlayer
   const [currentPlayer, setCurrentPlayer] = useState(1);
 
+  // teams
+  let teams = 3;
+
   const endPlayerTurn = () => {
     if (currentPlayer === 1) {
       setCurrentPlayer(2);
@@ -203,6 +207,7 @@ export default function Lobby() {
     setDiceRoll2(dr2);
     const result = dr1 + dr2;
     setLog([`Player ${currentPlayer} has rolled a ${result}.`, ...log]);
+    endPlayerTurn();
   };
 
   return (
@@ -210,10 +215,9 @@ export default function Lobby() {
       <Timer seconds={seconds} />
       <Gamelog log={log} />
       {/* chat */}
+      <TeamCardContainer teams={teams} />
       <Gameboard board={board} />
-      {/* team card feed a prop of team1] */}
-      {/* team card feed a prop of team2] */}
-      {/* team card feed a prop of team3] */}
+
       <DiceButton
         diceRoll1={diceRoll1}
         diceRoll2={diceRoll2}
