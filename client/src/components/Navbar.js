@@ -1,4 +1,5 @@
 function Navbar({ currentPage, handlePageChange }) {
+  console.log('Navbar.js');
   return (
     <nav bg='dark' variant='dark' expand='lg'>
       <div
