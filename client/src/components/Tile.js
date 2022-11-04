@@ -1,9 +1,10 @@
-import BoardTile from "../images/Board/Tile1-01.svg";
+import BoardTile from '../images/Board/Tile1-01.svg';
+
 function Tile(props) {
   return (
-    <div className="game-tile">
-      <p>{props.num}</p>
-      <img src={BoardTile} alt="Background Tile for GameBoard"></img>
+    <div className='game-tile'>
+      <p>{props.tileInfo.display}</p>
+      <img src={BoardTile} alt='Background Tile for GameBoard'></img>
     </div>
   );
 }
