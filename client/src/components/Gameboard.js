@@ -157,10 +157,7 @@ export default function Gameboard() {
     },
   });
 
-  const newBoard = board;
-  newBoard.filter();
-
-  const mappedBoardState = Object.keys(board).forEach((e) => {
+  const mappedBoardState = Object.keys(board).map((e) => {
     return <Tile tileInfo={e} key={e.position} />;
   });
 

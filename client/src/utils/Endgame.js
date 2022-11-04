@@ -19,13 +19,11 @@ function victoryChecker(playerClaims) {
 
   const result = winningPositions.every((e) => {
     const testTable = e;
-    // console.log('L207: testTable', testTable);
     let confirmTable = [];
 
     for (let i = 0; i < testTable.length; i++) {
       if (playerClaims.includes(testTable[i])) {
         confirmTable.push(testTable[i]);
-        // console.log('L213: confirmTable', confirmTable);
       }
     }
 
