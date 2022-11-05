@@ -5,6 +5,7 @@ const typeDefs = gql`
     me: User
     users: [User]
     user(username: String!): User
+    thoughts(username: String): [Thought]
     thought(thoughtId: ID!): Thought
   }
   type User {
