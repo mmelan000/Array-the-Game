@@ -8,9 +8,10 @@ const thoughtSchema = new Schema({
     min: [1, 'to little characters'],
     max: 280,
   },
-  username: {
+  thoughtAuthor: {
     type: String,
-    require: true,
+    required: true,
+    trim: true,
   },
   createdAt: {
     type: Date,
