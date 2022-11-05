@@ -14,12 +14,12 @@ const resolvers = {
     user: async (parent, { username }) => {
       return User.findOne({ username }).populate('thoughts');
     },
+    thought: async (parent, { thoughtId }) => {
+      return Thought.findOne({ _id: thoughtId });
+    },
     thoughts: async (parent, { username }) => {
       const params = username ? { username } : {};
       return Thought.find(params).sort({ createdAt: -1 });
-    },
-    thought: async (parent, { thoughtId }) => {
-      return Thought.findOne({ _id: thoughtId });
     },
   },
   Mutation: {
@@ -41,6 +41,37 @@ const resolvers = {
       }
       const token = signToken(user);
       return { token, user };
+    },
+    addThought: async (parent, { thoughtText }, context) => {
+      if (context.user) {
+        const newThought = await Thought.create(
+          { _id: context.user._id },
+          { $addToSet: { thoughts: thought._id } }
+        );
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { thoughts: thought._id } }
+        );
+        return newThought;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    addComment: async (parent, { thoughtId, commentText }, context) => {
+      if (context.user) {
+        return Thought.findOneAndUpdate(
+          { _id: thoughtId },
+          {
+            $addToSet: {
+              comments: { commentText, commentAuthor: context.user.username },
+            },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
   },
 };
