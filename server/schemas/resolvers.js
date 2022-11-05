@@ -8,12 +8,12 @@ const resolvers = {
       const params = _id ? { _id } : {};
       return User.findOne(params);
     },
-    // users: async () => {
-    //   return User.find().populate('thoughts');
-    // },
-    // user: async (parent, { username }) => {
-    //   return User.findOne({ username }).populate('thoughts');
-    // },
+    users: async () => {
+      return User.find().populate('thoughts');
+    },
+    user: async (parent, { username }) => {
+      return User.findOne({ username }).populate('thoughts');
+    },
   },
   Mutation: {
     addUser: async (parent, args) => {
