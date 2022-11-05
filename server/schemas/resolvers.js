@@ -14,6 +14,13 @@ const resolvers = {
     user: async (parent, { username }) => {
       return User.findOne({ username }).populate('thoughts');
     },
+    thoughts: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Thought.find(params).sort({ createdAt: -1 });
+    },
+    thought: async (parent, { thoughtId }) => {
+      return Thought.findOne({ _id: thoughtId });
+    },
   },
   Mutation: {
     addUser: async (parent, args) => {
