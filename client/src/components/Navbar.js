@@ -18,23 +18,45 @@ function Navbar({ currentPage, handlePageChange }) {
             alt="Array the game logo a diamond shape with 4 colors (yellow at the top, green to the right, blue to the bottom, red to the left) and the letter 'A' in front"
           />
           RRAY ]
-          <button
-            className='navbar-toggler'
-            type='button'
-            data-bs-toggle='collapse'
-            data-bs-target='#navbarNav'
-            aria-controls='navbarNav'
-            aria-expanded='false'
-            aria-label='Toggle navigation'
-          >
-            <span className='navbar-toggler-icon'></span>
-          </button>
         </div>
+        <button
+          className='navbar-toggler justify-content-end'
+          type='button'
+          data-bs-toggle='collapse'
+          data-bs-target='#navbarNav'
+          aria-controls='navbarNav'
+          aria-expanded='false'
+          aria-label='Toggle navigation'
+        >
+          <span className='navbar-toggler-icon'></span>
+        </button>
         <div
           className='collapse navbar-collapse justify-content-end'
           id='navbarNav'
         >
           <ul className='navbar-nav'>
+            <li className='nav-item'>
+              <button type='button' className='btn btn-success mx-2'>
+                <div
+                  onClick={() => handlePageChange('Forums')}
+                  className={currentPage === 'Forums'}
+                  href='#Forums'
+                >
+                  PLAY
+                </div>
+              </button>
+            </li>
+            <li className='nav-item'>
+              <button type='button' className='btn btn-light mx-2'>
+                <div
+                  onClick={() => handlePageChange('Forums')}
+                  className={currentPage === 'Forums'}
+                  href='#Forums'
+                >
+                  LEARN
+                </div>
+              </button>
+            </li>
             <li className='nav-item'>
               <button type='button' className='btn btn-dark mx-2'>
                 <div

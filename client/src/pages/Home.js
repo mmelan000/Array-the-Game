@@ -3,8 +3,8 @@ import React from 'react';
 export default function Home() {
   console.log('Home.js');
   return (
-    <div className='about-wrapper d-flex justify-content-center'>
-      <div className='about-section w-50 py-5 fw-semibold'>
+    <div className='about-wrapper'>
+      <div className='about-section fw-semibold'>
         <ul>
           <li className='list-group-item pt-4'>Welcome to [ ARRAY ]!</li>
           <li className='list-group-item pt-4'>
