@@ -1,55 +1,86 @@
+import logo from '../images/Logo.png';
+
 function Navbar({ currentPage, handlePageChange }) {
   console.log('Navbar.js');
   return (
-    <nav bg='dark' variant='dark' expand='lg'>
-      <div
-        onClick={() => handlePageChange('Home')}
-        className={currentPage === 'Home'}
-        href='#home'
-      >
-        Home
-      </div>
-      <div
-        onClick={() => handlePageChange('Account')}
-        className={currentPage === 'Account'}
-        href='#Account'
-      >
-        Account
-      </div>
-      <div
-        onClick={() => handlePageChange('Forums')}
-        className={currentPage === 'Forums'}
-        href='#Forums'
-      >
-        Forums
-      </div>
-      <div
-        onClick={() => handlePageChange('LFG')}
-        className={currentPage === 'LFG'}
-        href='#LFG'
-      >
-        LFG
-      </div>
-      <div
-        onClick={() => handlePageChange('Lobby')}
-        className={currentPage === 'Lobby'}
-        href='#Lobby'
-      >
-        Lobby
-      </div>
-      <div
-        onClick={() => handlePageChange('Login')}
-        className={currentPage === 'Login'}
-        href='#Login'
-      >
-        Login
-      </div>
-      <div
-        onClick={() => handlePageChange('Signup')}
-        className={currentPage === 'Signup'}
-        href='#Signup'
-      >
-        Signup
+    <nav className='navbar navbar-expand-lg fs-1 text-light'>
+      <div className='container-fluid'>
+        <div
+          id='array-brand'
+          onClick={() => handlePageChange('Home')}
+          className={currentPage === 'Home'}
+          href='#home'
+        >
+          [
+          <img
+            className='logo'
+            src={logo}
+            alt="Array the game logo a diamond shape with 4 colors (yellow at the top, green to the right, blue to the bottom, red to the left) and the letter 'A' in front"
+          />
+          RRAY ]
+          <button
+            className='navbar-toggler'
+            type='button'
+            data-bs-toggle='collapse'
+            data-bs-target='#navbarNav'
+            aria-controls='navbarNav'
+            aria-expanded='false'
+            aria-label='Toggle navigation'
+          >
+            <span className='navbar-toggler-icon'></span>
+          </button>
+        </div>
+        <div
+          className='collapse navbar-collapse justify-content-end'
+          id='navbarNav'
+        >
+          <ul className='navbar-nav'>
+            <li className='nav-item'>
+              <button type='button' className='btn btn-dark mx-2'>
+                <div
+                  onClick={() => handlePageChange('Forums')}
+                  className={currentPage === 'Forums'}
+                  href='#Forums'
+                >
+                  Forums
+                </div>
+              </button>
+            </li>
+            <li className='nav-item'>
+              <button type='button' className='btn btn-dark mx-2'>
+                <div
+                  onClick={() => handlePageChange('LFG')}
+                  className={currentPage === 'LFG'}
+                  href='#LFG'
+                >
+                  LFG
+                </div>
+              </button>
+            </li>
+            <li className='nav-item'>
+              <button type='button' className='btn btn-dark mx-2'>
+                <div
+                  onClick={() => handlePageChange('Lobby')}
+                  className={currentPage === 'Lobby'}
+                  href='#Lobby'
+                >
+                  Lobby
+                </div>
+              </button>
+            </li>
+            <li className='nav-item'>
+              <button type='button' className='btn btn-dark mx-2'>
+                <div
+                  onClick={() => handlePageChange('Login')}
+                  className={currentPage === 'Login'}
+                  href='#Login'
+                >
+                  Login / Sign Up
+                </div>
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   );
