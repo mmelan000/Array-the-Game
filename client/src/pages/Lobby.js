@@ -9,7 +9,32 @@ import TeamCardContainer from '../components/TeamCardContainer';
 import Tile from '../components/Tile';
 
 export default function Lobby() {
-  // console.log('Lobby.js');
+  // gamelog state
+  const [log, setLog] = useState(['Game has begun.']);
+  // current player state
+  const [currentPlayer, setCurrentPlayer] = useState(1);
+  // dice state
+  const [diceRoll1, setDiceRoll1] = useState(0);
+  const [diceRoll2, setDiceRoll2] = useState(0);
+  // time state
+  const [seconds, setSeconds] = useState(60);
+  useEffect(() => {
+    let myInterval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      } else {
+        setLog([
+          `Player ${currentPlayer} ran out of time and lost their turn.`,
+          ...log,
+        ]);
+        endPlayerTurn();
+        clearInterval(myInterval);
+      }
+    }, 1000);
+    return () => {
+      clearInterval(myInterval);
+    };
+  });
   // boardState
   const [board, setBoard] = useState({
     1: {
@@ -159,7 +184,15 @@ export default function Lobby() {
   });
 
   const claimTile = (position, name) => {
-    console.log(position + name);
+    console.log({ position, name });
+    if (board[position].player !== 'unclaimed') {
+      console.log('Tile already claimed.');
+      return;
+    }
+    if (diceRoll1 + diceRoll2 !== parseInt(board[position].display)) {
+      console.log('This isnt the number you rolled.');
+      return;
+    }
     let claimerName = name;
     if (claimerName === 1) {
       claimerName = 'red';
@@ -179,10 +212,14 @@ export default function Lobby() {
     };
     console.log(newBoard);
     setBoard(newBoard);
+    setDiceRoll1(0);
+    setDiceRoll2(0);
+    setLog([
+      `Player ${currentPlayer} has claimed a ${board[position].display}.`,
+      ...log,
+    ]);
+    endPlayerTurn();
   };
-
-  const [log, setLog] = useState(['Game has begun.']);
-  const [currentPlayer, setCurrentPlayer] = useState(1);
 
   const mappedBoardState = Object.entries(board).map((e) => {
     return (
@@ -192,7 +229,7 @@ export default function Lobby() {
         id={e[0]}
         key={e[0]}
         onClick={() => {
-          claimTile(e[0] + e[1].player);
+          claimTile(e[0], currentPlayer);
         }}
       />
     );
@@ -200,7 +237,7 @@ export default function Lobby() {
   // currentPlayer
 
   // teams
-  let teams = 2;
+  let teams = 3;
 
   const endPlayerTurn = () => {
     if (currentPlayer === 1) {
@@ -226,37 +263,17 @@ export default function Lobby() {
     }
   };
 
-  // timeState
-  const [seconds, setSeconds] = useState(60);
-  useEffect(() => {
-    let myInterval = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds(seconds - 1);
-      } else {
-        setLog([
-          `Player ${currentPlayer} ran out of time and lost their turn.`,
-          ...log,
-        ]);
-        endPlayerTurn();
-        clearInterval(myInterval);
-      }
-    }, 1000);
-    return () => {
-      clearInterval(myInterval);
-    };
-  });
-
-  const [diceRoll1, setDiceRoll1] = useState(0);
-  const [diceRoll2, setDiceRoll2] = useState(0);
-
   const rollDice = () => {
+    if (diceRoll1 !== 0) {
+      console.log('You already rolled.');
+      return;
+    }
     const dr1 = Math.floor(Math.random() * 6 + 1);
     const dr2 = Math.floor(Math.random() * 6 + 1);
     setDiceRoll1(dr1);
     setDiceRoll2(dr2);
     const result = dr1 + dr2;
     setLog([`Player ${currentPlayer} has rolled a ${result}.`, ...log]);
-    endPlayerTurn();
   };
 
   return (
