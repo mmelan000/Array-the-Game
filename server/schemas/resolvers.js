@@ -48,8 +48,7 @@ const resolvers = {
           thoughtText,
           thoughtAuthor: context.user.username,
         });
-        console.log('****************************');
-        console.log(newThought);
+
         await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { thoughts: newThought._id } }
