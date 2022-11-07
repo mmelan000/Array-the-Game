@@ -30,7 +30,7 @@ body {
   cursor: pointer;
   max-width: 25%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .about-wrapper {

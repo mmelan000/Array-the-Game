@@ -20,7 +20,7 @@ function Navbar({ currentPage, handlePageChange }) {
           RRAY ]
         </div>
         <button
-          className='navbar-toggler justify-content-end'
+          className='navbar-toggler'
           type='button'
           data-bs-toggle='collapse'
           data-bs-target='#navbarNav'
@@ -34,7 +34,7 @@ function Navbar({ currentPage, handlePageChange }) {
           className='collapse navbar-collapse justify-content-end'
           id='navbarNav'
         >
-          <ul className='navbar-nav'>
+          <ul className='navbar-nav d-flex justify-content-center align-items-end'>
             <li className='nav-item'>
               <button type='button' className='btn btn-success mx-2'>
                 <div
