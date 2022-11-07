@@ -241,6 +241,7 @@ export default function Lobby() {
       `Player ${currentPlayer} has claimed a ${board[position].display}.`,
       ...log,
     ]);
+
     endPlayerTurn();
   };
 
@@ -335,12 +336,16 @@ export default function Lobby() {
       <div className='Gameboard'>
         <div className='Gameboard-header'>{mappedBoardState}</div>
       </div>
-
+      {/* if currentPlayer === user */}
       <DiceButton
         diceRoll1={diceRoll1}
         diceRoll2={diceRoll2}
         onClick={() => rollDice()}
       />
+      {/* if/ */}
+      {/* if endGame === true */}
+      {/* <endGameCard winner={winner}/> */}
+      {/* if/ */}
     </div>
   );
 }
