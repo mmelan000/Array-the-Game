@@ -185,14 +185,6 @@ export default function Lobby() {
 
   const claimTile = (position, name) => {
     console.log({ position, name });
-    if (board[position].player !== 'unclaimed') {
-      console.log('Tile already claimed.');
-      return;
-    }
-    if (diceRoll1 + diceRoll2 !== parseInt(board[position].display)) {
-      console.log('This isnt the number you rolled.');
-      return;
-    }
     let claimerName = name;
     if (claimerName === 1) {
       claimerName = 'red';
@@ -203,17 +195,46 @@ export default function Lobby() {
     if (claimerName === 3) {
       claimerName = 'blue';
     }
-    const newBoard = {
+    const diceSum = diceRoll1 + diceRoll2;
+
+    let newBoard = {
       ...board,
       [position]: {
         ...board[position],
         player: claimerName,
       },
     };
-    console.log(newBoard);
+
+    if (
+      diceSum === 10 &&
+      board[position].player !== 'unclaimed' &&
+      board[position].player !== claimerName
+    ) {
+      newBoard = {
+        ...board,
+        [position]: {
+          ...board[position],
+          player: 'unclaimed',
+        },
+      };
+      setBoard(newBoard);
+      setLog([
+        `Player ${currentPlayer} has removed ${board[position].display}.`,
+        ...log,
+      ]);
+      endPlayerTurn();
+      return;
+    }
+    if (board[position].player !== 'unclaimed') {
+      console.log('Tile already claimed.');
+      return;
+    }
+    if (diceSum !== parseInt(board[position].display) && diceSum !== 11) {
+      console.log('This isnt the number you rolled.');
+      return;
+    }
+
     setBoard(newBoard);
-    setDiceRoll1(0);
-    setDiceRoll2(0);
     setLog([
       `Player ${currentPlayer} has claimed a ${board[position].display}.`,
       ...log,
@@ -240,6 +261,9 @@ export default function Lobby() {
   let teams = 3;
 
   const endPlayerTurn = () => {
+    console.log(currentPlayer);
+    setDiceRoll1(0);
+    setDiceRoll2(0);
     if (currentPlayer === 1) {
       setCurrentPlayer(2);
       setSeconds(60);
