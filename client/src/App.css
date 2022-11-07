@@ -9,6 +9,18 @@ body {
   min-width: auto;
 }
 
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.blue {
+  background-color: blue;
+}
+
 .navbar {
   margin-left: 2.5vw;
   margin-right: 2.5vw;

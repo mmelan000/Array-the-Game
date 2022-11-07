@@ -12,7 +12,7 @@ export default function Lobby() {
   // gamelog state
   const [log, setLog] = useState(['Game has begun.']);
   // current player state
-  const [currentPlayer, setCurrentPlayer] = useState(1);
+  const [currentPlayer, setCurrentPlayer] = useState('Red');
   // dice state
   const [diceRoll1, setDiceRoll1] = useState(0);
   const [diceRoll2, setDiceRoll2] = useState(0);
@@ -183,37 +183,60 @@ export default function Lobby() {
     },
   });
 
+  const otherPlayers = (currentPlayer) => {
+    switch (currentPlayer) {
+      case 'Green':
+        return ['Blue', 'Red'];
+      case 'Blue':
+        return ['Green', 'Red'];
+      default:
+        return ['Blue', 'Green'];
+    }
+  };
+
   const claimTile = (position, name) => {
     console.log({ position, name });
+
+    const diceSum = diceRoll1 + diceRoll2;
+
+    let newBoard = {
+      ...board,
+      [position]: {
+        ...board[position],
+        player: name,
+      },
+    };
+
+    if (
+      diceSum === 10 &&
+      board[position].player !== 'unclaimed' &&
+      board[position].player !== name
+    ) {
+      newBoard = {
+        ...board,
+        [position]: {
+          ...board[position],
+          player: 'unclaimed',
+        },
+      };
+      setBoard(newBoard);
+      setLog([
+        `Player ${currentPlayer} has removed ${board[position].display}.`,
+        ...log,
+      ]);
+      endPlayerTurn();
+      return;
+    }
     if (board[position].player !== 'unclaimed') {
       console.log('Tile already claimed.');
       return;
     }
-    if (diceRoll1 + diceRoll2 !== parseInt(board[position].display)) {
+    if (diceSum !== parseInt(board[position].display) && diceSum !== 11) {
       console.log('This isnt the number you rolled.');
       return;
     }
-    let claimerName = name;
-    if (claimerName === 1) {
-      claimerName = 'red';
-    }
-    if (claimerName === 2) {
-      claimerName = 'green';
-    }
-    if (claimerName === 3) {
-      claimerName = 'blue';
-    }
-    const newBoard = {
-      ...board,
-      [position]: {
-        ...board[position],
-        player: claimerName,
-      },
-    };
-    console.log(newBoard);
+
     setBoard(newBoard);
-    setDiceRoll1(0);
-    setDiceRoll2(0);
     setLog([
       `Player ${currentPlayer} has claimed a ${board[position].display}.`,
       ...log,
@@ -225,7 +248,7 @@ export default function Lobby() {
     return (
       <Tile
         tileDisplay={e[1].display}
-        player={e[1].player}
+        player={e[1].player.toLowerCase()}
         id={e[0]}
         key={e[0]}
         onClick={() => {
@@ -240,24 +263,27 @@ export default function Lobby() {
   let teams = 3;
 
   const endPlayerTurn = () => {
-    if (currentPlayer === 1) {
-      setCurrentPlayer(2);
+    console.log(currentPlayer);
+    setDiceRoll1(0);
+    setDiceRoll2(0);
+    if (currentPlayer === 'Red') {
+      setCurrentPlayer('Green');
       setSeconds(60);
       return;
     }
-    if (currentPlayer === 2) {
+    if (currentPlayer === 'Green') {
       setCurrentPlayer(() => {
         if (teams === 3) {
-          setCurrentPlayer(3);
+          setCurrentPlayer('Blue');
         } else {
-          setCurrentPlayer(1);
+          setCurrentPlayer('Red');
         }
       });
       setSeconds(60);
       return;
     }
-    if (currentPlayer === 3) {
-      setCurrentPlayer(1);
+    if (currentPlayer === 'Blue') {
+      setCurrentPlayer('Red');
       setSeconds(60);
       return;
     }
@@ -274,6 +300,30 @@ export default function Lobby() {
     setDiceRoll2(dr2);
     const result = dr1 + dr2;
     setLog([`Player ${currentPlayer} has rolled a ${result}.`, ...log]);
+
+    const otherPlayersTiles = otherPlayers(currentPlayer).map((e) => {
+      const playerTiles = Object.entries(board).filter((f) => {
+        if (f[1].player === e) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      return playerTiles;
+    });
+    console.log(otherPlayersTiles[0].length);
+    console.log(otherPlayersTiles[1].length);
+    if (
+      otherPlayersTiles[0].length === 0 &&
+      otherPlayersTiles[1].length === 0 &&
+      result === 10
+    ) {
+      setLog([
+        `Player ${currentPlayer} has rolled a ${result}, but there are no available tiles to remove.`,
+        ...log,
+      ]);
+      endPlayerTurn();
+    }
   };
 
   return (
