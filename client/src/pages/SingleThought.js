@@ -18,8 +18,6 @@ const SingleThought = () => {
   });
   const thought = data?.thought || {};
 
-  console.log('**********************');
-  console.log(thoughtId);
   if (loading) {
     return <div>Loading...</div>;
   }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ThoughtForm from '../ThoughtForm';
 
 const ThoughtList = ({ thoughts, title }) => {
   if (!thoughts.length) {
@@ -19,10 +20,13 @@ const ThoughtList = ({ thoughts, title }) => {
               className="btn btn-primary btn-block btn-squared"
               to={`/thoughts/${thought._id}`}
             >
-              Join the discussion on this thought.
+              Join the discussion on this post.
             </Link>
           </div>
         ))}
+      <div>
+        <ThoughtForm />
+      </div>
     </div>
   );
 };
