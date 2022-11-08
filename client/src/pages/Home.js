@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/esm/Button';
 
 export default function Home({ currentPage, handlePageChange }) {
   console.log('Home.js');
@@ -15,17 +16,13 @@ export default function Home({ currentPage, handlePageChange }) {
           </li>
         </ul>
         <div className='button-container pt-5'>
-          <button
+          <Button
             type='button'
-            className={`btn btn-success shadow fs-3 mx-2 ${
-              currentPage === 'Lobby'
-            }`}
-            onClick={() => handlePageChange('Lobby')}
-            // className=
-            href='#Lobby'
+            className='btn btn-success shadow fs-3 mx-2'
+            href='/lobby'
           >
             PLAY
-          </button>
+          </Button>
           <button type='button' className='btn btn-light shadow fs-3 mx-2'>
             LEARN
           </button>
