@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import Account from './pages/Account';
 import Forums from './pages/Forums';
 import Home from './pages/Home';
-import LFG from './pages/LFG';
 import Lobby from './pages/Lobby';
 // import Login from './pages/Login';
 // import Signup from './pages/Signup';
@@ -42,25 +40,15 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState('Home');
 
   const renderPage = () => {
-    if (currentPage === 'Account') {
-      return <Account />;
-    }
     if (currentPage === 'Forums') {
       return <Forums />;
-    }
-    if (currentPage === 'LFG') {
-      return <LFG />;
     }
     if (currentPage === 'Lobby') {
       return <Lobby />;
     }
-    // if (currentPage === 'Login') {
-    //   return <Login />;
-    // }
-    // if (currentPage === 'Signup') {
-    //   return <Signup />;
-    // }
-    return <Home />;
+    return (
+      <Home currentPage={currentPage} handlePageChange={handlePageChange} />
+    );
   };
 
   const handlePageChange = (page) => setCurrentPage(page);

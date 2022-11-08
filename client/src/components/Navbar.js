@@ -40,28 +40,6 @@ function Navbar({ currentPage, handlePageChange }) {
         >
           <ul className='navbar-nav d-flex justify-content-center align-items-end'>
             <li className='nav-item'>
-              <button type='button' className='btn btn-success mx-2'>
-                <div
-                  onClick={() => handlePageChange('Forums')}
-                  className={currentPage === 'Forums'}
-                  href='#Forums'
-                >
-                  PLAY
-                </div>
-              </button>
-            </li>
-            <li className='nav-item'>
-              <button type='button' className='btn btn-light mx-2'>
-                <div
-                  onClick={() => handlePageChange('Forums')}
-                  className={currentPage === 'Forums'}
-                  href='#Forums'
-                >
-                  LEARN
-                </div>
-              </button>
-            </li>
-            <li className='nav-item'>
               <button type='button' className='btn btn-dark mx-2'>
                 <div
                   onClick={() => handlePageChange('Forums')}
@@ -69,17 +47,6 @@ function Navbar({ currentPage, handlePageChange }) {
                   href='#Forums'
                 >
                   Forums
-                </div>
-              </button>
-            </li>
-            <li className='nav-item'>
-              <button type='button' className='btn btn-dark mx-2'>
-                <div
-                  onClick={() => handlePageChange('LFG')}
-                  className={currentPage === 'LFG'}
-                  href='#LFG'
-                >
-                  LFG
                 </div>
               </button>
             </li>
