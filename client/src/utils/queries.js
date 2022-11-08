@@ -32,8 +32,8 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_SINGLE_THOUGHT = gql`
-  query getSingleThought {
-    thought {
+  query getSingleThought($thoughtId: ID!) {
+    thought(thoughtId: $thoughtId) {
       _id
       thoughtAuthor
       thoughtText
