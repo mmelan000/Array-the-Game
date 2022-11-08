@@ -41,41 +41,41 @@ const Login = (props) => {
     <div>
       {data ? (
         <p>
-          Success! You may now head <Link to='/'> back to the homepage.</Link>
+          Success! You may now head <Link to="/"> back to the homepage.</Link>
         </p>
       ) : (
-        <form onSubmit={loginFormHandler} className='form login-form'>
-          <div className='form-group'>
-            <label for='email-login'>Email:</label>
+        <form onSubmit={loginFormHandler} className="form login-form">
+          <div className="form-group">
+            <label for="email-login">Email:</label>
             <input
-              className='form-input'
-              name='email'
-              type='email'
+              className="form-input"
+              name="email"
+              type="email"
               value={formState.email}
-              id='username-login'
+              id="username-login"
               onChange={handleChange}
             />
           </div>
-          <div className='form-group'>
-            <label for='password-login'>Password:</label>
+          <div className="form-group">
+            <label for="password-login">Password:</label>
             <input
-              className='form-input'
-              name='password'
-              type='password'
+              className="form-input"
+              name="password"
+              type="password"
               value={formState.password}
-              id='password-login'
+              id="password-login"
               onChange={handleChange}
             />
           </div>
-          <div className='form-group'>
-            <button className='login-form btn btn-primary' type='submit'>
+          <div className="form-group">
+            <button className="login-form btn btn-primary" type="submit">
               Login
             </button>
           </div>
         </form>
       )}
       {error && (
-        <div className='my-3 p-3 bg-danger text-white'>{error.message}</div>
+        <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
       )}
     </div>
   );
