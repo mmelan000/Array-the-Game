@@ -96,6 +96,8 @@ function Navbar({ currentPage, handlePageChange }) {
                   onClick={() => handlePageChange('Login')}
                   className={currentPage === 'Login'}
                   href='#Login'
+                  data-bs-toggle='modal'
+                  data-bs-target='#login'
                 >
                   Login / Sign Up
                 </div>
