@@ -6,30 +6,20 @@ import DiceButton from '../components/DiceButton';
 import Gamelog from '../components/Gamelog';
 import TeamCardContainer from '../components/TeamCardContainer';
 import Tile from '../components/Tile';
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:3002');
 
 export default function Lobby() {
-  // const [room, setRoom] = useState('');
+  const [room, setRoom] = useState('');
+  const [message, setMessage] = useState('');
+  const [messageReceived, setMessageReceived] = useState('');
 
-  // // Messages States
-  // const [message, setMessage] = useState('');
-  // const [messageReceived, setMessageReceived] = useState('');
+  const lobbyId = window.location.pathname.slice(7);
+  socket.emit('join-room', lobbyId);
 
-  // const joinRoom = () => {
-  //   if (room !== '') {
-  //     socket.emit('join_room', room);
-  //   }
-  // };
-
-  // const sendMessage = () => {
-  //   socket.emit('send_message', { message, room });
-  // };
-
-  // useEffect(() => {
-  //   socket.on('receive_message', (data) => {
-  //     setMessageReceived(data.message);
-  //   });
-  // }, [socket]);
-
+  const sendMessage = () => {
+    socket.emit('send_message', { message, room });
+  };
   // gamelog state
   const [log, setLog] = useState(['Game has begun.']);
   // current player state

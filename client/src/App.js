@@ -6,7 +6,6 @@ import Lobby from './pages/Lobby';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import './App.css';
-import io from 'socket.io-client';
 import { setContext } from '@apollo/client/link/context';
 import {
   ApolloClient,
@@ -18,8 +17,6 @@ import {
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
-
-const socket = io.connect('http://localhost:3002');
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('id_token');
@@ -35,7 +32,6 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
-const testurl = 'random-lobby-room';
 
 export default function App() {
   return (
@@ -46,7 +42,7 @@ export default function App() {
           <div className='container'>
             <Routes>
               <Route path='/' element={<Home />} />
-              <Route path='/lobby' element={<Lobby />} />
+              <Route path='/lobby/:id' element={<Lobby />} />
               <Route path='/forums' element={<Forums />} />
             </Routes>
           </div>

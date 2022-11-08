@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/esm/Button';
+const { v4: uuidv4 } = require('uuid');
 
 export default function Home({ currentPage, handlePageChange }) {
   console.log('Home.js');
@@ -19,7 +20,7 @@ export default function Home({ currentPage, handlePageChange }) {
           <Button
             type='button'
             className='btn btn-success shadow fs-3 mx-2'
-            href='/lobby'
+            href={`/lobby/${uuidv4()}`}
           >
             PLAY
           </Button>

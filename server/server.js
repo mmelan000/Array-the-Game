@@ -8,6 +8,7 @@ const app = express();
 const { Server } = require('socket.io');
 const http = require('http');
 const cors = require('cors');
+const { v4: uuid } = require('uuid');
 
 const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
@@ -51,20 +52,11 @@ const io = new Server(ioserver, {
 });
 
 io.on('connection', (socket) => {
-  console.log(`Socket.id Connected: ${socket.id}`);
+  console.log(`User Connected: ${socket.id}`);
 
-  socket.on('send-nickname', function (nickname) {
-    socket.nickname = nickname;
-    users.push(socket.nickname);
-    console.log(users);
-  });
-
-  socket.on('join_room', (data) => {
+  socket.on('join-room', (data) => {
+    console.log('join-room' + data);
     socket.join(data);
-  });
-
-  socket.on('send_message', (data) => {
-    socket.to(data.room).emit('receive_message', data);
   });
 });
 
