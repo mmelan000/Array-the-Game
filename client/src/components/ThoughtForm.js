@@ -25,11 +25,11 @@ const ThoughtForm = () => {
       }
 
       // update me object's cache
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      cache.writeQuery({
-        query: QUERY_ME,
-        data: { me: { ...me, thoughts: [...me.thoughts, addThought] } },
-      });
+      //   const { me } = cache.readQuery({ query: QUERY_ME });
+      //   cache.writeQuery({
+      //     query: QUERY_ME,
+      //     data: { me: { ...me, thoughts: [...me.thoughts, addThought] } },
+      //   });
     },
   });
 
@@ -58,7 +58,6 @@ const ThoughtForm = () => {
       setCharacterCount(value.length);
     }
   };
-  console.log(Auth.loggedIn());
 
   return (
     <div>
@@ -90,7 +89,7 @@ const ThoughtForm = () => {
 
             <div className="col-12 col-lg-3">
               <button className="btn btn-primary btn-block py-3" type="submit">
-                Add Thought
+                Add A Post
               </button>
             </div>
             {error && (
