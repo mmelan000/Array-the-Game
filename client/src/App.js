@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Forums from './pages/Forums';
 import Home from './pages/Home';
 import Lobby from './pages/Lobby';
+import SingleThought from './pages/SingleThought';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import './App.css';
@@ -39,11 +40,12 @@ export default function App() {
       <Router>
         <div>
           <Navbar />
-          <div className='container'>
+          <div className='main-display'>
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/lobby/:id' element={<Lobby />} />
               <Route path='/forums' element={<Forums />} />
+              <Route path='/thoughts/:thoughtId' element={<SingleThought />} />
             </Routes>
           </div>
           <Footer />
