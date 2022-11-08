@@ -4,8 +4,8 @@ import Forums from './pages/Forums';
 import Home from './pages/Home';
 import LFG from './pages/LFG';
 import Lobby from './pages/Lobby';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
+// import Login from './pages/Login';
+// import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import './App.css';
@@ -54,12 +54,12 @@ export default function App() {
     if (currentPage === 'Lobby') {
       return <Lobby />;
     }
-    if (currentPage === 'Login') {
-      return <Login />;
-    }
-    if (currentPage === 'Signup') {
-      return <Signup />;
-    }
+    // if (currentPage === 'Login') {
+    //   return <Login />;
+    // }
+    // if (currentPage === 'Signup') {
+    //   return <Signup />;
+    // }
     return <Home />;
   };
 
