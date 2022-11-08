@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
 import logo from '../images/Logo.png';
 import Login from '../pages/Login';
+import Button from 'react-bootstrap/Button';
 
-function Navbar({ currentPage, handlePageChange }) {
+function Navbar() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
     <nav className='navbar navbar-expand-lg fs-1 text-light'>
       <div className='container-fluid'>
-        <div
-          id='array-brand'
-          onClick={() => handlePageChange('Home')}
-          className={currentPage === 'Home'}
-          href='#home'
-        >
+        <a id='array-brand' href='/'>
           [
           <img
             className='logo'
@@ -22,7 +18,7 @@ function Navbar({ currentPage, handlePageChange }) {
             alt="Array the game logo a diamond shape with 4 colors (yellow at the top, green to the right, blue to the bottom, red to the left) and the letter 'A' in front"
           />
           RRAY ]
-        </div>
+        </a>
         <button
           className='navbar-toggler'
           type='button'
@@ -40,32 +36,19 @@ function Navbar({ currentPage, handlePageChange }) {
         >
           <ul className='navbar-nav d-flex justify-content-center align-items-end'>
             <li className='nav-item'>
-              <button type='button' className='btn btn-dark mx-2'>
-                <div
-                  onClick={() => handlePageChange('Forums')}
-                  className={currentPage === 'Forums'}
-                  href='#Forums'
-                >
-                  Forums
-                </div>
-              </button>
-            </li>
-            <li className='nav-item'>
-              <button type='button' className='btn btn-dark mx-2'>
-                <div
-                  onClick={() => handlePageChange('Lobby')}
-                  className={currentPage === 'Lobby'}
-                  href='#Lobby'
-                >
-                  Lobby
-                </div>
-              </button>
+              <Button
+                type='button'
+                className='btn btn-dark mx-2'
+                href='/forums'
+              >
+                Forums
+              </Button>
             </li>
             <li className='nav-item'>
               <button type='button' className='btn btn-dark mx-2'>
                 <div
                   onClick={() => handleShow()}
-                  className={currentPage === 'Login'}
+                  // className={currentPage === 'Login'}
                   href='#Login'
                   data-bs-toggle='modal'
                   data-bs-target='#login'

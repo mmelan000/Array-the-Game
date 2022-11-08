@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Forums from './pages/Forums';
 import Home from './pages/Home';
 import Lobby from './pages/Lobby';
-// import Login from './pages/Login';
-// import Signup from './pages/Signup';
+
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import './App.css';
@@ -37,29 +37,21 @@ const client = new ApolloClient({
 });
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('Home');
-
-  const renderPage = () => {
-    if (currentPage === 'Forums') {
-      return <Forums />;
-    }
-    if (currentPage === 'Lobby') {
-      return <Lobby />;
-    }
-    return (
-      <Home currentPage={currentPage} handlePageChange={handlePageChange} />
-    );
-  };
-
-  const handlePageChange = (page) => setCurrentPage(page);
-
   return (
     <ApolloProvider client={client}>
-      <div>
-        <Navbar currentPage={currentPage} handlePageChange={handlePageChange} />
-        {renderPage()}
-        <Footer />
-      </div>
+      <Router>
+        <div>
+          <Navbar />
+          <div className='container'>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/lobby' element={<Lobby />} />
+              <Route path='/forums' element={<Forums />} />
+            </Routes>
+          </div>
+          <Footer />
+        </div>
+      </Router>
     </ApolloProvider>
   );
 }
