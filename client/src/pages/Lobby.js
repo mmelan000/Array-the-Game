@@ -196,6 +196,7 @@ export default function Lobby() {
 
   const claimTile = (position, name) => {
     console.log({ position, name });
+    console.log(allClaimed(board[position].display));
 
     const diceSum = diceRoll1 + diceRoll2;
 
@@ -227,7 +228,10 @@ export default function Lobby() {
       endPlayerTurn();
       return;
     }
-    if (board[position].player !== 'unclaimed') {
+    if (
+      board[position].player !== 'unclaimed' &&
+      allClaimed(board[position].display) === false
+    ) {
       console.log('Tile already claimed.');
       return;
     }
@@ -324,6 +328,26 @@ export default function Lobby() {
         ...log,
       ]);
       endPlayerTurn();
+    }
+  };
+
+  const allClaimed = (display) => {
+    const checker = Object.entries(board).filter((e) => {
+      console.log(e);
+      if (e[1].display === display && e[1].player !== 'unclaimed') {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    console.log('checker');
+    console.log(checker);
+    console.log(checker.length);
+
+    if (checker.length === 4) {
+      return true;
+    } else {
+      return false;
     }
   };
 
