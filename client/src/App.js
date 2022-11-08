@@ -7,9 +7,7 @@ import SingleThought from './pages/SingleThought';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import './App.css';
-
 import { setContext } from '@apollo/client/link/context';
-
 import {
   ApolloClient,
   ApolloProvider,
@@ -45,7 +43,7 @@ export default function App() {
           <div className='main-display'>
             <Routes>
               <Route path='/' element={<Home />} />
-              <Route path='/lobby' element={<Lobby />} />
+              <Route path='/lobby/:id' element={<Lobby />} />
               <Route path='/forums' element={<Forums />} />
               <Route path='/thoughts/:thoughtId' element={<SingleThought />} />
             </Routes>
