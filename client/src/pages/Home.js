@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Home() {
+export default function Home({ currentPage, handlePageChange }) {
   console.log('Home.js');
   return (
     <div className='about-wrapper'>
@@ -15,7 +15,15 @@ export default function Home() {
           </li>
         </ul>
         <div className='button-container pt-5'>
-          <button type='button' className='btn btn-success shadow fs-3 mx-2'>
+          <button
+            type='button'
+            className={`btn btn-success shadow fs-3 mx-2 ${
+              currentPage === 'Lobby'
+            }`}
+            onClick={() => handlePageChange('Lobby')}
+            // className=
+            href='#Lobby'
+          >
             PLAY
           </button>
           <button type='button' className='btn btn-light shadow fs-3 mx-2'>
