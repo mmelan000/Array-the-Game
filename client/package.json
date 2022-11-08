@@ -2,6 +2,7 @@
   "name": "array-the-game",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@apollo/client": "^3.7.1",
     "@lottiefiles/react-lottie-player": "^3.4.7",
