@@ -1,7 +1,11 @@
+import React, { useState } from 'react';
 import logo from '../images/Logo.png';
+import Login from '../pages/Login';
 
 function Navbar({ currentPage, handlePageChange }) {
-  console.log('Navbar.js');
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <nav className='navbar navbar-expand-lg fs-1 text-light'>
       <div className='container-fluid'>
@@ -93,7 +97,7 @@ function Navbar({ currentPage, handlePageChange }) {
             <li className='nav-item'>
               <button type='button' className='btn btn-dark mx-2'>
                 <div
-                  onClick={() => handlePageChange('Login')}
+                  onClick={() => handleShow()}
                   className={currentPage === 'Login'}
                   href='#Login'
                   data-bs-toggle='modal'
@@ -106,6 +110,7 @@ function Navbar({ currentPage, handlePageChange }) {
           </ul>
         </div>
       </div>
+      <Login show={show} handleClose={handleClose} />
     </nav>
   );
 }

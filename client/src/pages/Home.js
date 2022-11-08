@@ -15,10 +15,10 @@ export default function Home() {
           </li>
         </ul>
         <div className='button-container pt-5'>
-          <button type='button' class='btn btn-success shadow fs-3 mx-2'>
+          <button type='button' className='btn btn-success shadow fs-3 mx-2'>
             PLAY
           </button>
-          <button type='button' class='btn btn-light shadow fs-3 mx-2'>
+          <button type='button' className='btn btn-light shadow fs-3 mx-2'>
             LEARN
           </button>
         </div>
