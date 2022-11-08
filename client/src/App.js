@@ -3,13 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Forums from './pages/Forums';
 import Home from './pages/Home';
 import Lobby from './pages/Lobby';
-
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import './App.css';
-
+import io from 'socket.io-client';
 import { setContext } from '@apollo/client/link/context';
-
 import {
   ApolloClient,
   ApolloProvider,
@@ -20,6 +18,8 @@ import {
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
+
+const socket = io.connect('http://localhost:3002');
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('id_token');
@@ -35,6 +35,7 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
+const testurl = 'random-lobby-room';
 
 export default function App() {
   return (

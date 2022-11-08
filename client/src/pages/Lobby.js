@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-// import Gameboard from '../components/Gameboard';
 import Timer from '../components/Timer';
 // import Endgame from '../utils/Endgame';
 import DiceButton from '../components/DiceButton';
@@ -9,6 +8,28 @@ import TeamCardContainer from '../components/TeamCardContainer';
 import Tile from '../components/Tile';
 
 export default function Lobby() {
+  // const [room, setRoom] = useState('');
+
+  // // Messages States
+  // const [message, setMessage] = useState('');
+  // const [messageReceived, setMessageReceived] = useState('');
+
+  // const joinRoom = () => {
+  //   if (room !== '') {
+  //     socket.emit('join_room', room);
+  //   }
+  // };
+
+  // const sendMessage = () => {
+  //   socket.emit('send_message', { message, room });
+  // };
+
+  // useEffect(() => {
+  //   socket.on('receive_message', (data) => {
+  //     setMessageReceived(data.message);
+  //   });
+  // }, [socket]);
+
   // gamelog state
   const [log, setLog] = useState(['Game has begun.']);
   // current player state
@@ -262,7 +283,6 @@ export default function Lobby() {
       />
     );
   });
-  // currentPlayer
 
   // teams
   let teams = 3;
@@ -356,6 +376,7 @@ export default function Lobby() {
       <Timer seconds={seconds} />
       <Gamelog log={log} />
       {/* chat */}
+
       <TeamCardContainer teams={teams} />
       <div className='Gameboard'>
         <div className='Gameboard-header'>{mappedBoardState}</div>
