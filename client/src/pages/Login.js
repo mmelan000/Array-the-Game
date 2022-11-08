@@ -82,7 +82,7 @@ const Login = (props) => {
                     />
                   </Form.Group>
                   <Button variant='primary' type='submit'>
-                    Log In
+                    Sign Up
                   </Button>
                 </Form>
 
