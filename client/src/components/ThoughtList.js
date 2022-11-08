@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ThoughtForm from '../ThoughtForm';
+import ThoughtForm from './ThoughtForm';
 
 const ThoughtList = ({ thoughts, title }) => {
   if (!thoughts.length) {
