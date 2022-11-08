@@ -63,8 +63,7 @@ body {
 }
 
 .logo {
-  max-width: 15%;
-  aspect-ratio: 1/1;
+  max-width: 50%;
 }
 
 footer {
@@ -89,6 +88,7 @@ footer {
   display: grid;
   grid-template-rows: repeat(6, 1fr);
   grid-template-columns: repeat(6, 1fr);
+  width: 50vw;
 }
 
 .game-log {
@@ -139,8 +139,8 @@ footer {
   z-index: 1;
   text-align: center;
   font-size: 3vw;
-  padding-bottom: 0.1%;
-  font-family: 'Readex Pro', Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family: 'Luckiest Guy', Arial, Helvetica, sans-serif;
 }
 
 .team-card-container {
@@ -183,8 +183,7 @@ footer {
   }
 
   .logo {
-    max-width: 25%;
-    aspect-ratio: 1/1;
+    max-width: 100%;
   }
 
   .about-wrapper {

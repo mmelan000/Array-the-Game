@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from '../images/Logo.png';
+import logo from '../images/ArrayLogo.png';
 import Login from '../pages/Login';
 import Button from 'react-bootstrap/Button';
 
@@ -11,13 +11,11 @@ function Navbar() {
     <nav className='navbar navbar-expand-lg fs-1 text-light'>
       <div className='container-fluid'>
         <a id='array-brand' href='/'>
-          [
           <img
             className='logo'
             src={logo}
             alt="Array the game logo a diamond shape with 4 colors (yellow at the top, green to the right, blue to the bottom, red to the left) and the letter 'A' in front"
           />
-          RRAY ]
         </a>
         <button
           className='navbar-toggler'
