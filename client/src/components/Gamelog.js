@@ -1,7 +1,7 @@
 export default function Gamelog(props) {
   //   console.log('Gamelog.js');
   const logs = props.log.map((e) => {
-    return <li>{e}</li>;
+    return <li key={props.log.indexOf(e)}>{e}</li>;
   });
   return (
     <div className='game-log-container'>
