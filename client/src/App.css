@@ -80,8 +80,13 @@ footer {
 }
 
 .Gameboard {
-  max-width: 50%;
+  max-width: 52%;
   margin: auto;
+  border-radius: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
 }
 
 .Gameboard-header {
