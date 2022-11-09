@@ -15,9 +15,9 @@ function Navbar() {
   };
 
   return (
-    <nav className='navbar navbar-expand-lg fs-1 text-light'>
-      <div className='container-fluid'>
-        <a id='array-brand' href='/'>
+    <nav className="navbar navbar-expand-lg fs-1 text-light">
+      <div className="container-fluid">
+        <a id="array-brand" href="/">
           <img
             className="logo"
             src={logo}
@@ -59,16 +59,14 @@ function Navbar() {
                   Logout
                 </button>
               ) : (
-                <button type="button" className="btn btn-dark mx-2">
-                  <div
-                    onClick={() => handleShow()}
-                    // className={currentPage === 'Login'}
-                    href="#Login"
-                    data-bs-toggle="modal"
-                    data-bs-target="#login"
-                  >
-                    Login / Sign Up
-                  </div>
+                <button
+                  type="button"
+                  className="btn btn-dark mx-2"
+                  onClick={() => handleShow()}
+                  href="#Login"
+                  data-bs-target="#login"
+                >
+                  Login / Sign Up
                 </button>
               )}
             </li>
