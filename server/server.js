@@ -9,6 +9,7 @@ const app = express();
 const cors = require('cors');
 let origin = 'http://localhost:3000';
 const http = require('http').Server(app);
+// const io = require('socket.io');
 const socketIO = require('socket.io')(http, {
   cors: {
     origin: origin,
@@ -54,6 +55,8 @@ const startApolloServer = async (typeDefs, resolvers) => {
   });
 };
 
+console.log(process.env);
+
 let users = [];
 
 socketIO.on('connection', (socket) => {
@@ -64,6 +67,7 @@ socketIO.on('connection', (socket) => {
       user = 'Guest';
     }
     socket.join(room);
+    // console.log(io.);
     console.log(`${user} has joined Room: ${room}`);
   });
 
