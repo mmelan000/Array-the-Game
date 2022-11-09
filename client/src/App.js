@@ -38,7 +38,7 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div>
+        <div className='main-body'>
           <Navbar />
           <div className='main-display'>
             <Routes>
@@ -48,7 +48,7 @@ export default function App() {
               <Route path='/thoughts/:thoughtId' element={<SingleThought />} />
             </Routes>
           </div>
-          <Footer />
+          <Footer year={new Date().getFullYear()} />
         </div>
       </Router>
     </ApolloProvider>
