@@ -40,7 +40,6 @@ body {
 }
 
 .about-section {
-  margin-top: 15vh;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -73,9 +72,8 @@ body {
 }
 
 .main-display {
-  height: 80vh;
+  height: 75vh;
   display: flex;
-  flex-basis: content;
 }
 
 .main-body footer {
@@ -148,11 +146,11 @@ footer {
 
 .game-tile {
   display: flex;
-  border-radius: 3px;
   text-align: center;
   color: black;
   justify-content: center;
   align-items: center;
+  aspect-ratio: 1/1;
 }
 
 .game-tile p {
