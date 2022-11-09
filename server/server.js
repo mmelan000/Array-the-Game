@@ -4,11 +4,15 @@ const db = require('./config/connection');
 const { ApolloServer } = require('apollo-server-express');
 const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
+const { v4: uuidv4 } = require('uuid');
 const app = express();
-const { Server } = require('socket.io');
-const http = require('http');
 const cors = require('cors');
-const { v4: uuid } = require('uuid');
+const http = require('http').Server(app);
+const socketIO = require('socket.io')(http, {
+  cors: {
+    origin: 'http://localhost:3000',
+  },
+});
 
 const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
@@ -43,27 +47,44 @@ const startApolloServer = async (typeDefs, resolvers) => {
   });
 };
 
-const ioserver = http.createServer(app);
-const io = new Server(ioserver, {
-  cors: {
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST'],
-  },
-});
+let users = [];
 
-io.on('connection', (socket) => {
-  socket.on('join-room', (data) => {
-    console.log(data);
-    socket.join(data);
+socketIO.on('connection', (socket) => {
+  console.log(`${socket.id} user just connected!`);
+
+  socket.on('joinRoom', (data) => {
+    socket.join(data.room);
+    console.log(`${data.user} has joined Room: ${data.room}`);
   });
 
-  socket.on('send-message', (data) => {
-    console.log(data);
-    socket.to(data.lobbyId).emit('receive-message', data);
+  socket.on('message', ({ user, room, message }) => {
+    if (!user) {
+      user = 'Guest';
+    }
+    console.log(`${user} has sent "${message}" to Room: ${room}"`);
+    socketIO.to(room).emit('messageResponse', `${user}: ${message}`);
+  });
+
+  socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data));
+
+  socket.on('newUser', (data) => {
+    if (data === null) {
+      data = `Guest/${uuidv4()}`;
+    }
+    console.log(`${data} has connected.`);
+    users.push(data);
+    socketIO.emit('newUserResponse', users);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+    console.log(users);
+    users = users.filter((user) => user.socketID !== socket.id);
+    socketIO.emit('newUserResponse', users);
+    socket.disconnect();
   });
 });
-
-ioserver.listen(3002, () => {
+http.listen(3002, () => {
   console.log('Socket.io server is running on port 3002');
 });
 // Call the async function to start the server
