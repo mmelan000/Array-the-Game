@@ -3,9 +3,12 @@ const path = require('path');
 const db = require('./config/connection');
 const { ApolloServer } = require('apollo-server-express');
 const { authMiddleware } = require('./utils/auth');
-
 const { typeDefs, resolvers } = require('./schemas');
 const app = express();
+const { Server } = require('socket.io');
+const http = require('http');
+const cors = require('cors');
+const { v4: uuid } = require('uuid');
 
 const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
@@ -14,6 +17,7 @@ const server = new ApolloServer({
   context: authMiddleware,
 });
 
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -39,5 +43,25 @@ const startApolloServer = async (typeDefs, resolvers) => {
   });
 };
 
+const ioserver = http.createServer(app);
+const io = new Server(ioserver, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
+});
+
+io.on('connection', (socket) => {
+  console.log(`User Connected: ${socket.id}`);
+
+  socket.on('join-room', (data) => {
+    console.log('join-room' + data);
+    socket.join(data);
+  });
+});
+
+ioserver.listen(3002, () => {
+  console.log('Socket.io server is running on port 3002');
+});
 // Call the async function to start the server
 startApolloServer(typeDefs, resolvers);
