@@ -1,7 +1,4 @@
 import { useState, useEffect } from 'react';
-import io from 'socket.io-client';
-
-// const webSocket = io('http://localhost:3002');
 
 export default function ChatLog({ socket, user, room }) {
   const [message, setMessage] = useState('');
