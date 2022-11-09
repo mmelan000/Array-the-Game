@@ -13,9 +13,15 @@ const Login = (props) => {
     password: '',
     username: '',
   });
-  const [login, { error, data }] = useMutation(LOGIN_USER);
+  const [login, { loginError, data }] = useMutation(LOGIN_USER);
   const [addUser, { addError, addData }] = useMutation(ADD_USER);
   const [toggleState, setToggleState] = useState(false);
+  const [error, setError] = useState('');
+
+  const isValidEmail = (email) => {
+    const regex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+    return regex.test(String(email).toLowerCase());
+  };
 
   const loginFormHandler = async (event) => {
     event.preventDefault();
@@ -33,7 +39,7 @@ const Login = (props) => {
         Auth.login(data.addUser.token);
       }
     } catch (e) {
-      console.error(e);
+      setError(e);
     }
 
     setFormState({
@@ -43,7 +49,6 @@ const Login = (props) => {
     });
   };
 
-  // Collect values from the login form
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -77,6 +82,16 @@ const Login = (props) => {
                       // controlid='email-login'
                       onChange={handleChange}
                       placeholder="Enter email"
+                      onMouseOut={() => {
+                        if (!formState.email) {
+                          setError('Email is required');
+                          return;
+                        }
+                        if (!isValidEmail(formState.email)) {
+                          setError('Please enter a valid Email');
+                          return;
+                        }
+                      }}
                     />
                   </Form.Group>
 
@@ -89,6 +104,12 @@ const Login = (props) => {
                       // controlid='password-login'
                       onChange={handleChange}
                       placeholder="Username"
+                      onMouseOut={() => {
+                        if (!formState.username) {
+                          setError('Username is required');
+                          return;
+                        }
+                      }}
                     />
                   </Form.Group>
 
@@ -101,10 +122,23 @@ const Login = (props) => {
                       // controlid='password-login'
                       onChange={handleChange}
                       placeholder="Password"
+                      onMouseOut={() => {
+                        if (!formState.password) {
+                          setError('Password is required');
+                          return;
+                        }
+                      }}
                     />
                   </Form.Group>
-
-                  <Button variant="primary" type="submit">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    disabled={
+                      !formState.email &&
+                      !formState.password &&
+                      !formState.username
+                    }
+                  >
                     Sign Up
                   </Button>
                 </Form>
@@ -137,6 +171,16 @@ const Login = (props) => {
                       // controlid='email-login'
                       onChange={handleChange}
                       placeholder="Enter email"
+                      onMouseOut={() => {
+                        if (!formState.email) {
+                          setError('Email is required');
+                          return;
+                        }
+                        if (!isValidEmail(formState.email)) {
+                          setError('Please enter a valid Email');
+                          return;
+                        }
+                      }}
                     />
                   </Form.Group>
 
@@ -149,9 +193,19 @@ const Login = (props) => {
                       // controlid='password-login'
                       onChange={handleChange}
                       placeholder="Password"
+                      onMouseOut={() => {
+                        if (!formState.password) {
+                          setError('Password is required');
+                          return;
+                        }
+                      }}
                     />
                   </Form.Group>
-                  <Button variant="primary" type="submit">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    disabled={!formState.email || !formState.password}
+                  >
                     Log In
                   </Button>
                 </Form>
@@ -171,7 +225,7 @@ const Login = (props) => {
           )}
         </Modal>
       )}
-      {error && addError && (
+      {error && (
         <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
       )}
     </div>
