@@ -69,11 +69,29 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
 
-.main-display {
-  height: 75vh;
+.log-and-chat {
   display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.chat-log {
+  display: flex;
+  flex-direction: column;
+  max-height: fit-content;
+  overflow-y: scroll;
+}
+
+.lobby-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .main-body footer {
@@ -82,6 +100,13 @@ body {
 
 footer {
   text-align: center;
+}
+
+/* Prevent selection of text */
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
 
 /* nav > div {

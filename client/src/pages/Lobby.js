@@ -7,7 +7,7 @@ import TeamCardContainer from '../components/TeamCardContainer';
 import Tile from '../components/Tile';
 import ChatLog from '../components/ChatLog';
 
-export default function Lobby(props) {
+export default function Lobby({ user, socket, room }) {
   // gamelog state
   const [log, setLog] = useState(['Game has begun.']);
   // current player state
@@ -342,24 +342,32 @@ export default function Lobby(props) {
 
   return (
     <div>
-      <Timer seconds={seconds} />
-      <Gamelog log={log} />
-      {/* chat */}
-      <ChatLog room={props.room} socket={props.socket} user={props.user} />
-      <TeamCardContainer teams={teams} />
-      <div className='Gameboard'>
-        <div className='Gameboard-header'>{mappedBoardState}</div>
+      <div className='lobby-container'>
+        <div className='log-and-chat'>
+          <Gamelog log={log} />
+          {/* chat */}
+          <ChatLog room={room} socket={socket} user={user} />
+        </div>
+        <div className='timer-and-board'>
+          <Timer seconds={seconds} />
+          <div className='Gameboard'>
+            <div className='Gameboard-header'>{mappedBoardState}</div>
+          </div>
+          {/* if currentPlayer === user */}
+        </div>
+        <div className='dice-and-player'>
+          <DiceButton
+            diceRoll1={diceRoll1}
+            diceRoll2={diceRoll2}
+            onClick={() => rollDice()}
+          />
+          <TeamCardContainer teams={teams} />
+        </div>
+        {/* if/ */}
+        {/* if endGame === true */}
+        {/* <endGameCard winner={winner}/> */}
+        {/* if/ */}
       </div>
-      {/* if currentPlayer === user */}
-      <DiceButton
-        diceRoll1={diceRoll1}
-        diceRoll2={diceRoll2}
-        onClick={() => rollDice()}
-      />
-      {/* if/ */}
-      {/* if endGame === true */}
-      {/* <endGameCard winner={winner}/> */}
-      {/* if/ */}
     </div>
   );
 }
