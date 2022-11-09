@@ -110,7 +110,7 @@ const Login = (props) => {
                 </Form>
 
                 <a
-                  href=''
+                  href='/'
                   data-bs-toggle='modal'
                   data-bs-target='#signup'
                   onClick={() => {
