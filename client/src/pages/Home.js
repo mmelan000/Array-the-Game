@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/esm/Button';
 const { v4: uuidv4 } = require('uuid');
 
 export default function Home({ currentPage, handlePageChange }) {
-  console.log('Home.js');
   return (
     <div className='about-wrapper'>
       <div className='about-section fw-semibold'>
