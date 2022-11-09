@@ -54,6 +54,9 @@ export default function App() {
   }
 
   socket.emit('newUser', user);
+  window.onbeforeunload = function () {
+    socket.emit('disconnect');
+  };
 
   return (
     <ApolloProvider client={client}>

@@ -7,7 +7,7 @@ import TeamCardContainer from '../components/TeamCardContainer';
 import Tile from '../components/Tile';
 import ChatLog from '../components/ChatLog';
 
-export default function Lobby(props) {
+export default function Lobby({ room, socket, user }) {
   // gamelog state
   const [log, setLog] = useState(['Game has begun.']);
   // current player state
@@ -345,7 +345,7 @@ export default function Lobby(props) {
       <Timer seconds={seconds} />
       <Gamelog log={log} />
       {/* chat */}
-      <ChatLog room={props.room} socket={props.socket} user={props.user} />
+      <ChatLog room={room} socket={socket} user={user} />
       <TeamCardContainer teams={teams} />
       <div className='Gameboard'>
         <div className='Gameboard-header'>{mappedBoardState}</div>
