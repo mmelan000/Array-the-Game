@@ -55,6 +55,8 @@ const startApolloServer = async (typeDefs, resolvers) => {
   });
 };
 
+console.log(process.env);
+
 let users = [];
 
 socketIO.on('connection', (socket) => {
