@@ -1,30 +1,27 @@
 import { useState, useEffect } from 'react';
-import io from 'socket.io-client';
-const socket = io.connect('http://localhost:3002');
-export default function ChatLog(props) {
-  const lobbyId = props.lobbyId;
 
-  const [chatMessage, setChatMessage] = useState('');
+export default function ChatLog({ socket, user, room }) {
+  const [message, setMessage] = useState('');
   const [chatLog, setChatLog] = useState([]);
+
   const renderChatLog = chatLog.map((e) => {
     return <li key={chatLog.indexOf(e)}>{e}</li>;
   });
   const sendMessage = () => {
-    console.log('sendMessage');
-    console.log(chatMessage);
-    socket.emit('send-message', { chatMessage, lobbyId });
-    setChatLog([chatMessage, ...chatLog]);
+    console.log(`Sending Message: ${message} tp Room: ${room}`);
+    socket.emit('message', { message, room, user });
   };
+
   useEffect(() => {
-    socket.on('receive-message', (data) => {
+    socket.on('messageResponse', (data) => {
       console.log(data);
-      setChatLog([data.message, ...chatLog]);
+      setChatLog([data, ...chatLog]);
       console.log(chatLog);
     });
-  }, [socket, chatLog]);
+  }, [socket, chatLog, room]);
 
   return (
-    <div>
+    <div className='chat-log'>
       <div className='chat-log-container'>
         <header className='chat-log-header'>Chat Log</header>
         <ul className='chat-log'>{renderChatLog}</ul>
@@ -34,12 +31,12 @@ export default function ChatLog(props) {
         placeholder='Type here...'
         id='chatInput'
         onChange={(e) => {
-          setChatMessage(e.target.value);
+          setMessage(e.target.value);
         }}
       />
       <button
         onClick={() => {
-          sendMessage(chatMessage);
+          sendMessage(message);
         }}
       >
         Submit

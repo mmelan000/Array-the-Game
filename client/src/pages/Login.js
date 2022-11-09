@@ -13,8 +13,8 @@ const Login = (props) => {
     password: '',
     username: '',
   });
-  const [login, { loginError, data }] = useMutation(LOGIN_USER);
-  const [addUser, { addError, addData }] = useMutation(ADD_USER);
+  const [login, { data }] = useMutation(LOGIN_USER);
+  const [addUser, { addError }] = useMutation(ADD_USER); //, { , addData  } pulled out of brackets
   const [toggleState, setToggleState] = useState(false);
   const [error, setError] = useState('');
 
@@ -36,7 +36,7 @@ const Login = (props) => {
         const { data } = await addUser({
           variables: { ...formState },
         });
-        Auth.login(data.addUser.token);
+        Auth.addUser(data.addUser.token);
       }
     } catch (e) {
       setError(e);
@@ -144,7 +144,7 @@ const Login = (props) => {
                 </Form>
 
                 <a
-                  href=""
+                  href="/"
                   data-bs-toggle="modal"
                   data-bs-target="#signup"
                   onClick={() => {
@@ -211,7 +211,7 @@ const Login = (props) => {
                 </Form>
 
                 <a
-                  href=""
+                  href="/"
                   data-bs-toggle="modal"
                   data-bs-target="#signup"
                   onClick={() => {
@@ -225,7 +225,7 @@ const Login = (props) => {
           )}
         </Modal>
       )}
-      {error && (
+      {error && addError && (
         <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
       )}
     </div>

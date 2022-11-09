@@ -24,7 +24,8 @@ const CommentForm = ({ thoughtId }) => {
         },
       });
 
-      setCommentText('');
+      // setCommentText('');
+      setCommentText(data.commentText);
     } catch (err) {
       console.error(err);
     }
@@ -51,25 +52,25 @@ const CommentForm = ({ thoughtId }) => {
             }`}
           >
             Character Count: {characterCount}/280
-            {error && <span className="ml-2">{error.message}</span>}
+            {error && <span className='ml-2'>{error.message}</span>}
           </p>
           <form
-            className="flex-row justify-center justify-space-between-md align-center"
+            className='flex-row justify-center justify-space-between-md align-center'
             onSubmit={handleFormSubmit}
           >
-            <div className="col-12 col-lg-9">
+            <div className='col-12 col-lg-9'>
               <textarea
-                name="commentText"
-                placeholder="Add your comment..."
+                name='commentText'
+                placeholder='Add your comment...'
                 value={commentText}
-                className="form-input w-100"
+                className='form-input w-100'
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange}
               ></textarea>
             </div>
 
-            <div className="col-12 col-lg-3">
-              <button className="btn btn-primary btn-block py-3" type="submit">
+            <div className='col-12 col-lg-3'>
+              <button className='btn btn-primary btn-block py-3' type='submit'>
                 Add Comment
               </button>
             </div>
@@ -78,7 +79,7 @@ const CommentForm = ({ thoughtId }) => {
       ) : (
         <p>
           You need to be logged in to comment on this. Please{' '}
-          <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
+          <Link to='/login'>login</Link> or <Link to='/signup'>signup.</Link>
         </p>
       )}
     </div>

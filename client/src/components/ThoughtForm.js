@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-
 import { ADD_THOUGHT } from '../utils/mutations';
-import { QUERY_THOUGHTS, QUERY_ME } from '../utils/queries';
+import { QUERY_THOUGHTS } from '../utils/queries';
+// import { QUERY_ME } from '../utils/queries';
 
 import Auth from '../utils/auth';
 
@@ -44,7 +44,8 @@ const ThoughtForm = () => {
         },
       });
 
-      setThoughtText('');
+      // setThoughtText('');
+      setThoughtText(data.thoughtText);
     } catch (err) {
       console.error(err);
     }
@@ -73,27 +74,27 @@ const ThoughtForm = () => {
             Character Count: {characterCount}/280
           </p>
           <form
-            className="flex-row justify-center justify-space-between-md align-center"
+            className='flex-row justify-center justify-space-between-md align-center'
             onSubmit={handleFormSubmit}
           >
-            <div className="col-12 col-lg-9">
+            <div className='col-12 col-lg-9'>
               <textarea
-                name="thoughtText"
+                name='thoughtText'
                 placeholder="Here's a new thought..."
                 value={thoughtText}
-                className="form-input w-100"
+                className='form-input w-100'
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange}
               ></textarea>
             </div>
 
-            <div className="col-12 col-lg-3">
-              <button className="btn btn-primary btn-block py-3" type="submit">
+            <div className='col-12 col-lg-3'>
+              <button className='btn btn-primary btn-block py-3' type='submit'>
                 Add A Post
               </button>
             </div>
             {error && (
-              <div className="col-12 my-3 bg-danger text-white p-3">
+              <div className='col-12 my-3 bg-danger text-white p-3'>
                 {error.message}
               </div>
             )}
