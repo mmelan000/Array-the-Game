@@ -7,13 +7,16 @@ const { typeDefs, resolvers } = require('./schemas');
 const { v4: uuidv4 } = require('uuid');
 const app = express();
 const cors = require('cors');
+let origin = 'http://localhost:3000';
 const http = require('http').Server(app);
 const socketIO = require('socket.io')(http, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: origin,
   },
 });
-
+if (process.env.NODE_ENV === 'production') {
+  origin = 'https://array-the-game-production.up.railway.app/';
+}
 const PORT = process.env.PORT || 3001;
 console.log(PORT);
 const ioPORT = process.env.ioPORT || 3002;
@@ -30,6 +33,7 @@ app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
+  origin = 'https://array-the-game-production.up.railway.app/';
 }
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));

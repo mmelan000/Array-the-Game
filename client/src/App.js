@@ -37,7 +37,9 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const socket = socketIO.connect('http://localhost:3002');
+const socket = socketIO.connect(
+  process.env.IO_ORIGIN || 'http://localhost:3002'
+);
 export default function App() {
   console.log('app.js');
   let room;
