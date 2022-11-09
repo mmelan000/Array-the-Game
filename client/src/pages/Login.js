@@ -14,7 +14,7 @@ const Login = (props) => {
     username: '',
   });
   const [login, { error, data }] = useMutation(LOGIN_USER);
-  const [addUser, { addError, addData }] = useMutation(ADD_USER);
+  const [addUser] = useMutation(ADD_USER); //, { addError, addData } pulled out of brackets
   const [toggleState, setToggleState] = useState(false);
 
   const loginFormHandler = async (event) => {
@@ -57,7 +57,7 @@ const Login = (props) => {
     <div>
       {data ? (
         <p>
-          Success! You may now head <Link to="/"> back to the homepage.</Link>
+          Success! You may now head <Link to='/'> back to the homepage.</Link>
         </p>
       ) : (
         <Modal show={props.show} onHide={props.handleClose}>
@@ -68,51 +68,51 @@ const Login = (props) => {
               </Modal.Header>
               <Modal.Body>
                 <Form onSubmit={loginFormHandler}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className='mb-3' controlId='formBasicEmail'>
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
-                      name="email"
-                      type="email"
+                      name='email'
+                      type='email'
                       value={formState.email}
                       // controlid='email-login'
                       onChange={handleChange}
-                      placeholder="Enter email"
+                      placeholder='Enter email'
                     />
                   </Form.Group>
 
-                  <Form.Group className="mb-3" controlId="formBasicUsername">
+                  <Form.Group className='mb-3' controlId='formBasicUsername'>
                     <Form.Label>Username</Form.Label>
                     <Form.Control
-                      name="username"
-                      type="username"
+                      name='username'
+                      type='username'
                       value={formState.username}
                       // controlid='password-login'
                       onChange={handleChange}
-                      placeholder="Username"
+                      placeholder='Username'
                     />
                   </Form.Group>
 
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Group className='mb-3' controlId='formBasicPassword'>
                     <Form.Label>Password</Form.Label>
                     <Form.Control
-                      name="password"
-                      type="password"
+                      name='password'
+                      type='password'
                       value={formState.password}
                       // controlid='password-login'
                       onChange={handleChange}
-                      placeholder="Password"
+                      placeholder='Password'
                     />
                   </Form.Group>
 
-                  <Button variant="primary" type="submit">
+                  <Button variant='primary' type='submit'>
                     Sign Up
                   </Button>
                 </Form>
 
                 <a
-                  href=""
-                  data-bs-toggle="modal"
-                  data-bs-target="#signup"
+                  href=''
+                  data-bs-toggle='modal'
+                  data-bs-target='#signup'
                   onClick={() => {
                     setToggleState(false);
                   }}
@@ -128,38 +128,38 @@ const Login = (props) => {
               </Modal.Header>
               <Modal.Body>
                 <Form onSubmit={loginFormHandler}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className='mb-3' controlId='formBasicEmail'>
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
-                      name="email"
-                      type="email"
+                      name='email'
+                      type='email'
                       value={formState.email}
                       // controlid='email-login'
                       onChange={handleChange}
-                      placeholder="Enter email"
+                      placeholder='Enter email'
                     />
                   </Form.Group>
 
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Group className='mb-3' controlId='formBasicPassword'>
                     <Form.Label>Password</Form.Label>
                     <Form.Control
-                      name="password"
-                      type="password"
+                      name='password'
+                      type='password'
                       value={formState.password}
                       // controlid='password-login'
                       onChange={handleChange}
-                      placeholder="Password"
+                      placeholder='Password'
                     />
                   </Form.Group>
-                  <Button variant="primary" type="submit">
+                  <Button variant='primary' type='submit'>
                     Log In
                   </Button>
                 </Form>
 
                 <a
-                  href=""
-                  data-bs-toggle="modal"
-                  data-bs-target="#signup"
+                  href='/'
+                  data-bs-toggle='modal'
+                  data-bs-target='#signup'
                   onClick={() => {
                     setToggleState(true);
                   }}

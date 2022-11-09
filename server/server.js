@@ -15,6 +15,7 @@ const socketIO = require('socket.io')(http, {
 });
 
 const PORT = process.env.PORT || 3001;
+const ioPORT = process.env.ioPORT || 3002;
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -84,8 +85,8 @@ socketIO.on('connection', (socket) => {
     socket.disconnect();
   });
 });
-http.listen(3002, () => {
-  console.log('Socket.io server is running on port 3002');
+http.listen(ioPORT, () => {
+  console.log(`Socket.io server is running on port ${ioPORT}`);
 });
 // Call the async function to start the server
 startApolloServer(typeDefs, resolvers);
