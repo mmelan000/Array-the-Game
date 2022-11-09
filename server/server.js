@@ -52,11 +52,14 @@ const io = new Server(ioserver, {
 });
 
 io.on('connection', (socket) => {
-  console.log(`User Connected: ${socket.id}`);
-
   socket.on('join-room', (data) => {
-    console.log('join-room' + data);
+    console.log(data);
     socket.join(data);
+  });
+
+  socket.on('send-message', (data) => {
+    console.log(data);
+    socket.to(data.lobbyId).emit('receive-message', data);
   });
 });
 

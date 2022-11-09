@@ -7,19 +7,14 @@ import Gamelog from '../components/Gamelog';
 import TeamCardContainer from '../components/TeamCardContainer';
 import Tile from '../components/Tile';
 import io from 'socket.io-client';
-const socket = io.connect('http://localhost:3002');
+import ChatLog from '../components/ChatLog';
 
 export default function Lobby() {
-  const [room, setRoom] = useState('');
-  const [message, setMessage] = useState('');
-  const [messageReceived, setMessageReceived] = useState('');
-
+  const socket = io.connect('http://localhost:3002');
   const lobbyId = window.location.pathname.slice(7);
+
   socket.emit('join-room', lobbyId);
 
-  const sendMessage = () => {
-    socket.emit('send_message', { message, room });
-  };
   // gamelog state
   const [log, setLog] = useState(['Game has begun.']);
   // current player state
@@ -206,9 +201,6 @@ export default function Lobby() {
   };
 
   const claimTile = (position, name) => {
-    console.log({ position, name });
-    console.log(allClaimed(board[position].display));
-
     const diceSum = diceRoll1 + diceRoll2;
 
     let newBoard = {
@@ -278,7 +270,6 @@ export default function Lobby() {
   let teams = 3;
 
   const endPlayerTurn = () => {
-    console.log(currentPlayer);
     setDiceRoll1(0);
     setDiceRoll2(0);
     if (currentPlayer === 'Red') {
@@ -326,8 +317,7 @@ export default function Lobby() {
       });
       return playerTiles;
     });
-    console.log(otherPlayersTiles[0].length);
-    console.log(otherPlayersTiles[1].length);
+
     if (
       otherPlayersTiles[0].length === 0 &&
       otherPlayersTiles[1].length === 0 &&
@@ -343,16 +333,12 @@ export default function Lobby() {
 
   const allClaimed = (display) => {
     const checker = Object.entries(board).filter((e) => {
-      console.log(e);
       if (e[1].display === display && e[1].player !== 'unclaimed') {
         return true;
       } else {
         return false;
       }
     });
-    console.log('checker');
-    console.log(checker);
-    console.log(checker.length);
 
     if (checker.length === 4) {
       return true;
@@ -366,7 +352,7 @@ export default function Lobby() {
       <Timer seconds={seconds} />
       <Gamelog log={log} />
       {/* chat */}
-
+      <ChatLog lobbyId={lobbyId} />
       <TeamCardContainer teams={teams} />
       <div className='Gameboard'>
         <div className='Gameboard-header'>{mappedBoardState}</div>
