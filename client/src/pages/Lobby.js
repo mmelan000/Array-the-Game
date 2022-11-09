@@ -7,7 +7,7 @@ import TeamCardContainer from '../components/TeamCardContainer';
 import Tile from '../components/Tile';
 import ChatLog from '../components/ChatLog';
 
-export default function Lobby({ user, socket, room }) {
+export default function Lobby({ room, socket, user }) {
   // gamelog state
   const [log, setLog] = useState(['Game has begun.']);
   // current player state

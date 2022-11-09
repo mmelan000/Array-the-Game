@@ -55,9 +55,12 @@ let users = [];
 socketIO.on('connection', (socket) => {
   console.log(`${socket.id} user just connected!`);
 
-  socket.on('joinRoom', (data) => {
-    socket.join(data.room);
-    console.log(`${data.user} has joined Room: ${data.room}`);
+  socket.on('joinRoom', ({ user, room }) => {
+    if (!user) {
+      user = 'Guest';
+    }
+    socket.join(room);
+    console.log(`${user} has joined Room: ${room}`);
   });
 
   socket.on('message', ({ user, room, message }) => {
@@ -70,19 +73,19 @@ socketIO.on('connection', (socket) => {
 
   socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data));
 
-  socket.on('newUser', (data) => {
-    if (data === null) {
-      data = `Guest/${uuidv4()}`;
+  socket.on('newUser', (username) => {
+    if (username === null || undefined) {
+      username = `Guest/${uuidv4()}`;
     }
-    console.log(`${data} has connected.`);
-    users.push(data);
+    users.push({ username: username, socket_id: socket.id });
     socketIO.emit('newUserResponse', users);
   });
-
+  //
   socket.on('disconnect', () => {
     console.log('A user disconnected');
     console.log(users);
-    users = users.filter((user) => user.socketID !== socket.id);
+    users = users.filter((user) => user.socket_id !== socket.id);
+    console.log(users);
     socketIO.emit('newUserResponse', users);
     socket.disconnect();
   });
