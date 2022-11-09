@@ -9,6 +9,7 @@ const app = express();
 const cors = require('cors');
 let origin = 'http://localhost:3000';
 const http = require('http').Server(app);
+const io = require('socket.io');
 const socketIO = require('socket.io')(http, {
   cors: {
     origin: origin,
@@ -64,6 +65,7 @@ socketIO.on('connection', (socket) => {
       user = 'Guest';
     }
     socket.join(room);
+    console.log(socketIO.sockets.clients(room));
     console.log(`${user} has joined Room: ${room}`);
   });
 

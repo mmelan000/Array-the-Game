@@ -36,7 +36,7 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
-
+console.log(process.env);
 const socket = socketIO.connect(
   process.env.IO_ORIGIN || 'http://localhost:3002'
 );
