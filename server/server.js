@@ -15,7 +15,9 @@ const socketIO = require('socket.io')(http, {
 });
 
 const PORT = process.env.PORT || 3001;
+console.log(PORT);
 const ioPORT = process.env.ioPORT || 3002;
+console.log(ioPORT);
 const server = new ApolloServer({
   typeDefs,
   resolvers,

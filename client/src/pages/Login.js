@@ -14,7 +14,7 @@ const Login = (props) => {
     username: '',
   });
   const [login, { error, data }] = useMutation(LOGIN_USER);
-  const [addUser] = useMutation(ADD_USER); //, { addError, addData } pulled out of brackets
+  const [addUser, { addError }] = useMutation(ADD_USER); //, { , addData  } pulled out of brackets
   const [toggleState, setToggleState] = useState(false);
 
   const loginFormHandler = async (event) => {
@@ -172,7 +172,7 @@ const Login = (props) => {
         </Modal>
       )}
       {error && addError && (
-        <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
+        <div className='my-3 p-3 bg-danger text-white'>{error.message}</div>
       )}
     </div>
   );
