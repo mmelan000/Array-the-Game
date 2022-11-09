@@ -24,7 +24,7 @@ export default function ChatLog(props) {
   }, [socket, chatLog]);
 
   return (
-    <div>
+    <div className='chat-log'>
       <div className='chat-log-container'>
         <header className='chat-log-header'>Chat Log</header>
         <ul className='chat-log'>{renderChatLog}</ul>
