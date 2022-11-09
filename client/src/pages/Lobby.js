@@ -342,24 +342,32 @@ export default function Lobby({ room, socket, user }) {
 
   return (
     <div>
-      <Timer seconds={seconds} />
-      <Gamelog log={log} />
-      {/* chat */}
-      <ChatLog room={room} socket={socket} user={user} />
-      <TeamCardContainer teams={teams} />
-      <div className='Gameboard'>
-        <div className='Gameboard-header'>{mappedBoardState}</div>
+      <div className='lobby-container'>
+        <div className='log-and-chat'>
+          <Gamelog log={log} />
+          {/* chat */}
+          <ChatLog room={room} socket={socket} user={user} />
+        </div>
+        <div className='timer-and-board'>
+          <Timer seconds={seconds} />
+          <div className='Gameboard'>
+            <div className='Gameboard-header'>{mappedBoardState}</div>
+          </div>
+          {/* if currentPlayer === user */}
+        </div>
+        <div className='dice-and-player'>
+          <DiceButton
+            diceRoll1={diceRoll1}
+            diceRoll2={diceRoll2}
+            onClick={() => rollDice()}
+          />
+          <TeamCardContainer teams={teams} />
+        </div>
+        {/* if/ */}
+        {/* if endGame === true */}
+        {/* <endGameCard winner={winner}/> */}
+        {/* if/ */}
       </div>
-      {/* if currentPlayer === user */}
-      <DiceButton
-        diceRoll1={diceRoll1}
-        diceRoll2={diceRoll2}
-        onClick={() => rollDice()}
-      />
-      {/* if/ */}
-      {/* if endGame === true */}
-      {/* <endGameCard winner={winner}/> */}
-      {/* if/ */}
     </div>
   );
 }
