@@ -4,7 +4,12 @@ import ThoughtForm from './ThoughtForm';
 
 const ThoughtList = ({ thoughts, title }) => {
   if (!thoughts.length) {
-    return <h3>No Thoughts Yet</h3>;
+    return (
+      <div>
+        <h3>No Thoughts Yet</h3>
+        <ThoughtForm />
+      </div>
+    );
   }
 
   return (
