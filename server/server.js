@@ -12,9 +12,9 @@ const http = require('http').Server(app);
 // const io = require('socket.io');
 
 if (process.env.NODE_ENV === 'production') {
-  origin = 'https://array-the-game-production.up.railway.app/:3000';
+  origin = 'https://array-the-game-production.up.railway.app:3000';
 }
-
+console.log(origin);
 const socketIO = require('socket.io')(http, {
   cors: {
     origin: origin,
@@ -36,7 +36,6 @@ app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
-  origin = 'https://array-the-game-production.up.railway.app/';
 }
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
@@ -57,8 +56,6 @@ const startApolloServer = async (typeDefs, resolvers) => {
   });
 };
 
-console.log(process.env);
-
 let users = [];
 
 socketIO.on('connection', (socket) => {
@@ -69,7 +66,6 @@ socketIO.on('connection', (socket) => {
       user = 'Guest';
     }
     socket.join(room);
-    // console.log(io.);
     console.log(`${user} has joined Room: ${room}`);
   });
 
