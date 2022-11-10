@@ -19,10 +19,16 @@ const Login = (props) => {
   const [error, setError] = useState('');
 
   const isValidEmail = (email) => {
-    const regex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+    const regex = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
     return regex.test(String(email).toLowerCase());
   };
 
+  const isValidPassword = (password) => {
+    if (password.length < 8) {
+      return false;
+    }
+    return true;
+  };
   const loginFormHandler = async (event) => {
     event.preventDefault();
 
@@ -36,7 +42,7 @@ const Login = (props) => {
         const { data } = await addUser({
           variables: { ...formState },
         });
-        Auth.addUser(data.addUser.token);
+        Auth.login(data.addUser.token);
       }
     } catch (e) {
       setError(e);
@@ -84,11 +90,11 @@ const Login = (props) => {
                       placeholder="Enter email"
                       onMouseOut={() => {
                         if (!formState.email) {
-                          setError('Email is required');
+                          setError('* Email is required');
                           return;
                         }
                         if (!isValidEmail(formState.email)) {
-                          setError('Please enter a valid Email');
+                          setError('* Please enter a valid Email');
                           return;
                         }
                       }}
@@ -106,7 +112,7 @@ const Login = (props) => {
                       placeholder="Username"
                       onMouseOut={() => {
                         if (!formState.username) {
-                          setError('Username is required');
+                          setError('* Username is required');
                           return;
                         }
                       }}
@@ -124,19 +130,29 @@ const Login = (props) => {
                       placeholder="Password"
                       onMouseOut={() => {
                         if (!formState.password) {
-                          setError('Password is required');
+                          setError('* Password is required');
+                          return;
+                        }
+                        if (!isValidPassword(formState.password)) {
+                          setError(
+                            '* Password does not meet length requirement'
+                          );
                           return;
                         }
                       }}
                     />
                   </Form.Group>
+
+                  <p>{error}</p>
+
                   <Button
                     variant="primary"
                     type="submit"
                     disabled={
-                      !formState.email &&
-                      !formState.password &&
-                      !formState.username
+                      !formState.email ||
+                      !formState.password ||
+                      !formState.username ||
+                      formState.password.length < 8
                     }
                   >
                     Sign Up
@@ -173,11 +189,11 @@ const Login = (props) => {
                       placeholder="Enter email"
                       onMouseOut={() => {
                         if (!formState.email) {
-                          setError('Email is required');
+                          setError('* Email is required');
                           return;
                         }
                         if (!isValidEmail(formState.email)) {
-                          setError('Please enter a valid Email');
+                          setError('* Please enter a valid Email');
                           return;
                         }
                       }}
@@ -195,16 +211,29 @@ const Login = (props) => {
                       placeholder="Password"
                       onMouseOut={() => {
                         if (!formState.password) {
-                          setError('Password is required');
+                          setError('* Password is required');
+                          return;
+                        }
+                        if (!isValidPassword(formState.password)) {
+                          setError(
+                            '* Password does not meet length requirement'
+                          );
                           return;
                         }
                       }}
                     />
                   </Form.Group>
+
+                  <p>{error}</p>
+
                   <Button
                     variant="primary"
                     type="submit"
-                    disabled={!formState.email || !formState.password}
+                    disabled={
+                      !formState.email ||
+                      !formState.password ||
+                      formState.password.length < 8
+                    }
                   >
                     Log In
                   </Button>

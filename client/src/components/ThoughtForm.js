@@ -23,13 +23,6 @@ const ThoughtForm = () => {
       } catch (e) {
         console.error(e);
       }
-
-      // update me object's cache
-      //   const { me } = cache.readQuery({ query: QUERY_ME });
-      //   cache.writeQuery({
-      //     query: QUERY_ME,
-      //     data: { me: { ...me, thoughts: [...me.thoughts, addThought] } },
-      //   });
     },
   });
 
@@ -74,27 +67,27 @@ const ThoughtForm = () => {
             Character Count: {characterCount}/280
           </p>
           <form
-            className='flex-row justify-center justify-space-between-md align-center'
+            className="flex-row justify-center justify-space-between-md align-center"
             onSubmit={handleFormSubmit}
           >
-            <div className='col-12 col-lg-9'>
+            <div className="col-12 col-lg-9">
               <textarea
-                name='thoughtText'
+                name="thoughtText"
                 placeholder="Here's a new thought..."
                 value={thoughtText}
-                className='form-input w-100'
+                className="form-input w-100"
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange}
               ></textarea>
             </div>
 
-            <div className='col-12 col-lg-3'>
-              <button className='btn btn-primary btn-block py-3' type='submit'>
+            <div className="col-12 col-lg-3">
+              <button className="btn btn-primary btn-block py-3" type="submit">
                 Add A Post
               </button>
             </div>
             {error && (
-              <div className='col-12 my-3 bg-danger text-white p-3'>
+              <div className="col-12 my-3 bg-danger text-white p-3">
                 {error.message}
               </div>
             )}
