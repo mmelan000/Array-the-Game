@@ -23,13 +23,6 @@ const ThoughtForm = () => {
       } catch (e) {
         console.error(e);
       }
-
-      // update me object's cache
-      //   const { me } = cache.readQuery({ query: QUERY_ME });
-      //   cache.writeQuery({
-      //     query: QUERY_ME,
-      //     data: { me: { ...me, thoughts: [...me.thoughts, addThought] } },
-      //   });
     },
   });
 
@@ -37,15 +30,15 @@ const ThoughtForm = () => {
     event.preventDefault();
 
     try {
-      const { data } = await addThought({
+      await addThought({
         variables: {
           thoughtText,
           thoughtAuthor: Auth.getProfile().data.username,
         },
       });
 
-      // setThoughtText('');
-      setThoughtText(data.thoughtText);
+      setThoughtText('');
+      // setThoughtText(data.thoughtText);
     } catch (err) {
       console.error(err);
     }

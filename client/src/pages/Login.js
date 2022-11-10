@@ -62,7 +62,7 @@ const Login = (props) => {
     <div>
       {data ? (
         <p>
-          Success! You may now head <Link to="/"> back to the homepage.</Link>
+          Success! You may now head <Link to='/'> back to the homepage.</Link>
         </p>
       ) : (
         <Modal show={props.show} onHide={props.handleClose}>
@@ -73,15 +73,15 @@ const Login = (props) => {
               </Modal.Header>
               <Modal.Body>
                 <Form onSubmit={loginFormHandler}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className='mb-3' controlId='formBasicEmail'>
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
-                      name="email"
-                      type="email"
+                      name='email'
+                      type='email'
                       value={formState.email}
                       // controlid='email-login'
                       onChange={handleChange}
-                      placeholder="Enter email"
+                      placeholder='Enter email'
                       onMouseOut={() => {
                         if (!formState.email) {
                           setError('Email is required');
@@ -95,15 +95,15 @@ const Login = (props) => {
                     />
                   </Form.Group>
 
-                  <Form.Group className="mb-3" controlId="formBasicUsername">
+                  <Form.Group className='mb-3' controlId='formBasicUsername'>
                     <Form.Label>Username</Form.Label>
                     <Form.Control
-                      name="username"
-                      type="username"
+                      name='username'
+                      type='username'
                       value={formState.username}
                       // controlid='password-login'
                       onChange={handleChange}
-                      placeholder="Username"
+                      placeholder='Username'
                       onMouseOut={() => {
                         if (!formState.username) {
                           setError('Username is required');
@@ -113,15 +113,15 @@ const Login = (props) => {
                     />
                   </Form.Group>
 
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Group className='mb-3' controlId='formBasicPassword'>
                     <Form.Label>Password</Form.Label>
                     <Form.Control
-                      name="password"
-                      type="password"
+                      name='password'
+                      type='password'
                       value={formState.password}
                       // controlid='password-login'
                       onChange={handleChange}
-                      placeholder="Password"
+                      placeholder='Password'
                       onMouseOut={() => {
                         if (!formState.password) {
                           setError('Password is required');
@@ -131,8 +131,8 @@ const Login = (props) => {
                     />
                   </Form.Group>
                   <Button
-                    variant="primary"
-                    type="submit"
+                    variant='primary'
+                    type='submit'
                     disabled={
                       !formState.email &&
                       !formState.password &&
@@ -144,9 +144,9 @@ const Login = (props) => {
                 </Form>
 
                 <a
-                  href="/"
-                  data-bs-toggle="modal"
-                  data-bs-target="#signup"
+                  href='/'
+                  data-bs-toggle='modal'
+                  data-bs-target='#signup'
                   onClick={() => {
                     setToggleState(false);
                   }}
@@ -162,15 +162,15 @@ const Login = (props) => {
               </Modal.Header>
               <Modal.Body>
                 <Form onSubmit={loginFormHandler}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className='mb-3' controlId='formBasicEmail'>
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
-                      name="email"
-                      type="email"
+                      name='email'
+                      type='email'
                       value={formState.email}
                       // controlid='email-login'
                       onChange={handleChange}
-                      placeholder="Enter email"
+                      placeholder='Enter email'
                       onMouseOut={() => {
                         if (!formState.email) {
                           setError('Email is required');
@@ -184,15 +184,15 @@ const Login = (props) => {
                     />
                   </Form.Group>
 
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Group className='mb-3' controlId='formBasicPassword'>
                     <Form.Label>Password</Form.Label>
                     <Form.Control
-                      name="password"
-                      type="password"
+                      name='password'
+                      type='password'
                       value={formState.password}
                       // controlid='password-login'
                       onChange={handleChange}
-                      placeholder="Password"
+                      placeholder='Password'
                       onMouseOut={() => {
                         if (!formState.password) {
                           setError('Password is required');
@@ -202,8 +202,8 @@ const Login = (props) => {
                     />
                   </Form.Group>
                   <Button
-                    variant="primary"
-                    type="submit"
+                    variant='primary'
+                    type='submit'
                     disabled={!formState.email || !formState.password}
                   >
                     Log In
@@ -211,9 +211,9 @@ const Login = (props) => {
                 </Form>
 
                 <a
-                  href="/"
-                  data-bs-toggle="modal"
-                  data-bs-target="#signup"
+                  href='/'
+                  data-bs-toggle='modal'
+                  data-bs-target='#signup'
                   onClick={() => {
                     setToggleState(true);
                   }}
@@ -226,7 +226,7 @@ const Login = (props) => {
         </Modal>
       )}
       {error && addError && (
-        <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
+        <div className='my-3 p-3 bg-danger text-white'>{error.message}</div>
       )}
     </div>
   );
