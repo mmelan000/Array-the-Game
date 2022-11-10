@@ -22,7 +22,7 @@ export default function ChatLog({ socket, user, room }) {
   }, [socket, chatLog, room]);
 
   return (
-    <div className='chat-log'>
+    <div className='chat-log-main'>
       <div className='chat-log-container'>
         <header className='chat-log-header'>Chat Log</header>
         <ul className='chat-log'>{renderChatLog}</ul>
