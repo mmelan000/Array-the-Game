@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_USER, LOGIN_USER } from '../utils/mutations';
-import { Link } from 'react-router-dom';
 import Auth from '../utils/auth';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -14,9 +13,10 @@ const Login = (props) => {
     username: '',
   });
   const [login, { data }] = useMutation(LOGIN_USER);
-  const [addUser, { addError }] = useMutation(ADD_USER); //, { , addData  } pulled out of brackets
+  const [addUser] = useMutation(ADD_USER); //, { , addData  } pulled out of brackets
   const [toggleState, setToggleState] = useState(false);
   const [error, setError] = useState('');
+  const [mutationError, setMutationError] = useState('');
 
   const isValidEmail = (email) => {
     const regex = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
@@ -45,7 +45,7 @@ const Login = (props) => {
         Auth.login(data.addUser.token);
       }
     } catch (e) {
-      setError(e);
+      setMutationError(e.message);
     }
 
     setFormState({
@@ -67,9 +67,14 @@ const Login = (props) => {
   return (
     <div>
       {data ? (
-        <p>
-          Success! You may now head <Link to="/"> back to the homepage.</Link>
-        </p>
+        <Modal show={props.show} onHide={props.handleClose}>
+          <>
+            <Modal.Header closeButton>
+              <Modal.Title>You are logged in! </Modal.Title>
+            </Modal.Header>
+            <Modal.Body></Modal.Body>
+          </>
+        </Modal>
       ) : (
         <Modal show={props.show} onHide={props.handleClose}>
           {toggleState ? (
@@ -144,7 +149,9 @@ const Login = (props) => {
                   </Form.Group>
 
                   <p>{error}</p>
-
+                  {mutationError && (
+                    <p className="error"> Error: {mutationError}</p>
+                  )}
                   <Button
                     variant="primary"
                     type="submit"
@@ -225,7 +232,9 @@ const Login = (props) => {
                   </Form.Group>
 
                   <p>{error}</p>
-
+                  {mutationError && (
+                    <p className="error"> Error: {mutationError}</p>
+                  )}
                   <Button
                     variant="primary"
                     type="submit"
@@ -253,9 +262,6 @@ const Login = (props) => {
             </>
           )}
         </Modal>
-      )}
-      {error && addError && (
-        <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
       )}
     </div>
   );
