@@ -6,18 +6,10 @@ const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
 const { v4: uuidv4 } = require('uuid');
 const app = express();
-const cors = require('cors');
-let origin = 'http://localhost:3000';
 const http = require('http').Server(app);
-// const io = require('socket.io');
-
-if (process.env.NODE_ENV === 'production') {
-  origin = 'https://array-the-game-production.up.railway.app:3000';
-}
-console.log(origin);
 const socketIO = require('socket.io')(http, {
   cors: {
-    origin: origin,
+    origin: '*',
   },
 });
 const PORT = process.env.PORT || 3001;
@@ -30,7 +22,14 @@ const server = new ApolloServer({
   context: authMiddleware,
 });
 
-app.use(cors());
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
