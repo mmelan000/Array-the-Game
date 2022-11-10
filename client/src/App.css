@@ -74,32 +74,43 @@ body {
   user-select: none; /* Standard syntax */
 }
 
+.lobby-container {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
 .log-and-chat {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  width: 80%;
   height: 100%;
+  align-items: center;
+}
+
+.timer-and-board {
+  width: 120%;
+}
+
+.dice-and-player {
+  width: 80%;
 }
 
 .chat-log {
   display: flex;
   flex-direction: column;
-  max-height: fit-content;
-  overflow-y: scroll;
+  height: 100%;
+  width: 25vw;
 }
 
-.lobby-container {
-  width: 100%;
-  display: flex;
-  align-items: center;
+.chat-log-container {
+  overflow-y: scroll;
+  height: 25vh;
 }
 
 .main-body footer {
   justify-content: flex-end;
-}
-
-footer {
-  text-align: center;
 }
 
 /* Prevent selection of text */
@@ -136,29 +147,30 @@ footer {
 }
 
 .game-log {
-  max-width: 20vw;
-  height: 10vh;
+  width: 25vw;
+  height: 25vh;
   overflow-y: auto;
-
   position: relative;
   border: 1px;
   border-style: solid;
   margin: 5px;
   list-style-type: none;
   padding-left: 0;
+  font-size: 2vh;
 }
 
 .game-log-header {
   font-weight: 700;
-  border: 1px;
-  border-style: dashed;
+  /* border: 1px;
+  border-style: dashed; */
   text-align: center;
 }
 
 .game-log-container {
-  border: 1px;
-  border-style: solid;
-  float: left;
+  /* border: 1px;
+  border-style: solid; */
+  height: 100%;
+  max-height: 100%;
 }
 
 .game-log > li:nth-child(even) {
@@ -206,6 +218,9 @@ footer {
   text-align: center;
 }
 
+footer {
+  text-align: center;
+}
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------- For Mobile Displays (PORTRAIT) ----------------------------------------------------*/
 /*-------------------------------------------------------------------------------------------------------------------------------*/

@@ -37,8 +37,14 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+let origin = 'http://localhost:3002';
+
+if (process.env.NODE_ENV === 'production') {
+  origin = 'https://array-the-game-production.up.railway.app/:7203';
+}
+
 console.log(process.env);
-const socket = socketIO.connect('http://localhost:3002');
+const socket = socketIO.connect(origin);
 export default function App() {
   console.log('app.js');
   let room;
