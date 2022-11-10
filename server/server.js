@@ -10,14 +10,16 @@ const cors = require('cors');
 let origin = 'http://localhost:3000';
 const http = require('http').Server(app);
 // const io = require('socket.io');
+
+if (process.env.NODE_ENV === 'production') {
+  origin = 'https://array-the-game-production.up.railway.app/:3000';
+}
+
 const socketIO = require('socket.io')(http, {
   cors: {
     origin: origin,
   },
 });
-if (process.env.NODE_ENV === 'production') {
-  origin = 'https://array-the-game-production.up.railway.app/';
-}
 const PORT = process.env.PORT || 3001;
 console.log(PORT);
 const ioPORT = process.env.ioPORT || 3002;
