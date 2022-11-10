@@ -19,7 +19,7 @@ import {
 } from '@apollo/client';
 
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: 'https://socket-io-server-for-array-game-production-50ce.up.railway.app/',
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -40,7 +40,7 @@ const client = new ApolloClient({
 let origin = 'http://localhost:3002';
 
 if (process.env.NODE_ENV === 'production') {
-  origin = 'https://array-the-game-production.up.railway.app:5776';
+  origin = 'https://array-the-game-production.up.railway.app/';
 }
 
 const socket = socketIO.connect(origin);
