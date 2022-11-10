@@ -40,7 +40,7 @@ const client = new ApolloClient({
 let origin = 'http://localhost:3002';
 
 if (process.env.NODE_ENV === 'production') {
-  origin = 'https://array-the-game-production.up.railway.app/:3002';
+  origin = 'https://array-the-game-production.up.railway.app/:7203';
 }
 
 console.log(process.env);
