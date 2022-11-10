@@ -65,6 +65,14 @@ body {
   max-width: 50%;
 }
 
+.main-display {
+  height: 100%;
+}
+
+.main-display div {
+  height: 100%;
+}
+
 .main-body {
   display: flex;
   flex-direction: column;
@@ -75,7 +83,7 @@ body {
 }
 
 .lobby-container {
-  width: 100vw;
+  width: 90vw;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -84,30 +92,65 @@ body {
 .log-and-chat {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100vw;
   height: 100%;
   align-items: center;
 }
 
-.timer-and-board {
-  width: 120%;
-  height: 60vh;
+.dice-and-player {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.dice-and-player {
-  width: 80%;
+.chat-log-main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 25vw;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.chat-log-main input {
+  border-color: transparent;
+}
+
+.chat-log-main button {
+  background-color: olivedrab;
+  border-color: transparent;
+  color: white;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.chat-log-container header {
+  font-weight: 700;
+  text-align: center;
+  background-color: olivedrab;
+  border-radius: 5px 5px 0px 0px;
+  color: white;
 }
 
 .chat-log {
-  display: flex;
-  flex-direction: column;
-  height: 90%;
-  width: 25vw;
+  height: 25vh;
+  overflow-y: scroll;
+  margin-bottom: 0;
+  background-color: bisque;
+  color: slateblue;
+  list-style: none;
+  padding-left: 2px;
+  font-size: 1.5vh;
 }
 
-.chat-log-container {
-  overflow-y: scroll;
-  height: 25vh;
+.chat-log > li:nth-child(even) {
+  background-color: floralwhite;
+}
+
+.chat-log > li:nth-child(odd) {
+  background-color: bisque;
 }
 
 .main-body footer {
@@ -119,15 +162,6 @@ body {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
-}
-
-/* nav > div {
-  display: inline;
-  padding: 5px;
-} */
-
-.dice-roller {
-  text-align: center;
 }
 
 .Gameboard {
@@ -144,7 +178,16 @@ body {
   display: grid;
   grid-template-rows: repeat(6, 1fr);
   grid-template-columns: repeat(6, 1fr);
-  width: 35vw;
+  width: 100%;
+  height: 100%;
+}
+
+.timer-and-board {
+  width: 100vw;
+}
+
+.timer {
+  text-align: center;
 }
 
 .game-log {
@@ -154,10 +197,18 @@ body {
   position: relative;
   border: 1px;
   border-style: solid;
-  margin: 5px;
   list-style-type: none;
-  padding-left: 0;
+  padding-left: 2px;
   font-size: 1.5vh;
+  background-color: bisque;
+}
+
+.game-log > li:nth-child(even) {
+  background-color: floralwhite;
+}
+
+.game-log > li:nth-child(odd) {
+  background-color: bisque;
 }
 
 .game-log-header {
@@ -165,6 +216,9 @@ body {
   /* border: 1px;
   border-style: dashed; */
   text-align: center;
+  background-color: olivedrab;
+  border-radius: 5px 5px 0px 0px;
+  color: white;
 }
 
 .game-log-container {
@@ -174,14 +228,6 @@ body {
   max-height: 100%;
 }
 
-.game-log > li:nth-child(even) {
-  background-color: #bbb;
-}
-
-.game-log > li:nth-child(odd) {
-  background-color: #ddd;
-}
-
 .game-tile {
   display: flex;
   text-align: center;
@@ -189,6 +235,7 @@ body {
   justify-content: center;
   align-items: center;
   aspect-ratio: 1/1;
+  width: 6vw;
 }
 
 .game-tile p {
@@ -201,22 +248,19 @@ body {
 }
 
 .team-card-container {
-  float: right;
-  display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  grid-template-columns: repeat(1, 1fr);
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 100%;
+  align-items: center;
 }
 
 .team-card {
   height: 10vh;
-  width: 20vw;
+  width: 25vw;
   border: 1px;
   border-style: solid;
   margin: 5px;
-}
-
-.timer {
-  text-align: center;
 }
 
 /* .footer-wrapper {
@@ -230,6 +274,7 @@ footer {
   left: 0;
   bottom: 0;
   right: 0;
+  font-size: 1.5vh;
 }
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------- For Mobile Displays (PORTRAIT) ----------------------------------------------------*/
