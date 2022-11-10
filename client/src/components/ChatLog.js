@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+const { v4: uuidv4 } = require('uuid');
 
 export default function ChatLog({ socket, user, room }) {
   const [message, setMessage] = useState('');
   const [chatLog, setChatLog] = useState([]);
 
   const renderChatLog = chatLog.map((e) => {
-    return <li key={chatLog.indexOf(e)}>{e}</li>;
+    return <li key={uuidv4()}>{e}</li>;
   });
   const sendMessage = () => {
     console.log(`Sending Message: ${message} tp Room: ${room}`);
