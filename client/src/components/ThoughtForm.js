@@ -30,15 +30,15 @@ const ThoughtForm = () => {
     event.preventDefault();
 
     try {
-      const { data } = await addThought({
+      await addThought({
         variables: {
           thoughtText,
           thoughtAuthor: Auth.getProfile().data.username,
         },
       });
 
-      // setThoughtText('');
-      setThoughtText(data.thoughtText);
+      setThoughtText('');
+      // setThoughtText(data.thoughtText);
     } catch (err) {
       console.error(err);
     }

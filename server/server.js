@@ -1,61 +1,35 @@
 const express = require('express');
 const path = require('path');
-const db = require('./config/connection');
-const { ApolloServer } = require('apollo-server-express');
-const { authMiddleware } = require('./utils/auth');
-const { typeDefs, resolvers } = require('./schemas');
 const { v4: uuidv4 } = require('uuid');
 const app = express();
-const cors = require('cors');
-let origin = 'http://localhost:3000';
 const http = require('http').Server(app);
-// const io = require('socket.io');
-const socketIO = require('socket.io')(http, {
-  cors: {
-    origin: origin,
-  },
-});
-if (process.env.NODE_ENV === 'production') {
-  origin = 'https://array-the-game-production.up.railway.app/';
-}
-const PORT = process.env.PORT || 3001;
-console.log(PORT);
-const ioPORT = process.env.ioPORT || 3002;
-console.log(ioPORT);
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: authMiddleware,
+const PORT = process.env.PORT || 3002;
+console.log(process.env);
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
 });
 
-app.use(cors());
+const socketIO = require('socket.io')(http, {
+  cors: {
+    origin: '*',
+  },
+});
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
-  origin = 'https://array-the-game-production.up.railway.app/';
 }
-app.get('/', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
-
-// Create a new instance of an Apollo server with the GraphQL schema
-const startApolloServer = async (typeDefs, resolvers) => {
-  await server.start();
-  server.applyMiddleware({ app });
-
-  db.once('open', () => {
-    app.listen(PORT, () => {
-      console.log(`API server running on port ${PORT}!`);
-      console.log(
-        `Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`
-      );
-    });
-  });
-};
-
-console.log(process.env);
 
 let users = [];
 
@@ -67,7 +41,6 @@ socketIO.on('connection', (socket) => {
       user = 'Guest';
     }
     socket.join(room);
-    // console.log(io.);
     console.log(`${user} has joined Room: ${room}`);
   });
 
@@ -98,8 +71,6 @@ socketIO.on('connection', (socket) => {
     socket.disconnect();
   });
 });
-http.listen(ioPORT, () => {
-  console.log(`Socket.io server is running on port ${ioPORT}`);
+http.listen(PORT, () => {
+  console.log(`Socket.io server is running on port ${PORT}`);
 });
-// Call the async function to start the server
-startApolloServer(typeDefs, resolvers);
