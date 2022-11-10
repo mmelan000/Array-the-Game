@@ -19,7 +19,7 @@ const Login = (props) => {
   const [error, setError] = useState('');
 
   const isValidEmail = (email) => {
-    const regex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+    const regex = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
     return regex.test(String(email).toLowerCase());
   };
 

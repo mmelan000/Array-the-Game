@@ -16,7 +16,7 @@ const CommentForm = ({ thoughtId }) => {
     event.preventDefault();
 
     try {
-      const { data } = await addComment({
+      await addComment({
         variables: {
           thoughtId,
           commentText,
@@ -24,8 +24,8 @@ const CommentForm = ({ thoughtId }) => {
         },
       });
 
-      // setCommentText('');
-      setCommentText(data.commentText);
+      setCommentText('');
+      // setCommentText(data.commentText);
     } catch (err) {
       console.error(err);
     }
