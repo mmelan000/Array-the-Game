@@ -1,3 +1,3 @@
 # Coming Soon...
 
-server repo: https://github.com/mmelan000/socket-io-server-for-array-game
+server repo: https://github.com/mmelan000/graphql-server-for-array-game
