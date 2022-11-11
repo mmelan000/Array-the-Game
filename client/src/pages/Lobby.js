@@ -31,7 +31,7 @@ export default function Lobby({ room, socket, user }) {
   const claimTile = (position, name) => {
     const diceSum = diceRoll1 + diceRoll2;
 
-    let newBoard = {
+    let updatedBoard = {
       ...board,
       [position]: {
         ...board[position],
@@ -44,14 +44,14 @@ export default function Lobby({ room, socket, user }) {
       board[position].player !== 'unclaimed' &&
       board[position].player !== name
     ) {
-      newBoard = {
+      updatedBoard = {
         ...board,
         [position]: {
           ...board[position],
           player: 'unclaimed',
         },
       };
-      setBoard(newBoard);
+      setBoard(updatedBoard);
       setLog([
         `Player ${currentPlayer} has removed ${board[position].display}.`,
         ...log,
@@ -59,6 +59,7 @@ export default function Lobby({ room, socket, user }) {
       endPlayerTurn();
       return;
     }
+
     if (
       board[position].player !== 'unclaimed' &&
       allClaimed(board[position].display, board) === false
@@ -71,13 +72,32 @@ export default function Lobby({ room, socket, user }) {
       return;
     }
 
-    setBoard(newBoard);
+    setBoard(updatedBoard);
     setLog([
       `Player ${currentPlayer} has claimed a ${board[position].display}.`,
       ...log,
     ]);
-
-    endPlayerTurn();
+    if (diceSum === 12) {
+      setLog([
+        `Player ${currentPlayer} gets another turn from rolling a 12!.`,
+        ...log,
+      ]);
+      setDiceRoll1(0);
+      setDiceRoll2(0);
+      return;
+    }
+    if (diceSum === 2) {
+      setLog([
+        `Player ${currentPlayer} gets another turn from rolling a 2!.`,
+        ...log,
+      ]);
+      setDiceRoll1(0);
+      setDiceRoll2(0);
+      return;
+    } else {
+      endPlayerTurn();
+      return;
+    }
   };
 
   const mappedBoardState = Object.entries(board).map((e) => {
