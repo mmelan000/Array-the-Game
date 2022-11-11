@@ -37,6 +37,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 20vh;
 }
 
 .about-section {
@@ -326,12 +327,39 @@ footer {
     padding-left: 0;
   }
 
+  .lobby-container {
+    flex-direction: column;
+  }
+
+  .timer-and-board {
+  }
+
+  .team-card-container {
+    flex-direction: row;
+  }
+
+  .chat-log-main {
+    width: 90vw;
+    margin-bottom: 5vh;
+  }
+
+  .log-and-chat {
+    order: 3;
+  }
+
   .Gameboard {
     max-width: 100%;
   }
 
+  .game-tile {
+    width: 15vw;
+  }
+
+  .game-tile p {
+    font-size: 6vw;
+  }
   .Gameboard-tile p {
-    font-size: 4vh;
+    font-size: 100vh;
   }
 }
 
