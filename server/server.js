@@ -38,7 +38,7 @@ socketIO.on('connection', (socket) => {
 
   socket.on('joinRoom', ({ user, room }) => {
     if (!user) {
-      user = 'Guest';
+      user = 'Guest' + uuidv4();
     }
     socket.join(room);
     console.log(`${user} has joined Room: ${room}`);
