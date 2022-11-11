@@ -106,7 +106,7 @@ export default function Home({ currentPage, handlePageChange }) {
           <Modal show={show} onHide={handleClose}>
             <>
               <Modal.Header closeButton>
-                <Modal.Title>Learn about [ Array ] </Modal.Title>
+                <Modal.Title>[ Array ] Rules </Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <Carousel interval={null}>
@@ -117,7 +117,7 @@ export default function Home({ currentPage, handlePageChange }) {
                         src={page.picture}
                         alt={page.information}
                       />
-                      <Carousel.Caption>
+                      <Carousel.Caption className='learn-text'>
                         <h3>{page.title}</h3>
                         <p>{page.information}</p>
                       </Carousel.Caption>
