@@ -3,9 +3,6 @@ import blueTile from '../images/Board/BlueBoardTile.svg';
 import greenTile from '../images/Board/GreenBoardTile.svg';
 
 export default function TeamCard({ player, color, isTurn }) {
-  console.log('tc');
-  console.log({ player, color, isTurn });
-
   let emblem;
   let altText;
   switch (color) {

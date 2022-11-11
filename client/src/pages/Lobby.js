@@ -15,10 +15,11 @@ import Endgame from '../utils/Endgame';
 const { v4: uuidv4 } = require('uuid');
 
 export default function Lobby({ room, socket, user }) {
+  const [username, setUsername] = useState();
   // gamelog state
   const [log, setLog] = useState(['Game has begun.']);
   // current player state
-  const [currentPlayer, setCurrentPlayer] = useState('Red');
+  const [currentPlayer, setCurrentPlayer] = useState({});
   // dice state
   const [diceRoll1, setDiceRoll1] = useState(0);
   const [diceRoll2, setDiceRoll2] = useState(0);
@@ -33,21 +34,21 @@ export default function Lobby({ room, socket, user }) {
 
   // const isTurn = user === currentPlayer;
 
-  const claimTile = (position, name) => {
+  const claimTile = (position, currentPlayer) => {
     const diceSum = diceRoll1 + diceRoll2;
 
     let updatedBoard = {
       ...board,
       [position]: {
         ...board[position],
-        player: name,
+        player: currentPlayer,
       },
     };
 
     if (
       diceSum === 10 &&
       board[position].player !== 'unclaimed' &&
-      board[position].player !== name
+      board[position].player !== currentPlayer
     ) {
       updatedBoard = {
         ...board,
@@ -194,7 +195,6 @@ export default function Lobby({ room, socket, user }) {
   };
 
   const startGame = () => {
-    console.log('l198');
     socket.emit('startGameInit', players, room);
   };
   const [show, setShow] = useState(true);
@@ -245,7 +245,6 @@ export default function Lobby({ room, socket, user }) {
       if (prePlayerList[1] === undefined) {
         prePlayerList.pop();
       }
-      console.log('l249');
       console.log(prePlayerList);
 
       setPlayers(prePlayerList);
@@ -254,8 +253,7 @@ export default function Lobby({ room, socket, user }) {
   // shared StartGame
   useEffect(() => {
     socket.on('startGame', (players) => {
-      console.log('L248');
-      console.log(players);
+      setCurrentPlayer(players.find((e) => e.isTurn === true));
       setPlayers(players);
       setShow(false);
       setGameStarted(true);
@@ -280,6 +278,13 @@ export default function Lobby({ room, socket, user }) {
       setBoard(board);
     });
   });
+  useEffect(() => {
+    socket.on('setUsername', (username) => {
+      setUsername(username);
+    });
+  });
+
+  console.log(username);
 
   // returned component
   return (
@@ -293,7 +298,7 @@ export default function Lobby({ room, socket, user }) {
             <Modal.Body>
               Players:
               <ul>
-                {console.log('l827', players)}
+                {/* {console.log('l298', players)} */}
                 {players.map((e) => (
                   <li key={uuidv4()}>{e.player}</li>
                 ))}
@@ -336,11 +341,15 @@ export default function Lobby({ room, socket, user }) {
           {/* if currentPlayer === user */}
         </div>
         <div className='dice-and-player'>
-          <DiceButton
-            diceRoll1={diceRoll1}
-            diceRoll2={diceRoll2}
-            onClick={() => rollDice()}
-          />
+          {username === currentPlayer.player ? (
+            <DiceButton
+              diceRoll1={diceRoll1}
+              diceRoll2={diceRoll2}
+              onClick={() => rollDice()}
+            />
+          ) : (
+            <div></div>
+          )}
           {players ? <TeamCardContainer players={players} /> : <div></div>}
         </div>
         {/* if/ */}
