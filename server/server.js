@@ -1,11 +1,11 @@
-const e = require('express');
 const express = require('express');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const app = express();
 const http = require('http').Server(app);
 const PORT = process.env.PORT || 3002;
-console.log(process.env);
+
+// console.log(process.env);
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -33,11 +33,7 @@ app.get('/*', (req, res) => {
 });
 
 let users = [];
-// let games = {
-//   123: {
-//     users: { player1: 'cloud', player2: 'alvin', player3: 'marshal' },
-//   },
-// };
+let games = {};
 
 socketIO.on('connection', (socket) => {
   console.log(`${socket.id} user just connected!`);
@@ -46,7 +42,36 @@ socketIO.on('connection', (socket) => {
     if (!user) {
       user = 'Guest' + uuidv4();
     }
-    // if (games.find((e) => e.room === room)) {
+
+    // function addPlayer(room, user) {
+    if (games[room]) {
+      if (!games[room].playerTwo) {
+        games = {
+          ...games,
+          [room]: {
+            ...games[room],
+            playerTwo: user,
+          },
+        };
+      } else {
+        games = {
+          ...games,
+          [room]: {
+            ...games[room],
+            playerThree: user,
+          },
+        };
+      }
+    } else {
+      games = {
+        ...games,
+        [room]: {
+          playerOne: user,
+        },
+      };
+    }
+    // }
+    console.log(games);
     // }
 
     socket.join(room);
