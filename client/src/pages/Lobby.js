@@ -35,20 +35,24 @@ export default function Lobby({ room, socket, user }) {
   // const isTurn = user === currentPlayer;
 
   const claimTile = (position, currentPlayer) => {
+    console.log('l39');
+    console.log(position);
+    console.log(currentPlayer);
+    console.log(board);
     const diceSum = diceRoll1 + diceRoll2;
 
     let updatedBoard = {
       ...board,
       [position]: {
         ...board[position],
-        player: currentPlayer,
+        player: currentPlayer.color,
       },
     };
 
     if (
       diceSum === 10 &&
       board[position].player !== 'unclaimed' &&
-      board[position].player !== currentPlayer
+      board[position].player !== currentPlayer.color
     ) {
       updatedBoard = {
         ...board,
@@ -57,12 +61,12 @@ export default function Lobby({ room, socket, user }) {
           player: 'unclaimed',
         },
       };
-      setBoard(updatedBoard);
+      // setBoard(updatedBoard);
       setLog([
-        `Player ${currentPlayer} has removed ${board[position].display}.`,
+        `Player ${currentPlayer.player} has removed ${board[position].display}.`,
         ...log,
       ]);
-      endPlayerTurn();
+      endPlayerTurn(room, updatedBoard);
       return;
     }
 
@@ -78,15 +82,15 @@ export default function Lobby({ room, socket, user }) {
       return;
     }
 
-    setBoard(updatedBoard);
+    // setBoard(updatedBoard);
     gameOverChecker(updatedBoard);
     setLog([
-      `Player ${currentPlayer} has claimed a ${board[position].display}.`,
+      `Player ${currentPlayer.player} has claimed a ${board[position].display}.`,
       ...log,
     ]);
     if (diceSum === 12) {
       setLog([
-        `Player ${currentPlayer} gets another turn from rolling a 12!.`,
+        `Player ${currentPlayer.player} gets another turn from rolling a 12!.`,
         ...log,
       ]);
       setDiceRoll1(0);
@@ -95,14 +99,14 @@ export default function Lobby({ room, socket, user }) {
     }
     if (diceSum === 2) {
       setLog([
-        `Player ${currentPlayer} gets another turn from rolling a 2!.`,
+        `Player ${currentPlayer.player} gets another turn from rolling a 2!.`,
         ...log,
       ]);
       setDiceRoll1(0);
       setDiceRoll2(0);
       return;
     } else {
-      endPlayerTurn();
+      endPlayerTurn(room, updatedBoard);
       return;
     }
   };
@@ -121,8 +125,10 @@ export default function Lobby({ room, socket, user }) {
     );
   });
 
-  const endPlayerTurn = () => {
+  const endPlayerTurn = (room, board) => {
     console.log(room);
+    console.log(board);
+
     socket.emit('initEndTurn', room, board);
     // setCurrentPlayer;
     // if (currentPlayer === 'Red') {
@@ -157,7 +163,7 @@ export default function Lobby({ room, socket, user }) {
     setDiceRoll1(dr1);
     setDiceRoll2(dr2);
     const result = dr1 + dr2;
-    setLog([`Player ${currentPlayer} has rolled a ${result}.`, ...log]);
+    setLog([`${currentPlayer.player} has rolled a ${result}.`, ...log]);
 
     const otherPlayers = (currentPlayer) => {
       switch (currentPlayer) {
@@ -170,7 +176,7 @@ export default function Lobby({ room, socket, user }) {
       }
     };
 
-    const otherPlayersTiles = otherPlayers(currentPlayer).map((e) => {
+    const otherPlayersTiles = otherPlayers(currentPlayer.color).map((e) => {
       const playerTiles = Object.entries(board).filter((f) => {
         if (f[1].player === e) {
           return true;
@@ -190,7 +196,7 @@ export default function Lobby({ room, socket, user }) {
         `Player ${currentPlayer} has rolled a ${result}, but there are no available tiles to remove.`,
         ...log,
       ]);
-      endPlayerTurn();
+      endPlayerTurn(room);
     }
   };
 
@@ -223,10 +229,10 @@ export default function Lobby({ room, socket, user }) {
         setSeconds(seconds - 1);
       } else {
         setLog([
-          `Player ${currentPlayer} ran out of time and lost their turn.`,
+          `${currentPlayer.player} ran out of time and lost their turn.`,
           ...log,
         ]);
-        endPlayerTurn();
+        endPlayerTurn(room);
         clearInterval(myInterval);
       }
     }, 1000);
@@ -264,9 +270,6 @@ export default function Lobby({ room, socket, user }) {
   useEffect(() => {
     socket.on('endTurn', (board) => {
       console.log('currentPlayer: ' + currentPlayer);
-      console.log(players);
-      console.log(players.indexOf(currentPlayer));
-      console.log(players.length - 1);
       if (players.indexOf(currentPlayer) < players.length - 1) {
         setCurrentPlayer(players[players.indexOf(currentPlayer) + 1]);
       } else {
@@ -284,7 +287,7 @@ export default function Lobby({ room, socket, user }) {
     });
   });
 
-  console.log(username);
+  // console.log(username);
 
   // returned component
   return (
