@@ -1,13 +1,29 @@
 import TeamCard from './TeamCard';
 
-export default function TeamCardContainer(props) {
-  console.log(props);
+export default function TeamCardContainer({ players, isTurn }) {
   let teamCards = [
-    <TeamCard team='1' key='1' />,
-    <TeamCard team='2' key='2' />,
+    <TeamCard
+      player={players.playerOne}
+      color={players.playerOne.color}
+      isTurn={isTurn}
+      key='1'
+    />,
+    <TeamCard
+      player={players.playerTwo}
+      color={players.playerTwo.color}
+      isTurn={isTurn}
+      key='2'
+    />,
   ];
-  if (props.teams === 3) {
-    teamCards.push(<TeamCard team='3' key='3' />);
+  if (players.length === 3) {
+    teamCards.push(
+      <TeamCard
+        player={players.playerThree}
+        color={players.playerThree.color}
+        isTurn={isTurn}
+        key='3'
+      />
+    );
   }
 
   return <div className='team-card-container'>{teamCards}</div>;
