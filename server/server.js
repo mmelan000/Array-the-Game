@@ -103,6 +103,9 @@ socketIO.on('connection', (socket) => {
     if (players[2] === null) {
       players.pop();
     }
+    if (players[1] === null) {
+      players.pop();
+    }
     players[Math.floor(Math.random() * players.length)].isTurn = true;
 
     console.log('l117');

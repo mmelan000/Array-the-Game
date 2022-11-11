@@ -29,9 +29,9 @@ export default function Lobby({ room, socket, user }) {
   // time state
   const [seconds, setSeconds] = useState(null);
   // players
-  const [players, setPlayers] = useState({});
+  const [players, setPlayers] = useState([]);
 
-  const isTurn = user === currentPlayer;
+  // const isTurn = user === currentPlayer;
 
   const claimTile = (position, name) => {
     const diceSum = diceRoll1 + diceRoll2;
@@ -238,8 +238,17 @@ export default function Lobby({ room, socket, user }) {
   // player list socketio
   useEffect(() => {
     socket.on('newPlayer', ({ playerOne, playerTwo, playerThree }) => {
-      console.log([playerOne, playerTwo, playerThree]);
-      setPlayers([playerOne, playerTwo, playerThree]);
+      let prePlayerList = [playerOne, playerTwo, playerThree];
+      if (prePlayerList[2] === undefined) {
+        prePlayerList.pop();
+      }
+      if (prePlayerList[1] === undefined) {
+        prePlayerList.pop();
+      }
+      console.log('l249');
+      console.log(prePlayerList);
+
+      setPlayers(prePlayerList);
     });
   }, [socket, players]);
   // shared StartGame
@@ -283,11 +292,12 @@ export default function Lobby({ room, socket, user }) {
             </Modal.Header>
             <Modal.Body>
               Players:
-              {/* <ul>
+              <ul>
+                {console.log('l827', players)}
                 {players.map((e) => (
-                  <li key={uuidv4()}>{e}</li>
+                  <li key={uuidv4()}>{e.player}</li>
                 ))}
-              </ul> */}
+              </ul>
             </Modal.Body>
           </>
           <div className='start-game-modal'>
@@ -331,7 +341,7 @@ export default function Lobby({ room, socket, user }) {
             diceRoll2={diceRoll2}
             onClick={() => rollDice()}
           />
-          <TeamCardContainer players={players} isCurrentTurn={isTurn} />
+          {players ? <TeamCardContainer players={players} /> : <div></div>}
         </div>
         {/* if/ */}
         {/* if endGame === true */}
