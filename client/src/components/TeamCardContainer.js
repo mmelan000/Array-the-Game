@@ -1,11 +1,11 @@
 import TeamCard from './TeamCard';
 
-export default function TeamCardContainer(props) {
+export default function TeamCardContainer({ players, isCurrentTurn }) {
   let teamCards = [
     <TeamCard team='1' key='1' />,
     <TeamCard team='2' key='2' />,
   ];
-  if (props.teams === 3) {
+  if (players.length === 3) {
     teamCards.push(<TeamCard team='3' key='3' />);
   }
 

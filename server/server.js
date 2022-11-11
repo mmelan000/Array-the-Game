@@ -42,6 +42,7 @@ socketIO.on('connection', (socket) => {
     }
     socket.join(room);
     console.log(`${user} has joined Room: ${room}`);
+    socketIO.to(room).emit('newPlayer', user);
   });
 
   socket.on('message', ({ user, room, message }) => {
