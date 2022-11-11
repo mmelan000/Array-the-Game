@@ -6,6 +6,9 @@ import Gamelog from '../components/Gamelog';
 import TeamCardContainer from '../components/TeamCardContainer';
 import Tile from '../components/Tile';
 import ChatLog from '../components/ChatLog';
+import { newBoard } from '../utils/newBoard';
+import onlyUnique from '../utils/onlyUnique';
+import allClaimed from '../utils/allClaimed';
 import Modal from 'react-bootstrap/Modal';
 
 export default function Lobby({ room, socket, user }) {
@@ -16,188 +19,14 @@ export default function Lobby({ room, socket, user }) {
   // dice state
   const [diceRoll1, setDiceRoll1] = useState(0);
   const [diceRoll2, setDiceRoll2] = useState(0);
-  // time state
-  const [seconds, setSeconds] = useState(0);
-
-  const [gameStarted, setGameStart] = useState(false);
-  useEffect(() => {
-    if (!gameStarted) {
-      return;
-    }
-    let myInterval = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds(seconds - 1);
-      } else {
-        setLog([
-          `Player ${currentPlayer} ran out of time and lost their turn.`,
-          ...log,
-        ]);
-        endPlayerTurn();
-        clearInterval(myInterval);
-      }
-    }, 1000);
-    return () => {
-      clearInterval(myInterval);
-    };
-  });
+  // state for is game started
+  const [gameStarted, setGameStarted] = useState(false);
   // boardState
-  const [board, setBoard] = useState({
-    1: {
-      player: 'unclaimed',
-      display: '2',
-    },
-    2: {
-      player: 'unclaimed',
-      display: '3',
-    },
-    3: {
-      player: 'unclaimed',
-      display: '4',
-    },
-    4: {
-      player: 'unclaimed',
-      display: '5',
-    },
-    5: {
-      player: 'unclaimed',
-      display: '6',
-    },
-    6: {
-      player: 'unclaimed',
-      display: '2',
-    },
-    7: {
-      player: 'unclaimed',
-      display: '6',
-    },
-    8: {
-      player: 'unclaimed',
-      display: '7',
-    },
-    9: {
-      player: 'unclaimed',
-      display: '8',
-    },
-    10: {
-      player: 'unclaimed',
-      display: '9',
-    },
-    11: {
-      player: 'unclaimed',
-      display: '7',
-    },
-    12: {
-      player: 'unclaimed',
-      display: '3',
-    },
-    13: {
-      player: 'unclaimed',
-      display: '5',
-    },
-    14: {
-      player: 'unclaimed',
-      display: '9',
-    },
-    15: {
-      player: 'unclaimed',
-      display: '12',
-    },
-    16: {
-      player: 'unclaimed',
-      display: '12',
-    },
-    17: {
-      player: 'unclaimed',
-      display: '8',
-    },
-    18: {
-      player: 'unclaimed',
-      display: '4',
-    },
-    19: {
-      player: 'unclaimed',
-      display: '4',
-    },
-    20: {
-      player: 'unclaimed',
-      display: '8',
-    },
-    21: {
-      player: 'unclaimed',
-      display: '12',
-    },
-    22: {
-      player: 'unclaimed',
-      display: '12',
-    },
-    23: {
-      player: 'unclaimed',
-      display: '9',
-    },
-    24: {
-      player: 'unclaimed',
-      display: '5',
-    },
-    25: {
-      player: 'unclaimed',
-      display: '3',
-    },
-    26: {
-      player: 'unclaimed',
-      display: '7',
-    },
-    27: {
-      player: 'unclaimed',
-      display: '9',
-    },
-    28: {
-      player: 'unclaimed',
-      display: '8',
-    },
-    29: {
-      player: 'unclaimed',
-      display: '7',
-    },
-    30: {
-      player: 'unclaimed',
-      display: '6',
-    },
-    31: {
-      player: 'unclaimed',
-      display: '2',
-    },
-    32: {
-      player: 'unclaimed',
-      display: '6',
-    },
-    33: {
-      player: 'unclaimed',
-      display: '5',
-    },
-    34: {
-      player: 'unclaimed',
-      display: '4',
-    },
-    35: {
-      player: 'unclaimed',
-      display: '3',
-    },
-    36: {
-      player: 'unclaimed',
-      display: '2',
-    },
-  });
-
-  const otherPlayers = (currentPlayer) => {
-    switch (currentPlayer) {
-      case 'Green':
-        return ['Blue', 'Red'];
-      case 'Blue':
-        return ['Green', 'Red'];
-      default:
-        return ['Blue', 'Green'];
-    }
-  };
+  const [board, setBoard] = useState(newBoard);
+  // time state
+  const [seconds, setSeconds] = useState(null);
+  // players
+  const [players, setPlayers] = useState([]);
 
   const claimTile = (position, name) => {
     const diceSum = diceRoll1 + diceRoll2;
@@ -232,7 +61,7 @@ export default function Lobby({ room, socket, user }) {
     }
     if (
       board[position].player !== 'unclaimed' &&
-      allClaimed(board[position].display) === false
+      allClaimed(board[position].display, board) === false
     ) {
       console.log('Tile already claimed.');
       return;
@@ -264,20 +93,6 @@ export default function Lobby({ room, socket, user }) {
       />
     );
   });
-
-  // players
-  const [players, setPlayers] = useState([]);
-
-  useEffect(() => {
-    socket.on('newPlayer', (user) => {
-      console.log(user);
-      if (players.length < 3) {
-        setPlayers([user, ...players]);
-      }
-      // setPlayers(players.map((e) => ))
-      else console.log(players);
-    });
-  }, [socket, players]);
 
   const endPlayerTurn = () => {
     setDiceRoll1(0);
@@ -317,6 +132,17 @@ export default function Lobby({ room, socket, user }) {
     const result = dr1 + dr2;
     setLog([`Player ${currentPlayer} has rolled a ${result}.`, ...log]);
 
+    const otherPlayers = (currentPlayer) => {
+      switch (currentPlayer) {
+        case 'Green':
+          return ['Blue', 'Red'];
+        case 'Blue':
+          return ['Green', 'Red'];
+        default:
+          return ['Blue', 'Green'];
+      }
+    };
+
     const otherPlayersTiles = otherPlayers(currentPlayer).map((e) => {
       const playerTiles = Object.entries(board).filter((f) => {
         if (f[1].player === e) {
@@ -341,31 +167,50 @@ export default function Lobby({ room, socket, user }) {
     }
   };
 
-  const allClaimed = (display) => {
-    const checker = Object.entries(board).filter((e) => {
-      if (e[1].display === display && e[1].player !== 'unclaimed') {
-        return true;
-      } else {
-        return false;
-      }
-    });
-
-    if (checker.length === 4) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   const startGame = () => {
+    setGameStarted(true);
     console.log('what am i doing with my life');
-    setGameStart(true);
   };
   const [show, setShow] = useState(true);
   const handleClose = () => {
     setShow(false);
   };
+  // timer effect
+  useEffect(() => {
+    if (!gameStarted) {
+      return;
+    }
+    let myInterval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      } else {
+        setLog([
+          `Player ${currentPlayer} ran out of time and lost their turn.`,
+          ...log,
+        ]);
+        endPlayerTurn();
+        clearInterval(myInterval);
+      }
+    }, 1000);
+    return () => {
+      clearInterval(myInterval);
+    };
+  });
+  // SOCKET IO STUFF
+  // player list socketio
+  useEffect(() => {
+    socket.on('newPlayer', (user) => {
+      console.log(user);
+      if (players.length < 3) {
+        const playerList = [user, ...players].filter(onlyUnique);
 
+        setPlayers(playerList);
+      }
+      console.log(players);
+    });
+  }, [socket, players]);
+
+  // returned component
   return (
     <div>
       <div className="lobby-container">
