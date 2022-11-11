@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; //, { useEffect }
 // import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Forums from './pages/Forums';
@@ -42,27 +42,27 @@ let origin = 'http://localhost:3002';
 if (process.env.NODE_ENV === 'production') {
   origin = 'https://array-the-game-production.up.railway.app/';
 }
-
 const socket = socketIO.connect(origin);
+let room;
+let user;
+if (localStorage.getItem('id_token')) {
+  user = jwtDecode(localStorage.getItem('id_token')).data.username;
+}
+if (
+  window.location.pathname.slice(1, 6) === 'lobby' &&
+  window.location.pathname.slice(7).length > 1
+) {
+  room = window.location.pathname.slice(7);
+  socket.emit('joinRoom', { room, user });
+}
+
+socket.emit('newUser', user);
+window.onbeforeunload = function () {
+  socket.emit('disconnect');
+};
+
 export default function App() {
   console.log('app.js');
-  let room;
-  let user;
-  if (localStorage.getItem('id_token')) {
-    user = jwtDecode(localStorage.getItem('id_token')).data.username;
-  }
-  if (
-    window.location.pathname.slice(1, 6) === 'lobby' &&
-    window.location.pathname.slice(7).length > 1
-  ) {
-    room = window.location.pathname.slice(7);
-    socket.emit('joinRoom', { room, user });
-  }
-
-  socket.emit('newUser', user);
-  window.onbeforeunload = function () {
-    socket.emit('disconnect');
-  };
 
   return (
     <ApolloProvider client={client}>

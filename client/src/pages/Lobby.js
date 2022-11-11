@@ -7,7 +7,8 @@ import TeamCardContainer from '../components/TeamCardContainer';
 import Tile from '../components/Tile';
 import ChatLog from '../components/ChatLog';
 import { newBoard } from '../utils/newBoard';
-import onlyUnique from '../utils/onlyUnique';
+const { v4: uuidv4 } = require('uuid');
+// import onlyUnique from '../utils/onlyUnique';
 import allClaimed from '../utils/allClaimed';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -191,8 +192,7 @@ export default function Lobby({ room, socket, user }) {
   };
 
   const startGame = () => {
-    setGameStarted(true);
-    console.log('what am i doing with my life');
+    socket.emit('startGameInit', players, room);
   };
   const [show, setShow] = useState(true);
   const handleClose = () => {
@@ -234,16 +234,27 @@ export default function Lobby({ room, socket, user }) {
   // SOCKET IO STUFF
   // player list socketio
   useEffect(() => {
-    socket.on('newPlayer', (user) => {
-      console.log(user);
-      if (players.length < 3) {
-        const playerList = [user, ...players].filter(onlyUnique);
-
-        setPlayers(playerList);
-      }
+    socket.on('newPlayer', ({ playerOne, playerTwo, playerThree }) => {
+      setPlayers([playerOne, playerTwo, playerThree]);
       console.log(players);
     });
   }, [socket, players]);
+  // shared StartGame
+  useEffect(() => {
+    socket.on('startGame', (players) => {
+      console.log(players);
+      let playerList = [
+        { playerOne: players[0], team: 'Red' },
+        { playerTwo: players[1], team: 'Green' },
+      ];
+      if (players[2]) {
+        playerList.push({ playerThree: players[2], team: 'Blue' });
+      }
+      setPlayers(players);
+      setShow(false);
+      setGameStarted(true);
+    });
+  }, [socket]);
 
   // returned component
   return (
@@ -258,7 +269,7 @@ export default function Lobby({ room, socket, user }) {
               Players:
               <ul>
                 {players.map((player) => (
-                  <li key={player}>{player}</li>
+                  <li key={uuidv4()}>{player}</li>
                 ))}
               </ul>
             </Modal.Body>

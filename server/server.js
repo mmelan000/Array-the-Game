@@ -1,4 +1,5 @@
 const express = require('express');
+const { truncate } = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const app = express();
@@ -76,7 +77,7 @@ socketIO.on('connection', (socket) => {
 
     socket.join(room);
     console.log(`${user} has joined Room: ${room}`);
-    socketIO.to(room).emit('newPlayer', user);
+    socketIO.to(room).emit('newPlayer', games[room]);
   });
 
   socket.on('message', ({ user, room, message }) => {
@@ -96,6 +97,31 @@ socketIO.on('connection', (socket) => {
     users.push({ username: username, socket_id: socket.id });
     socketIO.emit('newUserResponse', users);
   });
+
+  socket.on('startGameInit', (players, room) => {
+    if (players[2] === null) {
+      players.pop();
+    }
+    // shuffle players
+    let currentIndex = players.length,
+      randomIndex;
+    while (currentIndex != 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      [players[currentIndex], players[randomIndex]] = [
+        players[randomIndex],
+        players[currentIndex],
+      ];
+    }
+
+    console.log(players, room);
+    // const turnOrder =[]
+    socketIO.to(room).emit('startGame', players);
+  });
+
+  socket.on('boardStateSend', (room, board, user) => {});
   //
   socket.on('disconnect', () => {
     console.log('A user disconnected');
