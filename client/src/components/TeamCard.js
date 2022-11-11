@@ -1,7 +1,7 @@
-export default function TeamCard(props) {
+export default function TeamCard({ team }) {
   return (
     <div className='team-card'>
-      <p>Team {props.team}</p>
+      <p>Team {team}</p>
     </div>
   );
 }
