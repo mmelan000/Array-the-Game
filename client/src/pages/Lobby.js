@@ -35,10 +35,6 @@ export default function Lobby({ room, socket, user }) {
   // const isTurn = user === currentPlayer;
 
   const claimTile = (position, currentPlayer) => {
-    console.log('l39');
-    console.log(position);
-    console.log(currentPlayer);
-    console.log(board);
     const diceSum = diceRoll1 + diceRoll2;
 
     let updatedBoard = {
@@ -83,7 +79,7 @@ export default function Lobby({ room, socket, user }) {
     }
 
     // setBoard(updatedBoard);
-    gameOverChecker(updatedBoard);
+
     setLog([
       `Player ${currentPlayer.player} has claimed a ${board[position].display}.`,
       ...log,
@@ -95,6 +91,8 @@ export default function Lobby({ room, socket, user }) {
       ]);
       setDiceRoll1(0);
       setDiceRoll2(0);
+      socket.emit('initTwoOrTwelve', room, updatedBoard);
+
       return;
     }
     if (diceSum === 2) {
@@ -104,6 +102,7 @@ export default function Lobby({ room, socket, user }) {
       ]);
       setDiceRoll1(0);
       setDiceRoll2(0);
+      socket.emit('initTwoOrTwelve', room, updatedBoard);
       return;
     } else {
       endPlayerTurn(room, updatedBoard);
@@ -213,12 +212,6 @@ export default function Lobby({ room, socket, user }) {
     setShowEnd(false);
   };
 
-  const gameOverChecker = (currentBoard) => {
-    if (Endgame(currentBoard)) {
-      setShowEnd(true);
-    }
-  };
-
   // timer effect
   useEffect(() => {
     if (!gameStarted) {
@@ -232,7 +225,7 @@ export default function Lobby({ room, socket, user }) {
           `${currentPlayer.player} ran out of time and lost their turn.`,
           ...log,
         ]);
-        endPlayerTurn(room);
+        endPlayerTurn(room, board);
         clearInterval(myInterval);
       }
     }, 1000);
@@ -240,6 +233,7 @@ export default function Lobby({ room, socket, user }) {
       clearInterval(myInterval);
     };
   });
+
   // SOCKET IO STUFF
   // player list socketio
   useEffect(() => {
@@ -279,11 +273,30 @@ export default function Lobby({ room, socket, user }) {
       setDiceRoll2(0);
       setSeconds(60);
       setBoard(board);
+      if (Endgame(board)) {
+        socket.emit('initEndGame', room);
+      }
     });
   });
   useEffect(() => {
     socket.on('setUsername', (username) => {
       setUsername(username);
+    });
+  });
+  useEffect(() => {
+    socket.on('endGame', () => {
+      setShowEnd(true);
+    });
+  });
+  useEffect(() => {
+    socket.on('twoOrTwelve', (board) => {
+      setBoard(board);
+      setSeconds(60);
+      setDiceRoll1(0);
+      setDiceRoll2(0);
+      if (Endgame(board)) {
+        socket.emit('initEndGame', room);
+      }
     });
   });
 
@@ -362,7 +375,7 @@ export default function Lobby({ room, socket, user }) {
         <Modal show={showEnd} onHide={handleCloseEnd}>
           <>
             <Modal.Header closeButton>
-              <Modal.Title>The winner is:</Modal.Title>
+              <Modal.Title>The winner is: {currentPlayer.player}</Modal.Title>
             </Modal.Header>
             <Modal.Body></Modal.Body>
           </>
