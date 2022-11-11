@@ -41,8 +41,6 @@ export default function Lobby({ room, socket, user }) {
       },
     };
 
-    gameOverChecker(updatedBoard);
-
     if (
       diceSum === 10 &&
       board[position].player !== 'unclaimed' &&
@@ -77,6 +75,7 @@ export default function Lobby({ room, socket, user }) {
     }
 
     setBoard(updatedBoard);
+    gameOverChecker(updatedBoard);
     setLog([
       `Player ${currentPlayer} has claimed a ${board[position].display}.`,
       ...log,

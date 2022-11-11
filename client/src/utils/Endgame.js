@@ -53,12 +53,6 @@ export default function Endgame(boardState) {
       green.push(key);
     }
   }
-  console.log('&&&&&&&& blue Board **********');
-  console.log(blue);
-  console.log('&&&&&&&& red Board **********');
-  console.log(red);
-  console.log('&&&&&&&& green Board **********');
-  console.log(green);
 
   if (!victoryChecker(blue)) {
     console.log('Blue Wins');
