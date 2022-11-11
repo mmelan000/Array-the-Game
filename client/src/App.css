@@ -1,3 +1,7 @@
+:root {
+  --theme-color: rgb(0, 0, 0);
+}
+
 body {
   /* background: #000; */
   background: radial-gradient(
@@ -47,19 +51,25 @@ body {
   font-size: 3vh;
   text-align: center;
 
-  background-image: linear-gradient(#000000, #000000),
-    linear-gradient(#000000, #000000), linear-gradient(#000000, #000000),
-    linear-gradient(#000000, #000000);
+  background-image: linear-gradient(var(--theme-color), var(--theme-color)),
+    linear-gradient(var(--theme-color), var(--theme-color)),
+    linear-gradient(var(--theme-color), var(--theme-color)),
+    linear-gradient(var(--theme-color), var(--theme-color));
 
   background-repeat: no-repeat;
   background-size: 20px 15px;
   /* // ^^^ This value should be equal to width of left OR right border. */
   background-position: top left, top right, bottom left, bottom right;
 
-  border: solid #000000;
+  border: solid var(--theme-color);
   border-width: 0 15px;
   padding-left: 3vw;
   padding-right: 3vw;
+  color: var(--theme-color);
+}
+
+.about-section ul {
+  padding-left: 0;
 }
 
 .logo {
@@ -308,6 +318,19 @@ footer {
     max-width: 100%;
   }
 
+  .learn-text {
+    padding-top: 20px;
+    font-size: 3.25vw;
+  }
+
+  .learn-text p {
+    margin-bottom: 0;
+  }
+
+  .carousel-indicators {
+    margin-bottom: 8px;
+  }
+
   .about-wrapper {
     display: flex;
     justify-content: center;
@@ -372,6 +395,13 @@ footer {
     max-width: 43vw;
     max-height: 100%;
   }
+
+  .about-wrapper {
+    margin-top: 0;
+  }
+  .about-section {
+    font-size: 2vw;
+  }
 }
 
 /*-------------------------------------------------------------------------------------------------------------------------------------*/
@@ -385,6 +415,16 @@ footer {
 
   .game-tile p {
     font-size: 4vh;
+  }
+
+  .about-wrapper {
+    width: 90vw;
+    display: flex;
+    justify-content: center;
+  }
+
+  .about-section {
+    font-size: 2vh;
   }
 }
 
