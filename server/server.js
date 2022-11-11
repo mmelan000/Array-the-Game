@@ -51,7 +51,7 @@ socketIO.on('connection', (socket) => {
           ...games,
           [room]: {
             ...games[room],
-            playerTwo: user,
+            playerTwo: { player: user, color: 'Blue', isTurn: false },
           },
         };
       } else {
@@ -59,7 +59,7 @@ socketIO.on('connection', (socket) => {
           ...games,
           [room]: {
             ...games[room],
-            playerThree: user,
+            playerThree: { player: user, color: 'Green', isTurn: false },
           },
         };
       }
@@ -67,11 +67,12 @@ socketIO.on('connection', (socket) => {
       games = {
         ...games,
         [room]: {
-          playerOne: user,
+          playerOne: { player: user, color: 'Red', isTurn: false },
         },
       };
     }
     // }
+    console.log('line 75');
     console.log(games);
     // }
 
@@ -88,8 +89,6 @@ socketIO.on('connection', (socket) => {
     socketIO.to(room).emit('messageResponse', `${user}: ${message}`);
   });
 
-  socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data));
-
   socket.on('newUser', (username) => {
     if (username === null || undefined) {
       username = `Guest/${uuidv4()}`;
@@ -99,26 +98,24 @@ socketIO.on('connection', (socket) => {
   });
 
   socket.on('startGameInit', (players, room) => {
+    // console.
+    console.log(players);
     if (players[2] === null) {
       players.pop();
     }
-    // shuffle players
-    let currentIndex = players.length,
-      randomIndex;
-    while (currentIndex != 0) {
-      // Pick a remaining element.
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-
-      [players[currentIndex], players[randomIndex]] = [
-        players[randomIndex],
-        players[currentIndex],
-      ];
+    if (players[1] === null) {
+      players.pop();
     }
+    players[Math.floor(Math.random() * players.length)].isTurn = true;
 
-    console.log(players, room);
+    console.log('l117');
+    console.log(players);
     // const turnOrder =[]
     socketIO.to(room).emit('startGame', players);
+  });
+
+  socket.on('initEndTurn', (room, board) => {
+    socketIO.to(room).emit('endTurn', board);
   });
 
   socket.on('boardStateSend', (room, board, user) => {});

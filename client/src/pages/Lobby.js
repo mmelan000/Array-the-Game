@@ -31,6 +31,8 @@ export default function Lobby({ room, socket, user }) {
   // players
   const [players, setPlayers] = useState([]);
 
+  // const isTurn = user === currentPlayer;
+
   const claimTile = (position, name) => {
     const diceSum = diceRoll1 + diceRoll2;
 
@@ -119,29 +121,29 @@ export default function Lobby({ room, socket, user }) {
   });
 
   const endPlayerTurn = () => {
-    setDiceRoll1(0);
-    setDiceRoll2(0);
-    if (currentPlayer === 'Red') {
-      setCurrentPlayer('Green');
-      setSeconds(60);
-      return;
-    }
-    if (currentPlayer === 'Green') {
-      setCurrentPlayer(() => {
-        if (players.length === 3) {
-          setCurrentPlayer('Blue');
-        } else {
-          setCurrentPlayer('Red');
-        }
-      });
-      setSeconds(60);
-      return;
-    }
-    if (currentPlayer === 'Blue') {
-      setCurrentPlayer('Red');
-      setSeconds(60);
-      return;
-    }
+    console.log(room);
+    socket.emit('initEndTurn', room, board);
+    // setCurrentPlayer;
+    // if (currentPlayer === 'Red') {
+    //   setCurrentPlayer('Green');
+    //   return;
+    // }
+    // if (currentPlayer === 'Green') {
+    //   setCurrentPlayer(() => {
+    //     if (players.length === 3) {
+    //       setCurrentPlayer('Blue');
+    //     } else {
+    //       setCurrentPlayer('Red');
+    //     }
+    //   });
+    //   setSeconds(60);
+    //   return;
+    // }
+    // if (currentPlayer === 'Blue') {
+    //   setCurrentPlayer('Red');
+    //   setSeconds(60);
+    //   return;
+    // }
   };
 
   const rollDice = () => {
@@ -192,6 +194,7 @@ export default function Lobby({ room, socket, user }) {
   };
 
   const startGame = () => {
+    console.log('l198');
     socket.emit('startGameInit', players, room);
   };
   const [show, setShow] = useState(true);
@@ -235,26 +238,48 @@ export default function Lobby({ room, socket, user }) {
   // player list socketio
   useEffect(() => {
     socket.on('newPlayer', ({ playerOne, playerTwo, playerThree }) => {
-      setPlayers([playerOne, playerTwo, playerThree]);
-      console.log(players);
+      let prePlayerList = [playerOne, playerTwo, playerThree];
+      if (prePlayerList[2] === undefined) {
+        prePlayerList.pop();
+      }
+      if (prePlayerList[1] === undefined) {
+        prePlayerList.pop();
+      }
+      console.log('l249');
+      console.log(prePlayerList);
+
+      setPlayers(prePlayerList);
     });
   }, [socket, players]);
   // shared StartGame
   useEffect(() => {
     socket.on('startGame', (players) => {
+      console.log('L248');
       console.log(players);
-      let playerList = [
-        { playerOne: players[0], team: 'Red' },
-        { playerTwo: players[1], team: 'Green' },
-      ];
-      if (players[2]) {
-        playerList.push({ playerThree: players[2], team: 'Blue' });
-      }
       setPlayers(players);
       setShow(false);
       setGameStarted(true);
+      setSeconds(60);
     });
   }, [socket]);
+  // shared Turn State
+  useEffect(() => {
+    socket.on('endTurn', (board) => {
+      console.log('currentPlayer: ' + currentPlayer);
+      console.log(players);
+      console.log(players.indexOf(currentPlayer));
+      console.log(players.length - 1);
+      if (players.indexOf(currentPlayer) < players.length - 1) {
+        setCurrentPlayer(players[players.indexOf(currentPlayer) + 1]);
+      } else {
+        setCurrentPlayer(players[0]);
+      }
+      setDiceRoll1(0);
+      setDiceRoll2(0);
+      setSeconds(60);
+      setBoard(board);
+    });
+  });
 
   // returned component
   return (
@@ -268,8 +293,9 @@ export default function Lobby({ room, socket, user }) {
             <Modal.Body>
               Players:
               <ul>
-                {players.map((player) => (
-                  <li key={uuidv4()}>{player}</li>
+                {console.log('l827', players)}
+                {players.map((e) => (
+                  <li key={uuidv4()}>{e.player}</li>
                 ))}
               </ul>
             </Modal.Body>
@@ -315,7 +341,7 @@ export default function Lobby({ room, socket, user }) {
             diceRoll2={diceRoll2}
             onClick={() => rollDice()}
           />
-          <TeamCardContainer players={players} isCurrentTurn={true} />
+          {players ? <TeamCardContainer players={players} /> : <div></div>}
         </div>
         {/* if/ */}
         {/* if endGame === true */}
@@ -329,6 +355,23 @@ export default function Lobby({ room, socket, user }) {
             <Modal.Body></Modal.Body>
           </>
         </Modal>
+      </div>
+      <div className='debugBar'>
+        <button
+          onClick={() => {
+            console.log('currentPlayer=' + currentPlayer.player);
+            console.log(
+              `player1= ${players[0].player} team: ${players[0].team}`
+            );
+            console.log(
+              players.map((e) => {
+                return e;
+              })
+            );
+          }}
+        >
+          CLS
+        </button>
       </div>
     </div>
   );
