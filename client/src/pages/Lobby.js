@@ -10,6 +10,7 @@ import { newBoard } from '../utils/newBoard';
 import onlyUnique from '../utils/onlyUnique';
 import allClaimed from '../utils/allClaimed';
 import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 export default function Lobby({ room, socket, user }) {
   // gamelog state
@@ -228,21 +229,25 @@ export default function Lobby({ room, socket, user }) {
               </ul>
             </Modal.Body>
           </>
-          <button
+          <Button
+            variant="primary"
+            type="submit"
             onClick={() => {
               handleClose();
               startGame();
             }}
           >
             Start Game
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="primary"
+            type="submit"
             onClick={() => {
               window.location.href = '/';
             }}
           >
             Close
-          </button>
+          </Button>
         </Modal>
 
         <div className="log-and-chat">
