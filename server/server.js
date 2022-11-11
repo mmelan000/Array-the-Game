@@ -122,7 +122,14 @@ socketIO.on('connection', (socket) => {
     socketIO.to(room).emit('endTurn', board);
   });
 
-  socket.on('boardStateSend', (room, board, user) => {});
+  // socket.on('boardStateSend', (room, board, user) => {});
+  socket.on('initTwoOrTwelve', (room, board) => {
+    socketIO.to(room).emit('twoOrTwelve', board);
+  });
+
+  socket.on('initEndGame', (room) => {
+    socketIO.to(room).emit('endGame');
+  });
   //
   socket.on('disconnect', () => {
     console.log('A user disconnected');
