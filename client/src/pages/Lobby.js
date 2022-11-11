@@ -11,6 +11,7 @@ import onlyUnique from '../utils/onlyUnique';
 import allClaimed from '../utils/allClaimed';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import Endgame from '../utils/Endgame';
 
 export default function Lobby({ room, socket, user }) {
   // gamelog state
@@ -39,6 +40,8 @@ export default function Lobby({ room, socket, user }) {
         player: name,
       },
     };
+
+    gameOverChecker(updatedBoard);
 
     if (
       diceSum === 10 &&
@@ -196,6 +199,18 @@ export default function Lobby({ room, socket, user }) {
   const handleClose = () => {
     setShow(false);
   };
+
+  const [showEnd, setShowEnd] = useState(false);
+  const handleCloseEnd = () => {
+    setShowEnd(false);
+  };
+
+  const gameOverChecker = (currentBoard) => {
+    if (Endgame(currentBoard)) {
+      setShowEnd(true);
+    }
+  };
+
   // timer effect
   useEffect(() => {
     if (!gameStarted) {
@@ -294,6 +309,14 @@ export default function Lobby({ room, socket, user }) {
         {/* if endGame === true */}
         {/* <endGameCard winner={winner}/> */}
         {/* if/ */}
+        <Modal show={showEnd} onHide={handleCloseEnd}>
+          <>
+            <Modal.Header closeButton>
+              <Modal.Title>The winner is:</Modal.Title>
+            </Modal.Header>
+            <Modal.Body></Modal.Body>
+          </>
+        </Modal>
       </div>
     </div>
   );
