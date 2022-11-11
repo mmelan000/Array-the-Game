@@ -369,9 +369,9 @@ export default function Lobby({ room, socket, user }) {
   return (
     <div>
       <div className="lobby-container">
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show}>
           <>
-            <Modal.Header closeButton>
+            <Modal.Header>
               <Modal.Title>Start Game </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -390,6 +390,13 @@ export default function Lobby({ room, socket, user }) {
             }}
           >
             Start Game
+          </button>
+          <button
+            onClick={() => {
+              window.location.href = '/';
+            }}
+          >
+            Close
           </button>
         </Modal>
 
