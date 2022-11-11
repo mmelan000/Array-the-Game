@@ -5,9 +5,13 @@ import BlueBoardTile from '../images/lottieFiles/BlueBoardTile.json';
 import GreenBoardTile from '../images/lottieFiles/GreenBoardTile.json';
 
 function Tile(props) {
+  // console.log(props);
   let background;
   let textColor = '#ffffff';
-
+  if (props.player === 'unclaimed') {
+    background = UnclaimedBoardTile;
+    textColor = '#000000';
+  }
   if (props.player === 'red') {
     background = RedBoardTile;
   }
@@ -16,9 +20,6 @@ function Tile(props) {
   }
   if (props.player === 'blue') {
     background = BlueBoardTile;
-  } else {
-    background = UnclaimedBoardTile;
-    textColor = '#000000';
   }
 
   // console.log('Tile.js');
