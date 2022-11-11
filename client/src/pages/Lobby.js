@@ -9,6 +9,7 @@ import ChatLog from '../components/ChatLog';
 import { newBoard } from '../utils/newBoard';
 import onlyUnique from '../utils/onlyUnique';
 import allClaimed from '../utils/allClaimed';
+import Modal from 'react-bootstrap/Modal';
 
 export default function Lobby({ room, socket, user }) {
   // gamelog state
@@ -19,7 +20,7 @@ export default function Lobby({ room, socket, user }) {
   const [diceRoll1, setDiceRoll1] = useState(0);
   const [diceRoll2, setDiceRoll2] = useState(0);
   // state for is game started
-  const [gameStarted, setGameStarted] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false)
   // boardState
   const [board, setBoard] = useState(newBoard);
   // time state
@@ -169,6 +170,11 @@ export default function Lobby({ room, socket, user }) {
   const startGame = () => {
     setGameStarted(true);
     console.log('what am i doing with my life');
+    setGameStart(true);
+  };
+  const [show, setShow] = useState(true);
+  const handleClose = () => {
+    setShow(false);
   };
   // timer effect
   useEffect(() => {
@@ -208,27 +214,44 @@ export default function Lobby({ room, socket, user }) {
   // returned component
   return (
     <div>
-      <div className='lobby-container'>
-        <button
-          onClick={() => {
-            startGame();
-          }}
-        >
-          Start Game
-        </button>
-        <div className='log-and-chat'>
+      <div className="lobby-container">
+        <Modal show={show} onHide={handleClose}>
+          <>
+            <Modal.Header closeButton>
+              <Modal.Title>Start Game </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Players:
+              <ul>
+                {players.map((player) => (
+                  <li key={player}>{player}</li>
+                ))}
+              </ul>
+            </Modal.Body>
+          </>
+          <button
+            onClick={() => {
+              handleClose();
+              startGame();
+            }}
+          >
+            Start Game
+          </button>
+        </Modal>
+
+        <div className="log-and-chat">
           <Gamelog log={log} />
           {/* chat */}
           <ChatLog room={room} socket={socket} user={user} />
         </div>
-        <div className='timer-and-board'>
+        <div className="timer-and-board">
           <Timer seconds={seconds} />
-          <div className='Gameboard'>
-            <div className='Gameboard-header'>{mappedBoardState}</div>
+          <div className="Gameboard">
+            <div className="Gameboard-header">{mappedBoardState}</div>
           </div>
           {/* if currentPlayer === user */}
         </div>
-        <div className='dice-and-player'>
+        <div className="dice-and-player">
           <DiceButton
             diceRoll1={diceRoll1}
             diceRoll2={diceRoll2}
