@@ -1,3 +1,4 @@
+const e = require('express');
 const express = require('express');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
@@ -32,6 +33,11 @@ app.get('/*', (req, res) => {
 });
 
 let users = [];
+// let games = {
+//   123: {
+//     users: { player1: 'cloud', player2: 'alvin', player3: 'marshal' },
+//   },
+// };
 
 socketIO.on('connection', (socket) => {
   console.log(`${socket.id} user just connected!`);
@@ -40,6 +46,9 @@ socketIO.on('connection', (socket) => {
     if (!user) {
       user = 'Guest' + uuidv4();
     }
+    // if (games.find((e) => e.room === room)) {
+    // }
+
     socket.join(room);
     console.log(`${user} has joined Room: ${room}`);
     socketIO.to(room).emit('newPlayer', user);
