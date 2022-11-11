@@ -20,7 +20,7 @@ export default function Lobby({ room, socket, user }) {
   const [diceRoll1, setDiceRoll1] = useState(0);
   const [diceRoll2, setDiceRoll2] = useState(0);
   // state for is game started
-  const [gameStarted, setGameStarted] = useState(false)
+  const [gameStarted, setGameStarted] = useState(false);
   // boardState
   const [board, setBoard] = useState(newBoard);
   // time state
@@ -170,7 +170,6 @@ export default function Lobby({ room, socket, user }) {
   const startGame = () => {
     setGameStarted(true);
     console.log('what am i doing with my life');
-    setGameStart(true);
   };
   const [show, setShow] = useState(true);
   const handleClose = () => {
@@ -214,7 +213,7 @@ export default function Lobby({ room, socket, user }) {
   // returned component
   return (
     <div>
-      <div className="lobby-container">
+      <div className='lobby-container'>
         <Modal show={show} onHide={handleClose}>
           <>
             <Modal.Header closeButton>
@@ -239,19 +238,19 @@ export default function Lobby({ room, socket, user }) {
           </button>
         </Modal>
 
-        <div className="log-and-chat">
+        <div className='log-and-chat'>
           <Gamelog log={log} />
           {/* chat */}
           <ChatLog room={room} socket={socket} user={user} />
         </div>
-        <div className="timer-and-board">
+        <div className='timer-and-board'>
           <Timer seconds={seconds} />
-          <div className="Gameboard">
-            <div className="Gameboard-header">{mappedBoardState}</div>
+          <div className='Gameboard'>
+            <div className='Gameboard-header'>{mappedBoardState}</div>
           </div>
           {/* if currentPlayer === user */}
         </div>
-        <div className="dice-and-player">
+        <div className='dice-and-player'>
           <DiceButton
             diceRoll1={diceRoll1}
             diceRoll2={diceRoll2}
