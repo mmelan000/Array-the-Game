@@ -7,12 +7,12 @@ import TeamCardContainer from '../components/TeamCardContainer';
 import Tile from '../components/Tile';
 import ChatLog from '../components/ChatLog';
 import { newBoard } from '../utils/newBoard';
-const { v4: uuidv4 } = require('uuid');
 // import onlyUnique from '../utils/onlyUnique';
 import allClaimed from '../utils/allClaimed';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Endgame from '../utils/Endgame';
+const { v4: uuidv4 } = require('uuid');
 
 export default function Lobby({ room, socket, user }) {
   // gamelog state
