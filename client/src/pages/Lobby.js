@@ -6,6 +6,7 @@ import Gamelog from '../components/Gamelog';
 import TeamCardContainer from '../components/TeamCardContainer';
 import Tile from '../components/Tile';
 import ChatLog from '../components/ChatLog';
+import Modal from 'react-bootstrap/Modal';
 
 export default function Lobby({ room, socket, user }) {
   // gamelog state
@@ -17,7 +18,12 @@ export default function Lobby({ room, socket, user }) {
   const [diceRoll2, setDiceRoll2] = useState(0);
   // time state
   const [seconds, setSeconds] = useState(0);
+
+  const [gameStarted, setGameStart] = useState(false);
   useEffect(() => {
+    if (!gameStarted) {
+      return;
+    }
     let myInterval = setInterval(() => {
       if (seconds > 0) {
         setSeconds(seconds - 1);
@@ -353,31 +359,46 @@ export default function Lobby({ room, socket, user }) {
 
   const startGame = () => {
     console.log('what am i doing with my life');
+    setGameStart(true);
+  };
+  const [show, setShow] = useState(true);
+  const handleClose = () => {
+    setShow(false);
   };
 
   return (
     <div>
-      <div className='lobby-container'>
-        <button
-          onClick={() => {
-            startGame();
-          }}
-        >
-          Start Game
-        </button>
-        <div className='log-and-chat'>
+      <div className="lobby-container">
+        <Modal show={show} onHide={handleClose}>
+          <>
+            <Modal.Header closeButton>
+              <Modal.Title>Start Game </Modal.Title>
+            </Modal.Header>
+            <Modal.Body></Modal.Body>
+          </>
+          <button
+            onClick={() => {
+              handleClose();
+              startGame();
+            }}
+          >
+            Start Game
+          </button>
+        </Modal>
+
+        <div className="log-and-chat">
           <Gamelog log={log} />
           {/* chat */}
           <ChatLog room={room} socket={socket} user={user} />
         </div>
-        <div className='timer-and-board'>
+        <div className="timer-and-board">
           <Timer seconds={seconds} />
-          <div className='Gameboard'>
-            <div className='Gameboard-header'>{mappedBoardState}</div>
+          <div className="Gameboard">
+            <div className="Gameboard-header">{mappedBoardState}</div>
           </div>
           {/* if currentPlayer === user */}
         </div>
-        <div className='dice-and-player'>
+        <div className="dice-and-player">
           <DiceButton
             diceRoll1={diceRoll1}
             diceRoll2={diceRoll2}
