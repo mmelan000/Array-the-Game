@@ -374,7 +374,14 @@ export default function Lobby({ room, socket, user }) {
             <Modal.Header closeButton>
               <Modal.Title>Start Game </Modal.Title>
             </Modal.Header>
-            <Modal.Body></Modal.Body>
+            <Modal.Body>
+              Players:
+              <ul>
+                {players.map((player) => (
+                  <li key={player}>{player}</li>
+                ))}
+              </ul>
+            </Modal.Body>
           </>
           <button
             onClick={() => {
