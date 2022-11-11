@@ -16,7 +16,7 @@ export default function Lobby({ room, socket, user }) {
   const [diceRoll1, setDiceRoll1] = useState(0);
   const [diceRoll2, setDiceRoll2] = useState(0);
   // time state
-  const [seconds, setSeconds] = useState(60);
+  const [seconds, setSeconds] = useState(0);
   useEffect(() => {
     let myInterval = setInterval(() => {
       if (seconds > 0) {
@@ -259,8 +259,19 @@ export default function Lobby({ room, socket, user }) {
     );
   });
 
-  // teams
-  let teams = 3;
+  // players
+  const [players, setPlayers] = useState([]);
+
+  useEffect(() => {
+    socket.on('newPlayer', (user) => {
+      console.log(user);
+      if (players.length < 3) {
+        setPlayers([user, ...players]);
+      }
+      // setPlayers(players.map((e) => ))
+      else console.log(players);
+    });
+  }, [socket, players]);
 
   const endPlayerTurn = () => {
     setDiceRoll1(0);
@@ -272,7 +283,7 @@ export default function Lobby({ room, socket, user }) {
     }
     if (currentPlayer === 'Green') {
       setCurrentPlayer(() => {
-        if (teams === 3) {
+        if (players.length === 3) {
           setCurrentPlayer('Blue');
         } else {
           setCurrentPlayer('Red');
@@ -340,9 +351,20 @@ export default function Lobby({ room, socket, user }) {
     }
   };
 
+  const startGame = () => {
+    console.log('what am i doing with my life');
+  };
+
   return (
     <div>
       <div className='lobby-container'>
+        <button
+          onClick={() => {
+            startGame();
+          }}
+        >
+          Start Game
+        </button>
         <div className='log-and-chat'>
           <Gamelog log={log} />
           {/* chat */}
@@ -361,7 +383,7 @@ export default function Lobby({ room, socket, user }) {
             diceRoll2={diceRoll2}
             onClick={() => rollDice()}
           />
-          <TeamCardContainer teams={teams} />
+          <TeamCardContainer players={players} isCurrentTurn={true} />
         </div>
         {/* if/ */}
         {/* if endGame === true */}
