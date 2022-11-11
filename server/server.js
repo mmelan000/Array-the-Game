@@ -40,8 +40,11 @@ socketIO.on('connection', (socket) => {
   console.log(`${socket.id} user just connected!`);
 
   socket.on('joinRoom', ({ user, room }) => {
+    let username;
     if (!user) {
-      user = 'Guest' + uuidv4();
+      username = 'Guest' + uuidv4();
+    } else {
+      username = user;
     }
 
     // function addPlayer(room, user) {
@@ -51,7 +54,7 @@ socketIO.on('connection', (socket) => {
           ...games,
           [room]: {
             ...games[room],
-            playerTwo: { player: user, color: 'Blue', isTurn: false },
+            playerTwo: { player: username, color: 'Blue', isTurn: false },
           },
         };
       } else {
@@ -59,7 +62,7 @@ socketIO.on('connection', (socket) => {
           ...games,
           [room]: {
             ...games[room],
-            playerThree: { player: user, color: 'Green', isTurn: false },
+            playerThree: { player: username, color: 'Green', isTurn: false },
           },
         };
       }
@@ -67,7 +70,7 @@ socketIO.on('connection', (socket) => {
       games = {
         ...games,
         [room]: {
-          playerOne: { player: user, color: 'Red', isTurn: false },
+          playerOne: { player: username, color: 'Red', isTurn: false },
         },
       };
     }
@@ -77,7 +80,8 @@ socketIO.on('connection', (socket) => {
     // }
 
     socket.join(room);
-    console.log(`${user} has joined Room: ${room}`);
+    console.log(`${username} has joined Room: ${room}`);
+    socket.emit('setUsername', username);
     socketIO.to(room).emit('newPlayer', games[room]);
   });
 
