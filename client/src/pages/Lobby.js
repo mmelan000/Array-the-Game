@@ -248,7 +248,7 @@ export default function Lobby({ room, socket, user }) {
   // returned component
   return (
     <div>
-      <div className="lobby-container">
+      <div className='lobby-container'>
         <Modal show={show}>
           <>
             <Modal.Header>
@@ -263,40 +263,42 @@ export default function Lobby({ room, socket, user }) {
               </ul>
             </Modal.Body>
           </>
-          <Button
-            variant="primary"
-            type="submit"
-            onClick={() => {
-              handleClose();
-              startGame();
-            }}
-          >
-            Start Game
-          </Button>
-          <Button
-            variant="primary"
-            type="submit"
-            onClick={() => {
-              window.location.href = '/';
-            }}
-          >
-            Close
-          </Button>
+          <div className='start-game-modal'>
+            <Button
+              variant='primary'
+              type='submit'
+              onClick={() => {
+                handleClose();
+                startGame();
+              }}
+            >
+              Start Game
+            </Button>
+            <Button
+              variant='primary'
+              type='submit'
+              onClick={() => {
+                window.location.href = '/';
+              }}
+            >
+              Close
+            </Button>
+          </div>
         </Modal>
 
-        <div className="log-and-chat">
+        <div className='log-and-chat'>
           <Gamelog log={log} />
           {/* chat */}
           <ChatLog room={room} socket={socket} user={user} />
         </div>
-        <div className="timer-and-board">
+        <div className='timer-and-board'>
           <Timer seconds={seconds} />
-          <div className="Gameboard">
-            <div className="Gameboard-header">{mappedBoardState}</div>
+          <div className='Gameboard'>
+            <div className='Gameboard-header'>{mappedBoardState}</div>
           </div>
           {/* if currentPlayer === user */}
         </div>
-        <div className="dice-and-player">
+        <div className='dice-and-player'>
           <DiceButton
             diceRoll1={diceRoll1}
             diceRoll2={diceRoll2}

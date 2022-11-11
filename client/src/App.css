@@ -164,6 +164,13 @@ body {
   user-select: none; /* Standard syntax */
 }
 
+.start-game-modal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 10px;
+}
+
 .Gameboard {
   width: 100%;
   /* margin: auto; */
