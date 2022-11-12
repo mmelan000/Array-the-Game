@@ -34,6 +34,7 @@ export default function Lobby({ room, socket, user }) {
   // const isTurn = user === currentPlayer;
 
   const sendLog = (room, logMessage) => {
+    console.log(room, logMessage);
     socket.emit('sendLog', room, logMessage);
   };
 
@@ -290,7 +291,7 @@ export default function Lobby({ room, socket, user }) {
     socket.on('logUpdate', (logMessage) => {
       setLog([logMessage, ...log]);
     });
-  });
+  }, [socket, log]);
   // returned component
   return (
     <div>
