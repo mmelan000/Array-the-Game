@@ -31,7 +31,6 @@ export default function Lobby({ room, socket, user }) {
   const [seconds, setSeconds] = useState(null);
   // players
   const [players, setPlayers] = useState([]);
-
   // const isTurn = user === currentPlayer;
 
   const claimTile = (position, currentPlayer) => {
@@ -125,9 +124,6 @@ export default function Lobby({ room, socket, user }) {
   });
 
   const endPlayerTurn = (room, board) => {
-    console.log(room);
-    console.log(board);
-
     socket.emit('initEndTurn', room, board);
     // setCurrentPlayer;
     // if (currentPlayer === 'Red') {
@@ -245,7 +241,6 @@ export default function Lobby({ room, socket, user }) {
       if (prePlayerList[1] === undefined) {
         prePlayerList.pop();
       }
-      console.log(prePlayerList);
 
       setPlayers(prePlayerList);
     });
@@ -263,7 +258,6 @@ export default function Lobby({ room, socket, user }) {
   // shared Turn State
   useEffect(() => {
     socket.on('endTurn', (board) => {
-      console.log('currentPlayer: ' + currentPlayer);
       if (players.indexOf(currentPlayer) < players.length - 1) {
         setCurrentPlayer(players[players.indexOf(currentPlayer) + 1]);
       } else {
@@ -304,12 +298,10 @@ export default function Lobby({ room, socket, user }) {
     });
   });
 
-  // console.log(username);
-
   // returned component
   return (
     <div>
-      <div className='lobby-container'>
+      <div className="lobby-container">
         <Modal show={show}>
           <>
             <Modal.Header>
@@ -318,17 +310,16 @@ export default function Lobby({ room, socket, user }) {
             <Modal.Body>
               Players:
               <ul>
-                {/* {console.log('l298', players)} */}
                 {players.map((e) => (
                   <li key={uuidv4()}>{e.player}</li>
                 ))}
               </ul>
             </Modal.Body>
           </>
-          <div className='start-game-modal'>
+          <div className="start-game-modal">
             <Button
-              variant='primary'
-              type='submit'
+              variant="primary"
+              type="submit"
               onClick={() => {
                 handleClose();
                 startGame();
@@ -337,8 +328,8 @@ export default function Lobby({ room, socket, user }) {
               Start Game
             </Button>
             <Button
-              variant='primary'
-              type='submit'
+              variant="primary"
+              type="submit"
               onClick={() => {
                 window.location.href = '/';
               }}
@@ -348,19 +339,19 @@ export default function Lobby({ room, socket, user }) {
           </div>
         </Modal>
 
-        <div className='log-and-chat'>
+        <div className="log-and-chat">
           <Gamelog log={log} />
           {/* chat */}
           <ChatLog room={room} socket={socket} user={user} />
         </div>
-        <div className='timer-and-board'>
+        <div className="timer-and-board">
           <Timer seconds={seconds} />
-          <div className='Gameboard'>
-            <div className='Gameboard-header'>{mappedBoardState}</div>
+          <div className="Gameboard">
+            <div className="Gameboard-header">{mappedBoardState}</div>
           </div>
           {/* if currentPlayer === user */}
         </div>
-        <div className='dice-and-player'>
+        <div className="dice-and-player">
           {username === currentPlayer.player ? (
             <DiceButton
               diceRoll1={diceRoll1}
@@ -376,12 +367,21 @@ export default function Lobby({ room, socket, user }) {
         {/* if endGame === true */}
         {/* <endGameCard winner={winner}/> */}
         {/* if/ */}
-        <Modal show={showEnd} onHide={handleCloseEnd}>
+        <Modal show={showEnd}>
           <>
-            <Modal.Header closeButton>
+            <Modal.Header>
               <Modal.Title>The winner is: {currentPlayer.player}</Modal.Title>
             </Modal.Header>
-            <Modal.Body></Modal.Body>
+            <Modal.Body>
+              <Button
+                onClick={() => {
+                  window.location.href = 'lobby/' + uuidv4();
+                }}
+              >
+                Replay
+              </Button>
+              <Button href="/">Close Game</Button>
+            </Modal.Body>
           </>
         </Modal>
       </div>
