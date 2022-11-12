@@ -5,6 +5,8 @@ import DiceButton from '../components/DiceButton';
 import Gamelog from '../components/Gamelog';
 import TeamCardContainer from '../components/TeamCardContainer';
 import Tile from '../components/Tile';
+import { Player, Controls } from '@lottiefiles/react-lottie-player';
+
 import ChatLog from '../components/ChatLog';
 import { newBoard } from '../utils/newBoard';
 // import onlyUnique from '../utils/onlyUnique';
@@ -12,6 +14,27 @@ import allClaimed from '../utils/allClaimed';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Endgame from '../utils/Endgame';
+import fiveFive from '../images/dieRolls/fiveFive.json';
+import fiveSix from '../images/dieRolls/fiveSix.json';
+import fourFive from '../images/dieRolls/fourFive.json';
+import fourFour from '../images/dieRolls/fourFour.json';
+import fourSix from '../images/dieRolls/fourSix.json';
+import oneFive from '../images/dieRolls/oneFive.json';
+import oneFour from '../images/dieRolls/oneFour.json';
+import oneOne from '../images/dieRolls/oneOne.json';
+import oneSix from '../images/dieRolls/oneSix.json';
+import oneThree from '../images/dieRolls/oneThree.json';
+import oneTwo from '../images/dieRolls/oneTwo.json';
+import sixSix from '../images/dieRolls/sixSix.json';
+import threeFive from '../images/dieRolls/threeFive.json';
+import threeFour from '../images/dieRolls/threeFour.json';
+import threeSix from '../images/dieRolls/threeSix.json';
+import threeThree from '../images/dieRolls/threeThree.json';
+import twoFive from '../images/dieRolls/twoFive.json';
+import twoFour from '../images/dieRolls/twoFour.json';
+import twoSix from '../images/dieRolls/twoSix.json';
+import twoThree from '../images/dieRolls/twoThree.json';
+import twoTwo from '../images/dieRolls/twoTwo.json';
 const { v4: uuidv4 } = require('uuid');
 
 export default function Lobby({ room, socket, user }) {
@@ -32,6 +55,8 @@ export default function Lobby({ room, socket, user }) {
   // players
   const [players, setPlayers] = useState([]);
   // const isTurn = user === currentPlayer;
+  const [diceState, setDiceState] = useState(false);
+  const [diceAnimation, setDiceAnimation] = useState(fourFive);
 
   const claimTile = (position, currentPlayer) => {
     const diceSum = diceRoll1 + diceRoll2;
@@ -157,7 +182,9 @@ export default function Lobby({ room, socket, user }) {
     const dr2 = Math.floor(Math.random() * 6 + 1);
     setDiceRoll1(dr1);
     setDiceRoll2(dr2);
+
     const result = dr1 + dr2;
+    renderDiceAnimation(dr1, dr2);
     setLog([`${currentPlayer.player} has rolled a ${result}.`, ...log]);
 
     const otherPlayers = (currentPlayer) => {
@@ -204,9 +231,6 @@ export default function Lobby({ room, socket, user }) {
   };
 
   const [showEnd, setShowEnd] = useState(false);
-  const handleCloseEnd = () => {
-    setShowEnd(false);
-  };
 
   // timer effect
   useEffect(() => {
@@ -298,6 +322,100 @@ export default function Lobby({ room, socket, user }) {
     });
   });
 
+  const renderDiceAnimation = (dr1, dr2) => {
+    let die1;
+    let die2;
+
+    if (dr1 > dr2) {
+      die1 = dr2.toString();
+      die2 = dr1.toString();
+    } else if (dr1 < dr2) {
+      die1 = dr1.toString();
+      die2 = dr2.toString();
+    }
+    if (dr1 === dr2) {
+      die1 = dr1.toString();
+      die2 = dr2.toString();
+    }
+
+    const diceRolled = die1 + die2;
+    switch (diceRolled) {
+      case '55':
+        setDiceAnimation(fiveFive);
+        break;
+      case '56':
+        setDiceAnimation(fiveSix);
+        break;
+      case '45':
+        setDiceAnimation(fourFive);
+        break;
+      case '44':
+        setDiceAnimation(fourFour);
+        break;
+      case '46':
+        setDiceAnimation(fourSix);
+        break;
+      case '15':
+        setDiceAnimation(oneFive);
+        break;
+      case '14':
+        setDiceAnimation(oneFour);
+        break;
+      case '11':
+        setDiceAnimation(oneOne);
+        break;
+      case '16':
+        setDiceAnimation(oneSix);
+        break;
+      case '13':
+        setDiceAnimation(oneThree);
+        break;
+      case '12':
+        setDiceAnimation(oneTwo);
+        break;
+      case '66':
+        setDiceAnimation(sixSix);
+        break;
+      case '35':
+        setDiceAnimation(threeFive);
+        break;
+      case '34':
+        setDiceAnimation(threeFour);
+        break;
+      case '36':
+        setDiceAnimation(threeSix);
+        break;
+      case '33':
+        setDiceAnimation(threeThree);
+        break;
+      case '25':
+        setDiceAnimation(twoFive);
+        break;
+      case '24':
+        setDiceAnimation(twoFour);
+        break;
+      case '26':
+        setDiceAnimation(twoSix);
+        break;
+      case '23':
+        setDiceAnimation(twoThree);
+        break;
+
+      default:
+        setDiceAnimation(twoTwo);
+        break;
+    }
+    handleDiceShow();
+  };
+
+  const handleDiceShow = () => {
+    setDiceState(true);
+    setTimeout(handleDiceClose, 3000);
+  };
+
+  const handleDiceClose = () => {
+    setDiceState(false);
+  };
   // returned component
   return (
     <div>
@@ -307,6 +425,7 @@ export default function Lobby({ room, socket, user }) {
             <Modal.Header>
               <Modal.Title>Start Game </Modal.Title>
             </Modal.Header>
+
             <Modal.Body>
               Players:
               <ul>
@@ -363,10 +482,7 @@ export default function Lobby({ room, socket, user }) {
           )}
           {players ? <TeamCardContainer players={players} /> : <div></div>}
         </div>
-        {/* if/ */}
-        {/* if endGame === true */}
-        {/* <endGameCard winner={winner}/> */}
-        {/* if/ */}
+
         <Modal show={showEnd}>
           <>
             <Modal.Header>
@@ -375,12 +491,25 @@ export default function Lobby({ room, socket, user }) {
             <Modal.Body>
               <Button
                 onClick={() => {
-                  window.location.href = 'lobby/' + uuidv4();
+                  window.location.href = uuidv4();
                 }}
               >
                 Replay
               </Button>
               <Button href="/">Close Game</Button>
+            </Modal.Body>
+          </>
+        </Modal>
+
+        <Modal show={diceState}>
+          <>
+            <Modal.Header>
+              <Modal.Title>You rolled a:</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Player autoplay keepLastFrame src={diceAnimation}>
+                <Controls visible={false} />
+              </Player>
             </Modal.Body>
           </>
         </Modal>
