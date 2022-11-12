@@ -5,7 +5,6 @@ import BlueBoardTile from '../images/lottieFiles/BlueBoardTile.json';
 import GreenBoardTile from '../images/lottieFiles/GreenBoardTile.json';
 
 function Tile(props) {
-  // console.log(props);
   let background;
   let textColor = '#ffffff';
   if (props.player === 'unclaimed') {

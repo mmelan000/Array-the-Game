@@ -39,6 +39,7 @@ export default function Lobby({ room, socket, user }) {
   };
 
   const claimTile = (position, currentPlayer) => {
+    console.log(currentPlayer);
     const diceSum = diceRoll1 + diceRoll2;
 
     let updatedBoard = {
@@ -231,8 +232,8 @@ export default function Lobby({ room, socket, user }) {
   // shared StartGame
   useEffect(() => {
     socket.on('startGame', (players) => {
-      setCurrentPlayer(players.find((e) => e.isTurn === true));
       setPlayers(players);
+      setCurrentPlayer(players.find((e) => e.isTurn === true));
       setShow(false);
       setGameStarted(true);
       setSeconds(60);
@@ -241,21 +242,22 @@ export default function Lobby({ room, socket, user }) {
   // shared Turn State
   useEffect(() => {
     socket.on('endTurn', (board) => {
+      console.log(currentPlayer);
+
+      if (players.indexOf(currentPlayer) < players.length - 1) {
+        setCurrentPlayer(players[players.indexOf(currentPlayer) + 1]);
+      } else {
+        // players[0].isTurn = true;
+        setCurrentPlayer(players[0]);
+      }
+      setDiceRoll1(0);
+      setDiceRoll2(0);
+      setSeconds(60);
+      setBoard(board);
       if (Endgame(board)) {
         setGameStarted(false);
         setSeconds(null);
         socket.emit('initEndGame', room);
-      } else {
-        if (players.indexOf(currentPlayer) < players.length - 1) {
-          setCurrentPlayer(players[players.indexOf(currentPlayer) + 1]);
-        } else {
-          // players[0].isTurn = true;
-          setCurrentPlayer(players[0]);
-        }
-        setDiceRoll1(0);
-        setDiceRoll2(0);
-        setSeconds(60);
-        setBoard(board);
       }
     });
   });
