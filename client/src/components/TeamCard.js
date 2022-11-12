@@ -2,7 +2,7 @@ import redTile from '../images/Board/RedBoardTile.svg';
 import blueTile from '../images/Board/BlueBoardTile.svg';
 import greenTile from '../images/Board/GreenBoardTile.svg';
 
-export default function TeamCard({ player, color, isTurn }) {
+export default function TeamCard({ currentPlayer, player, color, isTurn }) {
   let emblem;
   let altText;
   switch (color) {
@@ -29,7 +29,8 @@ export default function TeamCard({ player, color, isTurn }) {
       break;
   }
   return (
-    <div className={isTurn ? 'is-turn' : ''}>
+    <div className={player === currentPlayer ? 'is-turn' : ''}>
+      |
       <div className='team-card'>
         <img className='team-card-image' src={emblem} alt={altText}></img>
         <p className='team-card-text'>{player}</p>
