@@ -529,6 +529,10 @@ footer {
 /*-------------------------------------------------------------------------------------------------------------------------------------*/
 
 @media only screen and (min-width: 601px) and (max-width: 1499px) and (orientation: portrait) {
+  #array-brand {
+    transform: scale(120%);
+  }
+
   .Gameboard {
     max-width: 100%;
   }
@@ -544,7 +548,7 @@ footer {
   }
 
   .game-tile p {
-    font-size: 4vh;
+    font-size: 6vh;
   }
 
   .about-wrapper {
@@ -585,6 +589,16 @@ footer {
   .team-card-container {
     display: flex;
     flex-direction: row;
+    margin-top: 5vw;
+  }
+
+  .dice-and-player {
+    margin-top: 5vw;
+    margin-bottom: 5vw;
+  }
+
+  .dice-roller {
+    transform: scale(150%);
   }
 
   footer {
