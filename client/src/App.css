@@ -428,11 +428,40 @@ footer {
     flex-direction: column;
   }
 
+  .dice-and-player {
+    margin-bottom: 3vh;
+  }
+
   .timer-and-board {
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+  }
+
+  .timer h2 {
+    font-family: 'Luckiest Guy', 'Arial';
+    font-size: 10vw;
+    color: white;
   }
 
   .team-card-container {
     flex-direction: row;
+    width: 100%;
+  }
+
+  .is-turn {
+    border: 4px;
+    border-style: solid;
+    border-color: yellow;
+    border-radius: 5px;
+  }
+
+  .team-card {
+    width: 100%;
+  }
+
+  .team-card-text {
+    font-size: 1.5vh;
+    font-family: 'Luckiest Guy', 'Arial';
   }
 
   .game-log {
@@ -446,6 +475,7 @@ footer {
 
   .log-and-chat {
     order: 3;
+    padding-bottom: 6vh;
   }
 
   .Gameboard {
@@ -463,10 +493,8 @@ footer {
     font-size: 100vh;
   }
 
-  .footer {
-    position: relative;
-    /* width: 100%;*/
-    height: 100vh;
+  footer {
+    visibility: hidden;
   }
 }
 
@@ -485,6 +513,14 @@ footer {
   }
   .about-section {
     font-size: 2vw;
+  }
+
+  .timer-and-board {
+    flex: 2;
+  }
+
+  footer {
+    visibility: hidden;
   }
 }
 
