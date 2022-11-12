@@ -21,6 +21,14 @@ export default function ChatLog({ socket, user, room }) {
     });
   }, [socket, chatLog, room]);
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      console.log(e.key);
+      sendMessage(message);
+      setMessage('');
+    }
+  };
+
   return (
     <div className='chat-log-main'>
       <div className='chat-log-container'>
@@ -31,13 +39,18 @@ export default function ChatLog({ socket, user, room }) {
         type='text'
         placeholder='Type here...'
         id='chatInput'
+        value={message}
         onChange={(e) => {
           setMessage(e.target.value);
+        }}
+        onKeyPress={(e) => {
+          handleKeyPress(e);
         }}
       />
       <button
         onClick={() => {
           sendMessage(message);
+          setMessage('');
         }}
       >
         Submit
