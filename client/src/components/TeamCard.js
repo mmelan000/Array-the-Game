@@ -31,8 +31,8 @@ export default function TeamCard({ player, color, isTurn }) {
   return (
     <div className={isTurn ? 'is-turn' : ''}>
       <div className='team-card'>
-        <img src={emblem} alt={altText}></img>
-        <p>{player}</p>
+        <img className='team-card-image' src={emblem} alt={altText}></img>
+        <p className='team-card-text'>{player}</p>
       </div>
     </div>
   );
