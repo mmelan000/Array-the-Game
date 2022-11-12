@@ -279,6 +279,16 @@ body {
   border: 1px;
   border-style: solid;
   margin: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.team-card-image {
+  width: 7vw;
+}
+
+.team-card-text {
+  font-size: 2vh;
 }
 
 /* .footer-wrapper {
