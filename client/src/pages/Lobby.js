@@ -57,7 +57,6 @@ export default function Lobby({ room, socket, user }) {
           player: 'unclaimed',
         },
       };
-      // setBoard(updatedBoard);
       setLog([
         `Player ${currentPlayer.player} has removed ${board[position].display}.`,
         ...log,
