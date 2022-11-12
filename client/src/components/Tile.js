@@ -27,7 +27,7 @@ function Tile(props) {
     <div className={'game-tile'} id={props.id} onClick={props.onClick}>
       <p style={{ color: textColor }}>{props.tileDisplay}</p>
       {props.player === 'unclaimed' ? (
-        <img src={UnclaimedBoardTile} alt='Background Tile for GameBoard'></img>
+        <img src={UnclaimedBoardTile} alt="Background Tile for GameBoard"></img>
       ) : (
         <Player autoplay keepLastFrame src={background}>
           <Controls visible={false} />
