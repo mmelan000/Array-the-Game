@@ -56,16 +56,18 @@ export default function DiceButton({ diceRoll1, diceRoll2, onClick }) {
   if (diceRoll1 !== 0) {
     return (
       <div className='dice-roller'>
+        <Button variant='success' onClick={onClick}>
+          Roll Dice
+        </Button>
         <div className='static-dice-container'>
-          <img className='static-dice' src={dr1} alt='dice' />
+          <img className='static-dice' src={dr1} alt='dice' />{' '}
           <img className='static-dice' src={dr2} alt='dice' />
         </div>
-        <Button disabled>Roll Dice</Button>
       </div>
     );
   } else {
     return (
-      <div className='dice-roller'>
+      <div variant='success' className='dice-roller'>
         <Button onClick={onClick}>Roll Dice</Button>
       </div>
     );

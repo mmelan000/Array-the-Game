@@ -42,7 +42,7 @@ socketIO.on('connection', (socket) => {
   socket.on('joinRoom', ({ user, room }) => {
     let username;
     if (!user) {
-      username = 'Guest' + uuidv4();
+      username = `Guest: ${uuidv4()}`;
     } else {
       username = user;
     }
@@ -99,7 +99,7 @@ socketIO.on('connection', (socket) => {
 
   socket.on('newUser', (username) => {
     if (username === null || undefined) {
-      username = `Guest/${uuidv4()}`;
+      username = `Guest: ${uuidv4()}`;
     }
     users.push({ username: username, socket_id: socket.id });
     socketIO.emit('newUserResponse', users);

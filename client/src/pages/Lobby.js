@@ -267,21 +267,21 @@ export default function Lobby({ room, socket, user }) {
   useEffect(() => {
     socket.on('endTurn', (board) => {
       console.log(currentPlayer);
-
-      if (players.indexOf(currentPlayer) < players.length - 1) {
-        setCurrentPlayer(players[players.indexOf(currentPlayer) + 1]);
-      } else {
-        // players[0].isTurn = true;
-        setCurrentPlayer(players[0]);
-      }
-      setDiceRoll1(0);
-      setDiceRoll2(0);
-      setSeconds(60);
-      setBoard(board);
       if (Endgame(board)) {
         setGameStarted(false);
         setSeconds(null);
         socket.emit('initEndGame', room);
+      } else {
+        if (players.indexOf(currentPlayer) < players.length - 1) {
+          setCurrentPlayer(players[players.indexOf(currentPlayer) + 1]);
+        } else {
+          // players[0].isTurn = true;
+          setCurrentPlayer(players[0]);
+        }
+        setDiceRoll1(0);
+        setDiceRoll2(0);
+        setSeconds(60);
+        setBoard(board);
       }
     });
   });
@@ -312,7 +312,7 @@ export default function Lobby({ room, socket, user }) {
     socket.on('logUpdate', (logMessage) => {
       setLog([logMessage, ...log]);
     });
-  }, [socket, log]);
+  });
   const renderDiceAnimation = (dr1, dr2) => {
     let die1;
     let die2;
@@ -410,7 +410,7 @@ export default function Lobby({ room, socket, user }) {
   // returned component
   return (
     <div>
-      <div className="lobby-container">
+      <div className='lobby-container'>
         <Modal show={show}>
           <>
             <Modal.Header>
@@ -428,10 +428,10 @@ export default function Lobby({ room, socket, user }) {
               <p>{window.location.href}</p>
             </Modal.Body>
           </>
-          <div className="start-game-modal">
+          <div className='start-game-modal'>
             <Button
-              variant="primary"
-              type="submit"
+              variant='primary'
+              type='submit'
               onClick={() => {
                 handleClose();
                 startGame();
@@ -440,8 +440,8 @@ export default function Lobby({ room, socket, user }) {
               Start Game
             </Button>
             <Button
-              variant="primary"
-              type="submit"
+              variant='primary'
+              type='submit'
               onClick={() => {
                 window.location.href = '/';
               }}
@@ -450,17 +450,17 @@ export default function Lobby({ room, socket, user }) {
             </Button>
           </div>
         </Modal>
-        <div className="log-and-chat">
+        <div className='log-and-chat'>
           <Gamelog log={log} />
           <ChatLog room={room} socket={socket} user={user} />
         </div>
-        <div className="timer-and-board">
+        <div className='timer-and-board'>
           <Timer seconds={seconds} />
-          <div className="Gameboard">
-            <div className="Gameboard-header">{mappedBoardState}</div>
+          <div className='Gameboard'>
+            <div className='Gameboard-header'>{mappedBoardState}</div>
           </div>
         </div>
-        <div className="dice-and-player">
+        <div className='dice-and-player'>
           {username === currentPlayer.player ? (
             <DiceButton
               diceRoll1={diceRoll1}
@@ -493,7 +493,7 @@ export default function Lobby({ room, socket, user }) {
               >
                 Replay
               </Button>
-              <Button href="/">Close Game</Button>
+              <Button href='/'>Close Game</Button>
             </Modal.Body>
           </>
         </Modal>
