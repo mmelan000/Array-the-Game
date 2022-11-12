@@ -9,14 +9,14 @@ export default function Forums() {
 
   const thoughts = data?.thoughts || [];
   return (
-    <div className="flex-row justify-center">
-      <div className="col-12 col-md-8 mb-3">
+    <div className='forum-container'>
+      <div className='col-12 col-md-8 mb-3'>
         {loading ? (
           <div>Loading...</div>
         ) : (
           <ThoughtList
             thoughts={thoughts}
-            title="Here are some of the things being talked about!"
+            title='Here are some of the things being talked about!'
           />
         )}
       </div>
