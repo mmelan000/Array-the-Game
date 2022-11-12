@@ -174,7 +174,7 @@ export default function Lobby({ room, socket, user }) {
         room,
         `Player ${currentPlayer} has rolled a ${result}, but there are no available tiles to remove.`
       );
-      endPlayerTurn(room);
+      endPlayerTurn(room, board);
     }
   };
 
@@ -241,26 +241,21 @@ export default function Lobby({ room, socket, user }) {
   // shared Turn State
   useEffect(() => {
     socket.on('endTurn', (board) => {
-      // const tempPlayers = players;
-      // console.log(tempPlayers);
-      // console.log(tempPlayers.indexOf(currentPlayer));
-
-      // setPlayers([...players, ]);
-
-      if (players.indexOf(currentPlayer) < players.length - 1) {
-        setCurrentPlayer(players[players.indexOf(currentPlayer) + 1]);
-      } else {
-        // players[0].isTurn = true;
-        setCurrentPlayer(players[0]);
-      }
-      setDiceRoll1(0);
-      setDiceRoll2(0);
-      setSeconds(60);
-      setBoard(board);
       if (Endgame(board)) {
         setGameStarted(false);
         setSeconds(null);
         socket.emit('initEndGame', room);
+      } else {
+        if (players.indexOf(currentPlayer) < players.length - 1) {
+          setCurrentPlayer(players[players.indexOf(currentPlayer) + 1]);
+        } else {
+          // players[0].isTurn = true;
+          setCurrentPlayer(players[0]);
+        }
+        setDiceRoll1(0);
+        setDiceRoll2(0);
+        setSeconds(60);
+        setBoard(board);
       }
     });
   });
@@ -370,7 +365,7 @@ export default function Lobby({ room, socket, user }) {
             <Modal.Body>
               <Button
                 onClick={() => {
-                  window.location.href = 'lobby/' + uuidv4();
+                  window.location.href = '/lobby/' + uuidv4();
                 }}
               >
                 Replay
