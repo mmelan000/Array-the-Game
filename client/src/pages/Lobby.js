@@ -274,6 +274,8 @@ export default function Lobby({ room, socket, user }) {
       setSeconds(60);
       setBoard(board);
       if (Endgame(board)) {
+        setGameStarted(false);
+        setSeconds(null);
         socket.emit('initEndGame', room);
       }
     });
@@ -295,6 +297,8 @@ export default function Lobby({ room, socket, user }) {
       setDiceRoll1(0);
       setDiceRoll2(0);
       if (Endgame(board)) {
+        setGameStarted(false);
+        setSeconds(null);
         socket.emit('initEndGame', room);
       }
     });
@@ -380,23 +384,6 @@ export default function Lobby({ room, socket, user }) {
             <Modal.Body></Modal.Body>
           </>
         </Modal>
-      </div>
-      <div className='debugBar'>
-        <button
-          onClick={() => {
-            console.log('currentPlayer=' + currentPlayer.player);
-            console.log(
-              `player1= ${players[0].player} team: ${players[0].team}`
-            );
-            console.log(
-              players.map((e) => {
-                return e;
-              })
-            );
-          }}
-        >
-          CLS
-        </button>
       </div>
     </div>
   );
