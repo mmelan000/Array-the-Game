@@ -85,6 +85,10 @@ socketIO.on('connection', (socket) => {
     socketIO.to(room).emit('newPlayer', games[room]);
   });
 
+  socket.on('sendLog', (room, logMessage) => {
+    socketIO.to(room).emit('logUpdate', logMessage);
+  });
+
   socket.on('message', ({ user, room, message }) => {
     if (!user) {
       user = 'Guest';

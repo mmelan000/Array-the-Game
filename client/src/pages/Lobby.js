@@ -33,6 +33,11 @@ export default function Lobby({ room, socket, user }) {
   const [players, setPlayers] = useState([]);
   // const isTurn = user === currentPlayer;
 
+  const sendLog = (room, logMessage) => {
+    console.log(room, logMessage);
+    socket.emit('sendLog', room, logMessage);
+  };
+
   const claimTile = (position, currentPlayer) => {
     const diceSum = diceRoll1 + diceRoll2;
 
@@ -56,11 +61,10 @@ export default function Lobby({ room, socket, user }) {
           player: 'unclaimed',
         },
       };
-      // setBoard(updatedBoard);
-      setLog([
-        `Player ${currentPlayer.player} has removed ${board[position].display}.`,
-        ...log,
-      ]);
+      sendLog(
+        room,
+        `Player ${currentPlayer.player} has removed ${board[position].display}.`
+      );
       endPlayerTurn(room, updatedBoard);
       return;
     }
@@ -79,15 +83,15 @@ export default function Lobby({ room, socket, user }) {
 
     // setBoard(updatedBoard);
 
-    setLog([
-      `Player ${currentPlayer.player} has claimed a ${board[position].display}.`,
-      ...log,
-    ]);
+    sendLog(
+      room,
+      `Player ${currentPlayer.player} has claimed a ${board[position].display}.`
+    );
     if (diceSum === 12) {
-      setLog([
-        `Player ${currentPlayer.player} gets another turn from rolling a 12!.`,
-        ...log,
-      ]);
+      sendLog(
+        room,
+        `Player ${currentPlayer.player} gets another turn from rolling a 12!.`
+      );
       setDiceRoll1(0);
       setDiceRoll2(0);
       socket.emit('initTwoOrTwelve', room, updatedBoard);
@@ -95,10 +99,10 @@ export default function Lobby({ room, socket, user }) {
       return;
     }
     if (diceSum === 2) {
-      setLog([
-        `Player ${currentPlayer.player} gets another turn from rolling a 2!.`,
-        ...log,
-      ]);
+      sendLog(
+        room,
+        `Player ${currentPlayer.player} gets another turn from rolling a 2!.`
+      );
       setDiceRoll1(0);
       setDiceRoll2(0);
       socket.emit('initTwoOrTwelve', room, updatedBoard);
@@ -125,27 +129,6 @@ export default function Lobby({ room, socket, user }) {
 
   const endPlayerTurn = (room, board) => {
     socket.emit('initEndTurn', room, board);
-    // setCurrentPlayer;
-    // if (currentPlayer === 'Red') {
-    //   setCurrentPlayer('Green');
-    //   return;
-    // }
-    // if (currentPlayer === 'Green') {
-    //   setCurrentPlayer(() => {
-    //     if (players.length === 3) {
-    //       setCurrentPlayer('Blue');
-    //     } else {
-    //       setCurrentPlayer('Red');
-    //     }
-    //   });
-    //   setSeconds(60);
-    //   return;
-    // }
-    // if (currentPlayer === 'Blue') {
-    //   setCurrentPlayer('Red');
-    //   setSeconds(60);
-    //   return;
-    // }
   };
 
   const rollDice = () => {
@@ -158,7 +141,7 @@ export default function Lobby({ room, socket, user }) {
     setDiceRoll1(dr1);
     setDiceRoll2(dr2);
     const result = dr1 + dr2;
-    setLog([`${currentPlayer.player} has rolled a ${result}.`, ...log]);
+    sendLog(room, `${currentPlayer.player} has rolled a ${result}.`);
 
     const otherPlayers = (currentPlayer) => {
       switch (currentPlayer) {
@@ -187,10 +170,10 @@ export default function Lobby({ room, socket, user }) {
       otherPlayersTiles[1].length === 0 &&
       result === 10
     ) {
-      setLog([
-        `Player ${currentPlayer} has rolled a ${result}, but there are no available tiles to remove.`,
-        ...log,
-      ]);
+      sendLog(
+        room,
+        `Player ${currentPlayer} has rolled a ${result}, but there are no available tiles to remove.`
+      );
       endPlayerTurn(room);
     }
   };
@@ -217,10 +200,10 @@ export default function Lobby({ room, socket, user }) {
       if (seconds > 0) {
         setSeconds(seconds - 1);
       } else {
-        setLog([
-          `${currentPlayer.player} ran out of time and lost their turn.`,
-          ...log,
-        ]);
+        sendLog(
+          room,
+          `${currentPlayer.player} ran out of time and lost their turn.`
+        );
         endPlayerTurn(room, board);
         clearInterval(myInterval);
       }
@@ -258,9 +241,16 @@ export default function Lobby({ room, socket, user }) {
   // shared Turn State
   useEffect(() => {
     socket.on('endTurn', (board) => {
+      // const tempPlayers = players;
+      // console.log(tempPlayers);
+      // console.log(tempPlayers.indexOf(currentPlayer));
+
+      // setPlayers([...players, ]);
+
       if (players.indexOf(currentPlayer) < players.length - 1) {
         setCurrentPlayer(players[players.indexOf(currentPlayer) + 1]);
       } else {
+        // players[0].isTurn = true;
         setCurrentPlayer(players[0]);
       }
       setDiceRoll1(0);
@@ -297,11 +287,15 @@ export default function Lobby({ room, socket, user }) {
       }
     });
   });
-
+  useEffect(() => {
+    socket.on('logUpdate', (logMessage) => {
+      setLog([logMessage, ...log]);
+    });
+  }, [socket, log]);
   // returned component
   return (
     <div>
-      <div className="lobby-container">
+      <div className='lobby-container'>
         <Modal show={show}>
           <>
             <Modal.Header>
@@ -316,10 +310,10 @@ export default function Lobby({ room, socket, user }) {
               </ul>
             </Modal.Body>
           </>
-          <div className="start-game-modal">
+          <div className='start-game-modal'>
             <Button
-              variant="primary"
-              type="submit"
+              variant='primary'
+              type='submit'
               onClick={() => {
                 handleClose();
                 startGame();
@@ -328,8 +322,8 @@ export default function Lobby({ room, socket, user }) {
               Start Game
             </Button>
             <Button
-              variant="primary"
-              type="submit"
+              variant='primary'
+              type='submit'
               onClick={() => {
                 window.location.href = '/';
               }}
@@ -339,19 +333,17 @@ export default function Lobby({ room, socket, user }) {
           </div>
         </Modal>
 
-        <div className="log-and-chat">
+        <div className='log-and-chat'>
           <Gamelog log={log} />
-          {/* chat */}
           <ChatLog room={room} socket={socket} user={user} />
         </div>
-        <div className="timer-and-board">
+        <div className='timer-and-board'>
           <Timer seconds={seconds} />
-          <div className="Gameboard">
-            <div className="Gameboard-header">{mappedBoardState}</div>
+          <div className='Gameboard'>
+            <div className='Gameboard-header'>{mappedBoardState}</div>
           </div>
-          {/* if currentPlayer === user */}
         </div>
-        <div className="dice-and-player">
+        <div className='dice-and-player'>
           {username === currentPlayer.player ? (
             <DiceButton
               diceRoll1={diceRoll1}
@@ -363,11 +355,7 @@ export default function Lobby({ room, socket, user }) {
           )}
           {players ? <TeamCardContainer players={players} /> : <div></div>}
         </div>
-        {/* if/ */}
-        {/* if endGame === true */}
-        {/* <endGameCard winner={winner}/> */}
-        {/* if/ */}
-        <Modal show={showEnd}>
+        <Modal show={showEnd} onHide={handleCloseEnd}>
           <>
             <Modal.Header>
               <Modal.Title>The winner is: {currentPlayer.player}</Modal.Title>
@@ -380,7 +368,7 @@ export default function Lobby({ room, socket, user }) {
               >
                 Replay
               </Button>
-              <Button href="/">Close Game</Button>
+              <Button href='/'>Close Game</Button>
             </Modal.Body>
           </>
         </Modal>

@@ -12,6 +12,12 @@ body {
   min-height: 100vh;
   min-width: auto;
 }
+.is-turn {
+  border: 8px;
+  border-style: solid;
+  border-color: yellow;
+  border-radius: 10px;
+}
 
 .red {
   background-color: red;
