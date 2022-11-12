@@ -497,26 +497,12 @@ export default function Lobby({ room, socket, user }) {
             </Modal.Body>
           </>
         </Modal>
-
-        <Modal show={diceState}>
+        <Modal show={diceState} contentClassName='dice-modal'>
           <>
-            <Modal.Header>
+            {/* <Modal.Header>
               <Modal.Title>You rolled a:</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Player autoplay keepLastFrame src={diceAnimation}>
-                <Controls visible={false} />
-              </Player>
-            </Modal.Body>
-          </>
-        </Modal>
-
-        <Modal show={diceState}>
-          <>
-            <Modal.Header>
-              <Modal.Title>You rolled a:</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
+            </Modal.Header> */}
+            <Modal.Body className='dice-roll-body'>
               <Player autoplay keepLastFrame src={diceAnimation}>
                 <Controls visible={false} />
               </Player>
