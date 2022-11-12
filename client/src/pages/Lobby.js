@@ -294,15 +294,17 @@ export default function Lobby({ room, socket, user }) {
         <Modal show={show}>
           <>
             <Modal.Header>
-              <Modal.Title>Start Game </Modal.Title>
+              <Modal.Title>Start Game</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Players:
+              <h4>Players:</h4>
               <ul>
                 {players.map((e) => (
                   <li key={uuidv4()}>{e.player}</li>
                 ))}
               </ul>
+              <h5>Lobby Link:</h5>
+              <p>{window.location.href}</p>
             </Modal.Body>
           </>
           <div className='start-game-modal'>
@@ -327,7 +329,6 @@ export default function Lobby({ room, socket, user }) {
             </Button>
           </div>
         </Modal>
-
         <div className='log-and-chat'>
           <Gamelog log={log} />
           <ChatLog room={room} socket={socket} user={user} />
