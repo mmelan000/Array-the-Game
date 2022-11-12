@@ -267,6 +267,7 @@ export default function Lobby({ room, socket, user }) {
   useEffect(() => {
     socket.on('endTurn', (board) => {
       console.log(currentPlayer);
+      setBoard(board);
       if (Endgame(board)) {
         setGameStarted(false);
         setSeconds(null);
@@ -281,7 +282,6 @@ export default function Lobby({ room, socket, user }) {
         setDiceRoll1(0);
         setDiceRoll2(0);
         setSeconds(60);
-        setBoard(board);
       }
     });
   });
