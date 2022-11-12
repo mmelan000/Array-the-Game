@@ -428,11 +428,44 @@ footer {
     flex-direction: column;
   }
 
+  .dice-and-player {
+    margin-bottom: 3vh;
+  }
+
   .timer-and-board {
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+  }
+
+  .timer h2 {
+    font-family: 'Luckiest Guy', 'Arial';
+    font-size: 10vw;
+    color: white;
   }
 
   .team-card-container {
     flex-direction: row;
+    width: 100%;
+  }
+
+  .is-turn {
+    border: 4px;
+    border-style: solid;
+    border-color: yellow;
+    border-radius: 5px;
+  }
+
+  .team-card {
+    width: 100%;
+  }
+
+  .team-card-text {
+    font-size: 1.5vh;
+    font-family: 'Luckiest Guy', 'Arial';
+  }
+
+  .game-log {
+    width: 90vw;
   }
 
   .chat-log-main {
@@ -442,6 +475,7 @@ footer {
 
   .log-and-chat {
     order: 3;
+    padding-bottom: 6vh;
   }
 
   .Gameboard {
@@ -457,6 +491,10 @@ footer {
   }
   .Gameboard-tile p {
     font-size: 100vh;
+  }
+
+  footer {
+    visibility: hidden;
   }
 }
 
@@ -476,6 +514,14 @@ footer {
   .about-section {
     font-size: 2vw;
   }
+
+  .timer-and-board {
+    flex: 2;
+  }
+
+  footer {
+    visibility: hidden;
+  }
 }
 
 /*-------------------------------------------------------------------------------------------------------------------------------------*/
@@ -483,12 +529,26 @@ footer {
 /*-------------------------------------------------------------------------------------------------------------------------------------*/
 
 @media only screen and (min-width: 601px) and (max-width: 1499px) and (orientation: portrait) {
+  #array-brand {
+    transform: scale(120%);
+  }
+
   .Gameboard {
     max-width: 100%;
   }
 
+  .Gameboard-header {
+    padding-left: 0.5vw;
+  }
+  .game-tile {
+    width: 16vw;
+  }
+  .timer h2 {
+    font-size: 10vw;
+  }
+
   .game-tile p {
-    font-size: 4vh;
+    font-size: 6vh;
   }
 
   .about-wrapper {
@@ -499,6 +559,50 @@ footer {
 
   .about-section {
     font-size: 2vh;
+  }
+
+  .log-and-chat {
+    order: 3;
+    padding-bottom: 6vh;
+    display: flex;
+    flex-direction: row;
+    padding-left: 10vw;
+  }
+
+  .chat-log-main {
+    margin-left: 9vw;
+    width: 35vw;
+  }
+
+  .game-log-container {
+    width: 35vw;
+  }
+
+  .game-log {
+    width: 35vw;
+  }
+
+  .lobby-container {
+    flex-direction: column;
+  }
+
+  .team-card-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5vw;
+  }
+
+  .dice-and-player {
+    margin-top: 5vw;
+    margin-bottom: 5vw;
+  }
+
+  .dice-roller {
+    transform: scale(150%);
+  }
+
+  footer {
+    visibility: hidden;
   }
 }
 
