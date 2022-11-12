@@ -123,6 +123,28 @@ body {
   align-items: center;
 }
 
+/* .dice-modal {
+  opacity: 0;
+} */
+
+.dice-roll-body {
+  /* background-color: tomato;
+  border-radius: 5px; */
+  background-color: rgba(235, 169, 75, 0);
+  box-shadow: none;
+  border: 0;
+}
+
+.dice-modal {
+  background-color: rgba(235, 169, 75, 0);
+  box-shadow: none;
+  border: 0;
+}
+
+.modal-backdrop {
+  opacity: 0.75 !important;
+}
+
 .chat-log-main {
   display: flex;
   flex-direction: column;
@@ -208,11 +230,39 @@ body {
 
 .timer-and-board {
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .timer {
   text-align: center;
 }
+
+.timer h2 {
+  font-family: 'Luckiest Guy', 'Arial';
+  font-size: 5vw;
+  color: white;
+  /* animation-name: tick;
+  animation-duration: 1s;
+  animation-iteration-count: infinite; */
+}
+
+/* @keyframes tick {
+  0% {
+    font-size: 2vw;
+  }
+  50% {
+    font-size: 2vw;
+  }
+  75% {
+    font-size: 4vw;
+  }
+  100% {
+    font-size: 2vw;
+  }
+} */
 
 .game-log {
   width: 25vw;
@@ -271,6 +321,10 @@ body {
   font-family: 'Luckiest Guy', Arial, Helvetica, sans-serif;
 }
 
+.static-dice {
+  width: 10vw;
+}
+
 .team-card-container {
   display: flex;
   flex-direction: column;
@@ -282,11 +336,14 @@ body {
 .team-card {
   height: 10vh;
   width: 25vw;
-  border: 1px;
+  border: 0.2vw;
   border-style: solid;
   margin: 5px;
   display: flex;
   align-items: center;
+  background-color: bisque;
+  border-color: olivedrab;
+  border-radius: 5px;
 }
 
 .team-card-image {
@@ -295,6 +352,7 @@ body {
 
 .team-card-text {
   font-size: 2vh;
+  font-family: 'Luckiest Guy', 'Arial';
 }
 
 /* .footer-wrapper {
