@@ -31,7 +31,6 @@ export default function Lobby({ room, socket, user }) {
   const [seconds, setSeconds] = useState(null);
   // players
   const [players, setPlayers] = useState([]);
-
   // const isTurn = user === currentPlayer;
 
   const sendLog = (room, logMessage) => {
@@ -128,9 +127,6 @@ export default function Lobby({ room, socket, user }) {
   });
 
   const endPlayerTurn = (room, board) => {
-    console.log(room);
-    console.log(board);
-
     socket.emit('initEndTurn', room, board);
   };
 
@@ -227,7 +223,6 @@ export default function Lobby({ room, socket, user }) {
       if (prePlayerList[1] === undefined) {
         prePlayerList.pop();
       }
-      console.log(prePlayerList);
 
       setPlayers(prePlayerList);
     });
@@ -361,10 +356,19 @@ export default function Lobby({ room, socket, user }) {
         </div>
         <Modal show={showEnd} onHide={handleCloseEnd}>
           <>
-            <Modal.Header closeButton>
+            <Modal.Header>
               <Modal.Title>The winner is: {currentPlayer.player}</Modal.Title>
             </Modal.Header>
-            <Modal.Body></Modal.Body>
+            <Modal.Body>
+              <Button
+                onClick={() => {
+                  window.location.href = 'lobby/' + uuidv4();
+                }}
+              >
+                Replay
+              </Button>
+              <Button href='/'>Close Game</Button>
+            </Modal.Body>
           </>
         </Modal>
       </div>
