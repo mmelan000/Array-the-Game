@@ -533,6 +533,16 @@ footer {
     max-width: 100%;
   }
 
+  .Gameboard-header {
+    padding-left: 0.5vw;
+  }
+  .game-tile {
+    width: 16vw;
+  }
+  .timer h2 {
+    font-size: 10vw;
+  }
+
   .game-tile p {
     font-size: 4vh;
   }
@@ -545,6 +555,40 @@ footer {
 
   .about-section {
     font-size: 2vh;
+  }
+
+  .log-and-chat {
+    order: 3;
+    padding-bottom: 6vh;
+    display: flex;
+    flex-direction: row;
+    padding-left: 10vw;
+  }
+
+  .chat-log-main {
+    margin-left: 9vw;
+    width: 35vw;
+  }
+
+  .game-log-container {
+    width: 35vw;
+  }
+
+  .game-log {
+    width: 35vw;
+  }
+
+  .lobby-container {
+    flex-direction: column;
+  }
+
+  .team-card-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  footer {
+    visibility: hidden;
   }
 }
 
