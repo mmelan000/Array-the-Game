@@ -353,7 +353,14 @@ export default function Lobby({ room, socket, user }) {
           ) : (
             <div></div>
           )}
-          {players ? <TeamCardContainer players={players} /> : <div></div>}
+          {players ? (
+            <TeamCardContainer
+              players={players}
+              currentPlayer={currentPlayer.player}
+            />
+          ) : (
+            <div></div>
+          )}
         </div>
         <Modal show={showEnd} onHide={handleCloseEnd}>
           <>
