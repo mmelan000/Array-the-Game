@@ -116,7 +116,7 @@ export default function Lobby({ room, socket, user }) {
     if (diceSum === 12) {
       sendLog(
         room,
-        `Player ${currentPlayer.player} gets another turn from rolling a 12!.`
+        `Player ${currentPlayer.player} gets another turn from rolling a 12!`
       );
       setDiceRoll1(0);
       setDiceRoll2(0);
@@ -127,7 +127,7 @@ export default function Lobby({ room, socket, user }) {
     if (diceSum === 2) {
       sendLog(
         room,
-        `Player ${currentPlayer.player} gets another turn from rolling a 2!.`
+        `Player ${currentPlayer.player} gets another turn from rolling a 2!`
       );
       setDiceRoll1(0);
       setDiceRoll2(0);

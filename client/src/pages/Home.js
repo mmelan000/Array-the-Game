@@ -24,7 +24,7 @@ const pages = [
   {
     title: 'Goal of Game',
     picture: sunWins,
-    information: `The object of the game is to score an ARRAY before your opponents do, an ARRAY is 6 tiles in a line with your color on it. (5 if you're playing with 3 players)`,
+    information: `The object of the game is to score an ARRAY before your opponents do, an ARRAY is 6 tiles in a line with your color on it.`, //(5 if you're playing with 3 players)
     key: 2,
   },
   {
