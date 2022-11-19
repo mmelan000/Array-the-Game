@@ -59,12 +59,10 @@ export default function Lobby({ room, socket, user }) {
   const [diceAnimation, setDiceAnimation] = useState(fourFive);
 
   const sendLog = (room, logMessage) => {
-    console.log(room, logMessage);
     socket.emit('sendLog', room, logMessage);
   };
 
   const claimTile = (position, currentPlayer) => {
-    console.log(currentPlayer);
     const diceSum = diceRoll1 + diceRoll2;
 
     let updatedBoard = {
@@ -99,11 +97,9 @@ export default function Lobby({ room, socket, user }) {
       board[position].player !== 'unclaimed' &&
       allClaimed(board[position].display, board) === false
     ) {
-      console.log('Tile already claimed.');
       return;
     }
     if (diceSum !== parseInt(board[position].display) && diceSum !== 11) {
-      console.log('This isnt the number you rolled.');
       return;
     }
 
@@ -159,7 +155,6 @@ export default function Lobby({ room, socket, user }) {
 
   const rollDice = () => {
     if (diceRoll1 !== 0) {
-      console.log('You already rolled.');
       return;
     }
     const dr1 = Math.floor(Math.random() * 6 + 1);
@@ -266,7 +261,6 @@ export default function Lobby({ room, socket, user }) {
   // shared Turn State
   useEffect(() => {
     socket.on('endTurn', (board) => {
-      console.log(currentPlayer);
       setBoard(board);
       if (Endgame(board)) {
         setGameStarted(false);
