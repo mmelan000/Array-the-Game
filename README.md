@@ -42,7 +42,7 @@ SO THAT I can have fun
 
 ![App Screenshot](./readme-images/SS7.png)
 
-![App Screenshot](./readme-images/SS8.png)
+![App Screenshot](./readme-images/ss8.png)
 
 ## Contributors
 
